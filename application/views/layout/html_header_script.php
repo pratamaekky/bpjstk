@@ -7,7 +7,9 @@
 <!-- Font Awesome -->
 <link rel="stylesheet" href="<?php echo base_url('assets/plugins/fontawesome/css/all.min.css'); ?>">
 <!-- Tempusdominus Bootstrap 4 -->
-<!-- <link rel="stylesheet" href="<?php echo base_url('assets/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css'); ?>"> -->
+<link rel="stylesheet" href="<?php echo base_url('assets/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css'); ?>">
+<!-- Toastr -->
+<link rel="stylesheet" href="<?php echo base_url("assets/plugins/toastr/toastr.min.css"); ?>">
 <!-- Theme style -->
 <link rel="stylesheet" href="<?php echo base_url('assets/dist/css/adminlte.css'); ?>">
 <link rel="stylesheet" href="<?php echo base_url('assets/css/public/main.css'); ?>">
