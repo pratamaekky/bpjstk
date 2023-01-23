@@ -46,8 +46,7 @@ class API_Controller extends CI_Controller
             $this->responseSuccessObj = $response;
         }
 
-        echo json_encode($response);
-        return;
+        return json_encode($response);
     }
 
     protected function sendResponseError(&$responsMessage, $responseCode = 500)
@@ -57,7 +56,7 @@ class API_Controller extends CI_Controller
             "result" => $responsMessage->getCode() == 0 ? $responseCode : $responsMessage->getCode(),
             "message" => $responsMessage->getMessage()
         ];
-        $this->sendResponse($responsMessage->getCode() == 0 ? $responseCode : $responsMessage->getCode(), $responsMessage->getMessage());
+        return $this->sendResponse($responsMessage->getCode() == 0 ? $responseCode : $responsMessage->getCode(), $responsMessage->getMessage());
     }
 
     protected function checkValidation()
