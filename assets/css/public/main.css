@@ -26,6 +26,20 @@ body {
     .nav-pills.nav-bottom .nav-icon {
         transform: scaleX(-1);
     }
+.div_table-bordered {
+    border: 2px solid #dee2e6;
+    border-radius: 10px;
+    overflow: hidden;
+}
+    .div_table-bordered .table-bordered {
+        width: calc(100% + 2px);
+        margin-left: -1px;
+        margin-top: -1px;
+        margin-right: -1px;
+    }
+.modal .form-group label {
+    font-size: 14px;
+}
 .login-content {
     margin-top: 0;
     overflow: hidden;

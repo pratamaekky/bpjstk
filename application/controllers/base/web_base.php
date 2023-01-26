@@ -13,6 +13,8 @@ class web_base extends CI_Controller
         
         $contr = strtolower($this->uri->segment(1));
         $module = strtolower($this->uri->segment(2));
+        $this->controller = $contr;
+        $this->module = $module;
 
         if ($module != "login" && ($module != "dologin" && $module != "dologout") && is_null($session_userdata)) {
             redirect(BASE_URL . "user/login");
