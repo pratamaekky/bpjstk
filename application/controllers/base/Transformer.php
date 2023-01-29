@@ -22,4 +22,23 @@ class Transformer
         return $result;
     }
 
+    public static function convertHospitalOwner($owner)
+    {
+        $result = "Unknown";
+
+        switch (intval($owner)) {
+            case 0:
+                $result = "Prmerintah Provinsi";
+                break;
+            case 1:
+                $result = "Pemerintah Daerah";
+                break;
+            case 2:
+                $result = "Swasta";
+                break;
+        }
+
+        return $result;
+    }
+
 }

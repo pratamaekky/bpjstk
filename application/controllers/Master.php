@@ -3,6 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 date_default_timezone_set("Asia/Jakarta");
 require_once APPPATH . 'controllers/base/web_base.php';
 require_once APPPATH . "controllers/components/Hospital.php";
+require_once APPPATH . "controllers/components/Datas.php";
 
 class Master extends web_base
 {
@@ -27,11 +28,22 @@ class Master extends web_base
     public function hospital($command = "lists")
     {
         try {
-            $hospital = new Hospital($command);
+            $params = (!is_null($this->input->post()) && !empty($this->input->post())) ? $this->input->post() : null;
+            $hospital = new Hospital($command, $params);
             $hospital->action();
         } catch (Exception $e) {
             // return $this->sendResponseError($e);
         }
+    }
 
+    public function datas($command)
+    {
+        try {
+            $params = (!is_null($this->input->post()) && !empty($this->input->post())) ? $this->input->post() : null;
+            $datas = new Datas($command, $params);
+            $datas->action();
+        } catch (Exception $e) {
+            // return $this->sendResponseError($e);
+        }
     }
 }

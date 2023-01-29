@@ -5,6 +5,27 @@ body {
     font-family: "Poppins-Regular" !important;
 }
 
+.overlay-loading {
+    position: fixed;
+    font-family: Arial, Helvetica, sans-serif;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 99999;
+}
+
+.overlay-loading-spinner {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    bottom: 0;
+    color: white;
+    left: 50%;
+    margin: -15px 0 -15px;
+}
+
 .form-group .fa-eye {
     display: none;
 }

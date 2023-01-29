@@ -3,9 +3,16 @@
 
 <head>
     <?php include(APPPATH . "views/layout/html_header_script.php"); ?>
+    <link href="<?php echo base_url("assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css"); ?>" rel="stylesheet">
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
+    <div class="overlay-loading" style="display: none">
+        <div class="overlay-loading-spinner">
+            <i class="fa fa-spinner fa-spin animated" style="font-size: 38px; margin: 12px;"></i>
+            <p>Processing...</p>
+        </div>
+    </div>
     <div class="wrapper">
         <?php include(APPPATH . "views/layout/navbar_header.php"); ?>
         <?php include(APPPATH . "views/layout/navbar_sidebar.php"); ?>
@@ -39,22 +46,20 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-body">
-                                    <div class="div_table-bordered">
-                                        <table id="tableHospitalLists" class="table table-bordered table-hover">
-                                            <thead>
-                                                <tr>
-                                                    <th align="center">No</th>
-                                                    <th align="center">Nama Rumah Sakit</th>
-                                                    <th>Alamat</th>
-                                                    <th>No Telp</th>
-                                                    <th>Jenis</th>
-                                                    <th>Kelas</th>
-                                                    <th>Kepemilikan</th>
-                                                    <th>Aksi</th>
-                                                </tr>
-                                            </thead>
-                                        </table>
-                                    </div>
+                                    <table id="tableHospitalLists" class="table table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th align="center">No</th>
+                                                <th align="center">Nama Rumah Sakit</th>
+                                                <th>Alamat</th>
+                                                <th>No Telp</th>
+                                                <th>Jenis</th>
+                                                <th>Kelas</th>
+                                                <th>Kepemilikan</th>
+                                                <th>Aksi</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -69,7 +74,7 @@
     </div>
 
     <div class="modal fade modal-overflow" id="modal-hospital">
-        <form name="projectForm" id="projectForm" enctype="multipart/form-data" novalidate="novalidate">
+        <form name="hospitalForm" id="hospitalForm" enctype="multipart/form-data" novalidate="novalidate">
             <div class="modal-dialog modal-xl">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -79,50 +84,64 @@
                         </button>
                     </div>
                     <div class="modal-body row">
-                        <input type="hidden" name="project_id" id="project_id" value="" />
                         <label class="modal-seg col-12">Informasi Rumah Sakit</label>
                         <div class="col-12 col-sm-6">
                             <div class="row">
                                 <div class="form-group col-12">
-                                    <label for="project_name">Nama Rumah Sakit</label>
+                                    <label for="name">Nama Rumah Sakit</label>
                                     <div class="input-group">
-                                        <input type="text" name="project_name" id="project_name" class="form-control" placeholder="Contoh: Rumah Sakit Umum Daerah" autocomplete="off" required="required" />
+                                        <input type="text" name="name" id="name" class="form-control" placeholder="Contoh: Rumah Sakit Umum Daerah" autocomplete="off" required="required" />
                                     </div>
                                 </div>
                                 <div class="form-group col-12">
-                                    <label for="project_link">Jenis Rumah Sakit</label>
+                                    <label for="type">Jenis Rumah Sakit</label>
                                     <div class="input-group">
-                                        <input type="text" name="project_link" id="project_link" class="form-control" placeholder="Contoh: http://www.telkomsel.com" autocomplete="off" />
+                                        <select name="type" id="type" class="form-control" required="required">
+                                            <option value="">-- Pilih Jenis Rumah Sakit --</option>
+                                            <option value="1">Rumah Sakit Umum</option>
+                                            <option value="2">Rumah Sakit Swasta</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group col-12">
-                                    <label for="project_progress">Kelas rumah Sakit</label>
+                                    <label for="class">Kelas rumah Sakit</label>
                                     <div class="input-group">
-                                        <input type="text" name="project_link" id="project_link" class="form-control" placeholder="Contoh: http://www.telkomsel.com" autocomplete="off" />
+                                        <input type="text" name="class" id="class" class="form-control" placeholder="Contoh: A" autocomplete="off" required="required" />
                                     </div>
                                 </div>
                                 <div class="form-group col-12">
-                                    <label for="project_deadline">Status BLU</label>
+                                    <label for="status_blu">Status BLU</label>
                                     <div class="input-group">
-                                        <input type="text" name="project_link" id="project_link" class="form-control" placeholder="Contoh: http://www.telkomsel.com" autocomplete="off" />
+                                        <input type="text" name="status_blu" id="status_blu" class="form-control" placeholder="Contoh: BLUD" autocomplete="off" required="required" />
                                     </div>
                                 </div>
                                 <div class="form-group col-12">
-                                    <label for="project_deadline">Kepemilikan</label>
+                                    <label for="owner">Kepemilikan</label>
                                     <div class="input-group">
-                                        <input type="text" name="project_link" id="project_link" class="form-control" placeholder="Contoh: http://www.telkomsel.com" autocomplete="off" />
+                                        <select name="owner" id="owner" class="form-control" required="required">
+                                            <option value="">-- Pilih Kepemilikan Rumah Sakit --</option>
+                                            <option value="0">Pemerintah Provinsi</option>
+                                            <option value="1">Pemerintah Daerah</option>
+                                            <option value="2">Swasta</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group col-12">
-                                    <label for="project_deadline">Direktur</label>
+                                    <label for="directur">Direktur</label>
                                     <div class="input-group">
-                                        <input type="text" name="project_link" id="project_link" class="form-control" placeholder="Contoh: http://www.telkomsel.com" autocomplete="off" />
+                                        <input type="text" name="directur" id="directur" class="form-control" placeholder="Contoh: Budi Gunadi Sadikin" autocomplete="off" />
                                     </div>
                                 </div>
                                 <div class="form-group col-12">
-                                    <label for="project_deadline">Luas Tanah</label>
+                                    <label for="land_area">Luas Tanah</label>
                                     <div class="input-group">
-                                        <input type="text" name="project_link" id="project_link" class="form-control" placeholder="Contoh: http://www.telkomsel.com" autocomplete="off" />
+                                        <input type="text" name="land_area" id="land_area" class="form-control" placeholder="Contoh: 1234" autocomplete="off" />
+                                    </div>
+                                </div>
+                                <div class="form-group col-12">
+                                    <label for="building_area">Luas Bangunan</label>
+                                    <div class="input-group">
+                                        <input type="text" name="building_area" id="building_area" class="form-control" placeholder="Contoh: 1234" autocomplete="off" />
                                     </div>
                                 </div>
                             </div>
@@ -130,14 +149,20 @@
                         <div class="col-12 col-sm-6">
                             <div class="row">
                                 <div class="form-group col-12">
-                                    <label for="project_divisi">Provinsi</label>
+                                    <label for="telp">No Telepon</label>
                                     <div class="input-group">
-                                        <select name="project_divisi" id="project_divisi" class="form-control" required="required">
+                                        <input type="text" name="telp" id="telp" class="form-control" placeholder="Contoh: 082221111111" autocomplete="off" required="required" />
+                                    </div>
+                                </div>
+                                <div class="form-group col-12">
+                                    <label for="province_id">Provinsi</label>
+                                    <div class="input-group">
+                                        <select name="province_id" id="province_id" class="form-control" required="required">
                                             <option value="">-- Pilih Provinsi --</option>
                                             <?php
-                                            if (!is_null($usersDivisi)) {
-                                                foreach ($usersDivisi as $divisi) {
-                                                    echo '<option value="' . $divisi->id . '">' . $divisi->value . '</option>';
+                                            if (!is_null($getProvince)) {
+                                                foreach ($getProvince as $province) {
+                                                    echo '<option value="' . $province->id . '">' . $province->name . '</option>';
                                                 }
                                             }
                                             ?>
@@ -145,61 +170,35 @@
                                     </div>
                                 </div>
                                 <div class="form-group col-12">
-                                    <label for="project_divisi">Kota / Kabupaten</label>
+                                    <label for="city_id">Kota / Kabupaten</label>
                                     <div class="input-group">
-                                        <select name="project_divisi" id="project_divisi" class="form-control" required="required" disabled>
+                                        <select name="city_id" id="city_id" class="form-control" required="required" disabled>
                                             <option value="">-- Pilih Kota / Kabupaten --</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group col-12">
-                                    <label for="project_divisi">Kecamatan</label>
+                                    <label for="district_id">Kecamatan</label>
                                     <div class="input-group">
-                                        <select name="project_divisi" id="project_divisi" class="form-control" required="required" disabled>
+                                        <select name="district_id" id="district_id" class="form-control" required="required" disabled>
                                             <option value="">-- Pilih Kecamatan --</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group col-12">
-                                    <label for="project_divisi">Kodepos</label>
+                                    <label for="postalcode">Kodepos</label>
                                     <div class="input-group">
-                                        <select name="project_divisi" id="project_divisi" class="form-control" required="required" disabled>
+                                        <input type="hidden" name="village_id" id="village_id" value="" />
+                                        <select name="postalcode" id="postalcode" class="form-control" required="required" disabled>
                                             <option value="">-- Pilih Kodepos --</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group col-12">
-                                    <label for="project_description">Deskripsi Proyek</label>
-                                    <textarea name="project_description" id="project_description" class="form-control" placeholder="Contoh: Proyek prioritas tahun ini" rows="6"></textarea>
+                                    <label for="address">Alamat</label>
+                                    <textarea name="address" id="address" class="form-control" placeholder="Contoh: Jalan Masih Panjang No. 69" rows="6"></textarea>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-12 row row-pic">
-                            <div class="col-12 col-sm-6">
-                                <div class="row">
-                                    <div class="form-group col-12">
-                                        <label for="pic_leader_name">Nama PIC Leader</label>
-                                        <input type="text" name="pic_leader_name" id="pic_leader_name" class="form-control" placeholder="Contoh: Dwi Setiawan" autocomplete="off" required="required" />
-                                        <input type="hidden" name="pic_leader_id" id="pic_leader_id" />
-                                        <div id="autocomplete-pic-leader">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-6">
-                                <div class="row">
-                                    <div class="form-group col-12">
-                                        <label for="pic_leader_handphone">Nomor Telepon PIC Leader</label>
-                                        <input type="text" name="pic_leader_handphone" id="pic_leader_handphone" class="form-control" placeholder="Contoh: 089818181818" autocomplete="off" required="required" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 row-pic row-pic-member">
-                            <input type="hidden" name="count-pic" id="count-pic" value="0" />
-                        </div>
-                        <div class="col-12">
-                            <label class="add-pic">+ Tambahkan PIC Member</label>
                         </div>
                     </div>
                     <div class="modal-footer justify-content-between">
@@ -218,6 +217,176 @@
 
 
     <?PHP include(APPPATH . "views/layout/html_footer_script.php"); ?>
+    <script src="<?php echo base_url("assets/plugins/datatables/jquery.dataTables.min.js"); ?>"></script>
+    <script src="<?php echo base_url("assets/plugins/jquery-validation/jquery.validate.min.js"); ?>"></script>
+    <script>
+        $(document).ready(function(){
+            $('#tableHospitalLists').DataTable({
+                'processing': true,
+                'serverSide': true,
+                'serverMethod': 'post',
+                'ajax': {
+                    'url':'<?php echo base_url("master/hospital/data"); ?>'
+                },
+                'columns': [
+                    { data: 'no' },
+                    { data: 'name' },
+                    { data: 'address' },
+                    { data: 'telp' },
+                    { data: 'type' },
+                    { data: 'class' },
+                    { data: 'owner' },
+                    { data: 'action' },
+                ]
+            });
+        });
+
+        $("#province_id").on("change", function(e) {
+            var idProvince = this.value;
+            $('.overlay-loading').show();
+
+            $.ajax({
+                url: "<?php echo base_url('master/datas/city'); ?>",
+                type: "POST",
+                data: {
+                    id: idProvince
+                },
+                dataType: "JSON",
+                success: function(response) {
+                    var cityOption = '<option value="">-- Pilih Kota / Kabupaten --</option>';
+                    $.each(response, function(k, v) {
+                        cityOption += '<option value="' + v.id + '">' + v.name + '</option>'
+                    })
+                    $("#city_id").html(cityOption);
+                    $("#city_id").removeAttr("disabled");
+                    $('.overlay-loading').hide();
+                },
+                error: function(error) {
+                    $('.overlay-loading').hide();
+                    show_notif("error", "Gagal Update Data! Ulangi beberapa saat lagi")
+                }
+            });
+        })
+
+        $("#city_id").on("change", function(e) {
+            var idCity = this.value;
+            $('.overlay-loading').show();
+
+            $.ajax({
+                url: "<?php echo base_url('master/datas/district'); ?>",
+                type: "POST",
+                data: {
+                    id: idCity
+                },
+                dataType: "JSON",
+                success: function(response) {
+                    console.log(response);
+                    var districtOption = '<option value="">-- Pilih Kecamatan --</option>';
+                    $.each(response, function(k, v) {
+                        districtOption += '<option value="' + v.id + '">' + v.name + '</option>'
+                    })
+                    $("#district_id").html(districtOption);
+                    $("#district_id").removeAttr("disabled");
+                    $('.overlay-loading').hide();
+                },
+                error: function(error) {
+                    $('.overlay-loading').hide();
+                    show_notif("error", "Gagal Update Data! Ulangi beberapa saat lagi")
+                }
+            });
+        })
+
+        $("#district_id").on("change", function(e) {
+            var idProvince = $('#province_id').find(":selected").val();
+            var idCity = $('#city_id').find(":selected").val();
+            var idDistrict = this.value;
+            $('.overlay-loading').show();
+
+            $.ajax({
+                url: "<?php echo base_url('master/datas/postalcode'); ?>",
+                type: "POST",
+                data: {
+                    idProvince: idProvince,
+                    idCity: idCity,
+                    idDistrict: idDistrict
+                },
+                dataType: "JSON",
+                success: function(response) {
+                    var kodeposOption = '<option value="">-- Pilih Kodepos --</option>';
+                    $.each(response, function(k, v) {
+                        kodeposOption += '<option value="' + v.postal_code + '">' + v.village + ' (' + v.postal_code + ')</option>'
+                    })
+                    $("#postalcode").html(kodeposOption);
+                    $("#postalcode").removeAttr("disabled");
+                    $('.overlay-loading').hide();
+                },
+                error: function(error) {
+                    $('.overlay-loading').hide();
+                    show_notif("error", "Gagal Update Data! Ulangi beberapa saat lagi")
+                }
+            });
+        })
+
+        $(function() {
+            $.validator.setDefaults({
+                ignore: ":hidden, [contenteditable='true']:not([name])",
+                submitHandler: function(form) {
+                    $('.overlay-loading').show();
+
+                    $.ajax({
+                        url: "<?php echo base_url('master/hospital/save'); ?>",
+                        type: "POST",
+                        data: new FormData(form),
+                        async: true,
+                        dataType: "JSON",
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        success: function(response) {
+                            if (response.result == 200) {
+                                $(".overlay-loading").hide();
+                                location.reload();
+                            } else {
+                                $('.overlay-loading').hide();
+                                show_notif("error", response.message)
+                            }
+                        },
+                        error: function(error) {
+                            $('.overlay-loading').hide();
+                            show_notif("error", "Gagal Update Data! Ulangi beberapa saat lagi")
+                        }
+                    });
+                }
+            });
+            $('#hospitalForm').validate({
+                errorElement: 'span',
+                errorPlacement: function(error, element) {
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
+                highlight: function(element, errorClass, validClass) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function(element, errorClass, validClass) {
+                    $(element).removeClass('is-invalid');
+                }
+            });
+
+            $('#hospitalForm').validate({
+                errorElement: 'span',
+                errorPlacement: function(error, element) {
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
+                highlight: function(element, errorClass, validClass) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function(element, errorClass, validClass) {
+                    $(element).removeClass('is-invalid');
+                }
+            });
+        });
+</script>
 </body>
 
 </html>
