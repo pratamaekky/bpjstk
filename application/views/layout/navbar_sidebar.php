@@ -22,7 +22,7 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <?php if ($this->plkk_session->user_role == -1 || $this->plkk_session->user_role == 0) { ?>
-                    <li class="nav-item <?php echo ($this->controller == "master") ? "menu-open": ""; ?>">
+                    <li class="nav-item <?php echo ($this->controller == "master" && ($this->module == "hospital" || $this->module == "service")) ? "menu-open": ""; ?>">
                         <a href="javascript:void(0);" class="nav-link">
                             <i class="nav-icon fas fa-hospital-alt"></i>
                             <p>Rumah Sakit<i class="right fas fa-angle-left"></i></p>
@@ -35,13 +35,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="pages/charts/flot.html" class="nav-link">
-                                    <i class="fas fa-hospital-user nav-icon"></i>
-                                    <p>Data Dokter</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="pages/charts/inline.html" class="nav-link">
+                                <a href="<?php echo base_url("master/service"); ?>" class="nav-link <?php echo ($this->module == "service") ? "active" : ""; ?>">
                                     <i class="fas fa-procedures nav-icon"></i>
                                     <p>Data Pelayanan</p>
                                 </a>
@@ -67,7 +61,7 @@
                         <p>Data Obat-obatan</i></p>
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item <?php echo ($this->controller == "master" && $this->module != "hospital" && $this->module != "service") ? "menu-open": ""; ?>">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-database"></i>
                         <p>
@@ -77,15 +71,45 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="pages/charts/chartjs.html" class="nav-link">
-                                <i class="fas fa-hospital nav-icon"></i>
-                                <p>Rumah Sakit</p>
+                            <a href="<?php echo base_url("master/generals/lists/hospital_type"); ?>" class="nav-link <?php echo ($this->module == "generals" && $this->last_segment == "hospital_type") ? "active" : ""; ?>">
+                                <i class="fas fa-h-square nav-icon"></i>
+                                <p>Tipe Rumah Sakit</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="pages/charts/flot.html" class="nav-link">
-                                <i class="fas fa-users nav-icon"></i>
-                                <p>Users</p>
+                            <a href="<?php echo base_url("master/generals/lists/hospital_owner"); ?>" class="nav-link <?php echo ($this->module == "generals" && $this->last_segment == "hospital_owner") ? "active" : ""; ?>">
+                                <i class="fas fa-users nav-icon nav-icon"></i>
+                                <p>Pemilik RS</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="<?php echo base_url("master/generals/lists/ot_category"); ?>" class="nav-link <?php echo ($this->module == "generals" && $this->last_segment == "ot_category") ? "active" : ""; ?>">
+                                <i class="fas fa-database nav-icon"></i>
+                                <p>Kategori Operasi</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="<?php echo base_url("master/generals/lists/ot_specialist"); ?>" class="nav-link <?php echo ($this->module == "generals" && $this->last_segment == "ot_specialist") ? "active" : ""; ?>">
+                                <i class="fas fa-user-tag nav-icon"></i>
+                                <p>Spesialis Operasi</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="<?php echo base_url("master/generals/lists/doctor_specialist"); ?>" class="nav-link <?php echo ($this->module == "generals" && $this->last_segment == "doctor_specialist") ? "active" : ""; ?>">
+                                <i class="fas fa-user-md nav-icon"></i>
+                                <p>Dokter Spesialisasi</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="<?php echo base_url("master/generals/lists/lab_category"); ?>" class="nav-link <?php echo ($this->module == "generals" && $this->last_segment == "lab_category") ? "active" : ""; ?>">
+                                <i class="fas fa-vials nav-icon"></i>
+                                <p>Kategori Lab</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="<?php echo base_url("master/generals/lists/other_fee"); ?>" class="nav-link <?php echo ($this->module == "generals" && $this->last_segment == "other_fee") ? "active" : ""; ?>">
+                                <i class="fas fa-money-check-alt nav-icon"></i>
+                                <p>Biaya Lainnya</p>
                             </a>
                         </li>
                     </ul>

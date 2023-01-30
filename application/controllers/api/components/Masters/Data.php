@@ -1,13 +1,12 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
-include_once(APPPATH . "controllers/base/Transformer.php");
 
 class Data
 {
     protected $CI;
     protected $appSrc;
 
-    public function __construct($command, $params)
+    public function __construct($command, $flag, $params)
     {
         $this->CI = &get_instance();
         $this->CI->load->helper(array());
@@ -20,40 +19,69 @@ class Data
         ));
 
         $this->_command = $command;
+        $this->_flag = $flag;
         $this->_params = $params;
     }
 
     private function _data_hospital(&$responseObj, &$responsecode, &$responseMessage)
     {
-        $result = null;
-        $getHospital = $this->CI->mhospital->getData();
-
-        if (!is_null($getHospital)) {
-            foreach ($getHospital as $key => $hospital) {
-                $row = [
-                    "no" => ($key  + 1),
-                    "name" => $hospital->name,
-                    "address" => $hospital->address . ", " . $hospital->village . ", " . $hospital->district . ", " . $hospital->city . ", " . $hospital->province . " - " . $hospital->postalcode,
-                    "telp" => $hospital->telp,
-                    "type" => ($hospital->type == 0) ? "Rumah Sakit Umum" : "Rumah Sakit Swasta",
-                    "class" => $hospital->class,
-                    "owner" => Transformer::convertHospitalOwner($hospital->owner),
-                    "action" => "Aksi"
-                ];
-
-                $result[] = $row;
+        $totalPage = 1;
+        $result = [];
+        $draw = isset($this->_params["draw"]) ? intval($this->_params["draw"]) : 1;
+        $start = isset($this->_params["start"]) ? intval($this->_params["start"]) : 0;
+        $limit = isset($this->_params["length"]) ? intval($this->_params["length"]) : 10;
+        $query = (isset($this->_params["search"]["value"]) && !empty($this->_params["search"]["value"])) ? $this->_params["search"]["value"] : null;
+        $column = isset($this->_params["order"][0]["column"]) ? $this->_params["order"][0]["column"] : null;
+        $order = isset($this->_params["order"][0]["dir"]) ? $this->_params["order"][0]["dir"] : "asc";
+        if (!is_null($column)) {
+            switch ($column) {
+                case 1:
+                    $sortColumn = "name";
+                    break;
+                case 4:
+                    $sortColumn = "hospital_type";
+                    break;
+                case 5:
+                    $sortColumn = "class";
+                    break;
+                case 6:
+                    $sortColumn = "hospital_owner";
+                    break;
+                default:
+                    $sortColumn = "id";
+                    break;
             }
+        }
+
+        $totalHospital = $this->CI->mhospital->totalData();
+
+        if ($totalHospital > 0) {
+            $result = $this->CI->mhospital->getData($query, $start, $limit, $sortColumn, $order);
             $responsecode = 200;
         }
 
         $responseObj = [
             "name" => "Data Hospital",
             "item" => [
-                "draw" => 1,
-                "iTotalRecords" => count($getHospital),
-                "iTotalDisplayRecords" => count($getHospital),
+                "draw" => $draw,
+                "iTotalRecords" => intval($limit),
+                "iTotalDisplayRecords" => intval($totalHospital),
                 "aaData" => $result
             ]
+        ];
+    }
+
+    private function _detail_hospital(&$responseObj, &$responsecode, &$responseMessage)
+    {
+        if (!isset($this->_params["rsId"]) && $this->_params["rsId"] <= 0) throw new Exception("Data tidak lengkap!", 201);
+
+        $hospital = $this->CI->mhospital->detail($this->_params["rsId"]);
+        
+        if (is_null($hospital)) throw new Exception("Data hospital tidak ditemukan!", 201);
+        $responsecode = 200;
+        $responseObj  = [
+            "name"  => "Detail Hospital",
+            "item"  => $hospital
         ];
     }
 
@@ -126,11 +154,329 @@ class Data
         ];
     }
 
+
+    private function _data_general(&$responseObj, &$responsecode, &$responseMessage)
+    {
+        $generalField = [
+            "hospital_type",
+            "hospital_owner",
+            "ot_category",
+            "ot_specialist",
+            "doctor_specialist",
+            "lab_category",
+            "other_fee"
+        ];
+        if (is_null($this->_flag)) throw new Exception("Flag Tidak Lengkap!", 201);
+        if (!in_array($this->_flag, $generalField)) throw new Exception("Flag tidak tersedia!", 201);
+        
+        $general = $this->CI->general->getGeneral($this->_flag);
+        if (is_null($general)) throw new Exception("Data tidak ada!", 201);
+
+        $responsecode = 200;
+        $responseObj = [
+            "name" => "Data General " . ucwords(str_replace("_", " ", $this->_flag)),
+            "item" => $general
+        ];
+    }
+
+    private function _data_generals(&$responseObj, &$responsecode, &$responseMessage)
+    {
+        $generalField = [
+            "hospital_type",
+            "hospital_owner",
+            "ot_category",
+            "ot_specialist",
+            "doctor_specialist",
+            "lab_category",
+            "other_fee"
+        ];
+        if (is_null($this->_flag)) throw new Exception("Flag Tidak Lengkap!", 201);
+        if (!in_array($this->_flag, $generalField)) throw new Exception("Flag tidak tersedia!", 201);
+        
+        $result = [];
+        $idRs = isset($this->_params["rsid"]) ? $this->_params["rsid"] : 0;
+        $draw = isset($this->_params["draw"]) ? intval($this->_params["draw"]) : 1;
+        $start = isset($this->_params["start"]) ? intval($this->_params["start"]) : 0;
+        $limit = isset($this->_params["length"]) ? intval($this->_params["length"]) : 10;
+        $query = (isset($this->_params["search"]["value"]) && !empty($this->_params["search"]["value"])) ? $this->_params["search"]["value"] : null;
+        $column = isset($this->_params["order"][0]["column"]) ? $this->_params["order"][0]["column"] : null;
+        $order = isset($this->_params["order"][0]["dir"]) ? $this->_params["order"][0]["dir"] : "asc";
+        $sortColumn = "id";
+        $totalGeneral = $this->CI->general->totalGeneral($this->_flag);
+
+        if ($totalGeneral > 0) {
+            $result = $this->CI->general->getGenerals($this->_flag, $query, $start, $limit, $sortColumn, $order);
+            $responsecode = 200;
+        }
+
+        $responseObj = [
+            "name" => "Data General " . ucwords(str_replace("_", " ", $this->_flag)),
+            "item" => [
+                "draw" => $draw,
+                "iTotalRecords" => intval($limit),
+                "iTotalDisplayRecords" => intval($totalGeneral),
+                "aaData" => $result
+            ]
+        ];
+    }
+
+    private function _data_room(&$responseObj, &$responsecode, &$responseMessage)
+    {
+        $result = [];
+        $idRs = isset($this->_params["rsid"]) ? $this->_params["rsid"] : 0;
+        $draw = isset($this->_params["draw"]) ? intval($this->_params["draw"]) : 1;
+        $start = isset($this->_params["start"]) ? intval($this->_params["start"]) : 0;
+        $limit = isset($this->_params["length"]) ? intval($this->_params["length"]) : 10;
+        $query = (isset($this->_params["search"]["value"]) && !empty($this->_params["search"]["value"])) ? $this->_params["search"]["value"] : null;
+        $column = isset($this->_params["order"][0]["column"]) ? $this->_params["order"][0]["column"] : null;
+        $order = isset($this->_params["order"][0]["dir"]) ? $this->_params["order"][0]["dir"] : "asc";
+        $sortColumn = "id";
+        if (!is_null($column)) {
+            switch ($column) {
+                case 1:
+                    $sortColumn = "name";
+                    break;
+                case 4:
+                    $sortColumn = "hospital_type";
+                    break;
+                case 5:
+                    $sortColumn = "class";
+                    break;
+                case 6:
+                    $sortColumn = "hospital_owner";
+                    break;
+                default:
+                    $sortColumn = "id";
+                    break;
+            }
+        }
+
+        $totalRoom = $this->CI->general->totalRoom();
+
+        if ($totalRoom > 0) {
+            $result = $this->CI->general->getRoom($idRs, $query, $start, $limit, $sortColumn, $order);
+            $responsecode = 200;
+        }
+
+        $responseObj = [
+            "name" => "Data Room",
+            "item" => [
+                "draw" => $draw,
+                "iTotalRecords" => intval($limit),
+                "iTotalDisplayRecords" => intval($totalRoom),
+                "aaData" => $result
+            ]
+        ];
+    }
+
+    private function _data_measure(&$responseObj, &$responsecode, &$responseMessage)
+    {
+        $totalPage = 1;
+        $result = [];
+        $idRs = isset($this->_params["rsid"]) ? $this->_params["rsid"] : 0;
+        $draw = isset($this->_params["draw"]) ? intval($this->_params["draw"]) : 1;
+        $start = isset($this->_params["start"]) ? intval($this->_params["start"]) : 0;
+        $limit = isset($this->_params["length"]) ? intval($this->_params["length"]) : 10;
+        $query = (isset($this->_params["search"]["value"]) && !empty($this->_params["search"]["value"])) ? $this->_params["search"]["value"] : null;
+        $column = isset($this->_params["order"][0]["column"]) ? $this->_params["order"][0]["column"] : null;
+        $order = isset($this->_params["order"][0]["dir"]) ? $this->_params["order"][0]["dir"] : "asc";
+        $sortColumn = "id";
+        if (!is_null($column)) {
+            switch ($column) {
+                case 1:
+                    $sortColumn = "name";
+                    break;
+                case 4:
+                    $sortColumn = "hospital_type";
+                    break;
+                case 5:
+                    $sortColumn = "class";
+                    break;
+                case 6:
+                    $sortColumn = "hospital_owner";
+                    break;
+                default:
+                    $sortColumn = "id";
+                    break;
+            }
+        }
+
+        $totalMeasure = $this->CI->general->totalMeasure();
+
+        if ($totalMeasure > 0) {
+            $result = $this->CI->general->getMeasure($idRs, $query, $start, $limit, $sortColumn, $order);
+            $responsecode = 200;
+        }
+
+        $responseObj = [
+            "name" => "Data Measure",
+            "item" => [
+                "draw" => $draw,
+                "iTotalRecords" => intval($limit),
+                "iTotalDisplayRecords" => intval($totalMeasure),
+                "aaData" => $result
+            ]
+        ];
+    }
+
+    private function _data_doctor(&$responseObj, &$responsecode, &$responseMessage)
+    {
+        $totalPage = 1;
+        $result = [];
+        $idRs = isset($this->_params["rsid"]) ? $this->_params["rsid"] : 0;
+        $draw = isset($this->_params["draw"]) ? intval($this->_params["draw"]) : 1;
+        $start = isset($this->_params["start"]) ? intval($this->_params["start"]) : 0;
+        $limit = isset($this->_params["length"]) ? intval($this->_params["length"]) : 10;
+        $query = (isset($this->_params["search"]["value"]) && !empty($this->_params["search"]["value"])) ? $this->_params["search"]["value"] : null;
+        $column = isset($this->_params["order"][0]["column"]) ? $this->_params["order"][0]["column"] : null;
+        $order = isset($this->_params["order"][0]["dir"]) ? $this->_params["order"][0]["dir"] : "asc";
+        $sortColumn = "id";
+        if (!is_null($column)) {
+            switch ($column) {
+                case 1:
+                    $sortColumn = "name";
+                    break;
+                case 4:
+                    $sortColumn = "hospital_type";
+                    break;
+                case 5:
+                    $sortColumn = "class";
+                    break;
+                case 6:
+                    $sortColumn = "hospital_owner";
+                    break;
+                default:
+                    $sortColumn = "id";
+                    break;
+            }
+        }
+
+        $totalDoctor = $this->CI->general->totalDoctor();
+
+        if ($totalDoctor > 0) {
+            $result = $this->CI->general->getDoctor($idRs, $query, $start, $limit, $sortColumn, $order);
+            $responsecode = 200;
+        }
+
+        $responseObj = [
+            "name" => "Data Doctor",
+            "item" => [
+                "draw" => $draw,
+                "iTotalRecords" => intval($limit),
+                "iTotalDisplayRecords" => intval($totalDoctor),
+                "aaData" => $result
+            ]
+        ];
+    }
+
+    private function _data_laboratory(&$responseObj, &$responsecode, &$responseMessage)
+    {
+        $totalPage = 1;
+        $result = [];
+        $idRs = isset($this->_params["rsid"]) ? $this->_params["rsid"] : 0;
+        $draw = isset($this->_params["draw"]) ? intval($this->_params["draw"]) : 1;
+        $start = isset($this->_params["start"]) ? intval($this->_params["start"]) : 0;
+        $limit = isset($this->_params["length"]) ? intval($this->_params["length"]) : 10;
+        $query = (isset($this->_params["search"]["value"]) && !empty($this->_params["search"]["value"])) ? $this->_params["search"]["value"] : null;
+        $column = isset($this->_params["order"][0]["column"]) ? $this->_params["order"][0]["column"] : null;
+        $order = isset($this->_params["order"][0]["dir"]) ? $this->_params["order"][0]["dir"] : "asc";
+        $sortColumn = "id";
+        if (!is_null($column)) {
+            switch ($column) {
+                case 1:
+                    $sortColumn = "name";
+                    break;
+                case 4:
+                    $sortColumn = "hospital_type";
+                    break;
+                case 5:
+                    $sortColumn = "class";
+                    break;
+                case 6:
+                    $sortColumn = "hospital_owner";
+                    break;
+                default:
+                    $sortColumn = "id";
+                    break;
+            }
+        }
+
+        $totalLaboratory = $this->CI->general->totalLaboratory();
+
+        if ($totalLaboratory > 0) {
+            $result = $this->CI->general->getLaboratory($idRs, $query, $start, $limit, $sortColumn, $order);
+            $responsecode = 200;
+        }
+
+        $responseObj = [
+            "name" => "Data Laboratory",
+            "item" => [
+                "draw" => $draw,
+                "iTotalRecords" => intval($limit),
+                "iTotalDisplayRecords" => intval($totalLaboratory),
+                "aaData" => $result
+            ]
+        ];
+    }
+
+    private function _data_fee(&$responseObj, &$responsecode, &$responseMessage)
+    {
+        $totalPage = 1;
+        $result = [];
+        $idRs = isset($this->_params["rsid"]) ? $this->_params["rsid"] : 0;
+        $draw = isset($this->_params["draw"]) ? intval($this->_params["draw"]) : 1;
+        $start = isset($this->_params["start"]) ? intval($this->_params["start"]) : 0;
+        $limit = isset($this->_params["length"]) ? intval($this->_params["length"]) : 10;
+        $query = (isset($this->_params["search"]["value"]) && !empty($this->_params["search"]["value"])) ? $this->_params["search"]["value"] : null;
+        $column = isset($this->_params["order"][0]["column"]) ? $this->_params["order"][0]["column"] : null;
+        $order = isset($this->_params["order"][0]["dir"]) ? $this->_params["order"][0]["dir"] : "asc";
+        $sortColumn = "id";
+        if (!is_null($column)) {
+            switch ($column) {
+                case 1:
+                    $sortColumn = "name";
+                    break;
+                case 4:
+                    $sortColumn = "hospital_type";
+                    break;
+                case 5:
+                    $sortColumn = "class";
+                    break;
+                case 6:
+                    $sortColumn = "hospital_owner";
+                    break;
+                default:
+                    $sortColumn = "id";
+                    break;
+            }
+        }
+
+        $totalFee = $this->CI->general->totalFee();
+
+        if ($totalFee > 0) {
+            $result = $this->CI->general->getFee($idRs, $query, $start, $limit, $sortColumn, $order);
+            $responsecode = 200;
+        }
+
+        $responseObj = [
+            "name" => "Data Fee",
+            "item" => [
+                "draw" => $draw,
+                "iTotalRecords" => intval($limit),
+                "iTotalDisplayRecords" => intval($totalFee),
+                "aaData" => $result
+            ]
+        ];
+    }
+
     public function action(&$responseObj, &$responsecode, &$responseMessage)
     {
         switch ($this->_command) {
             case "hospital":
-                $this->_data_hospital($responseObj, $responsecode, $responseMessage);
+                if ($this->_flag == "detail")
+                    $this->_detail_hospital($responseObj, $responsecode, $responseMessage);
+                else
+                    $this->_data_hospital($responseObj, $responsecode, $responseMessage);
                 break;
             case "province":
                 $this->_data_province($responseObj, $responsecode, $responseMessage);
@@ -143,6 +489,27 @@ class Data
                 break;
             case "postalcode":
                 $this->_data_postalcode($responseObj, $responsecode, $responseMessage);
+                break;
+            case "general":
+                $this->_data_general($responseObj, $responsecode, $responseMessage);
+                break;
+            case "generals":
+                $this->_data_generals($responseObj, $responsecode, $responseMessage);
+                break;
+            case "room":
+                $this->_data_room($responseObj, $responsecode, $responseMessage);
+                break;
+            case "measure":
+                $this->_data_measure($responseObj, $responsecode, $responseMessage);
+                break;
+            case "doctor":
+                $this->_data_doctor($responseObj, $responsecode, $responseMessage);
+                break;
+            case "laboratory":
+                $this->_data_laboratory($responseObj, $responsecode, $responseMessage);
+                break;
+            case "fee":
+                $this->_data_fee($responseObj, $responsecode, $responseMessage);
                 break;
         }
     }

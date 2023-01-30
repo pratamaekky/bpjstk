@@ -24,7 +24,7 @@ class Datas
     private function _city()
     {
         $params["idProvince"] = (isset($this->_params["id"]) && $this->_params["id"] != 0 ) ? $this->_params["id"] : 0;
-        $responseCity = $this->Masters->data("city", $params);
+        $responseCity = $this->Masters->data("city", null, $params);
         $responseCity = json_decode($responseCity);
 
         $result = ($responseCity->result == 200) ? $responseCity->data->item : $responseCity->data;
@@ -35,7 +35,7 @@ class Datas
     private function _district()
     {
         $params["idCity"] = (isset($this->_params["id"]) && $this->_params["id"] != 0 ) ? $this->_params["id"] : 0;
-        $responseDistrict = $this->Masters->data("district", $params);
+        $responseDistrict = $this->Masters->data("district", null, $params);
         $responseDistrict = json_decode($responseDistrict);
 
         $result = ($responseDistrict->result == 200) ? $responseDistrict->data->item : $responseDistrict->data;
@@ -48,7 +48,7 @@ class Datas
         $params["idProvince"] = (isset($this->_params["idProvince"]) && $this->_params["idProvince"] != 0 ) ? $this->_params["idProvince"] : 0;
         $params["idCity"] = (isset($this->_params["idCity"]) && $this->_params["idCity"] != 0 ) ? $this->_params["idCity"] : 0;
         $params["idDistrict"] = (isset($this->_params["idDistrict"]) && $this->_params["idDistrict"] != 0 ) ? $this->_params["idDistrict"] : 0;
-        $responsePostalcode = $this->Masters->data("postalcode", $params);
+        $responsePostalcode = $this->Masters->data("postalcode", null, $params);
         $responsePostalcode = json_decode($responsePostalcode);
 
         $result = ($responsePostalcode->result == 200) ? $responsePostalcode->data->item : $responsePostalcode->data;

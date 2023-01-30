@@ -28,10 +28,10 @@ class Masters extends API_Controller
         ));
     }
 
-    public function data($command, $params = null)
+    public function data($command, $flag = null, $params = null)
     {
         try {
-            $data = new Data($command, $params);
+            $data = new Data($command, $flag, $params);
             $data->action($this->responseObj, $this->res_code, $this->res_message);
 
             return $this->sendResponse($this->res_code, $this->res_message);

@@ -12966,6 +12966,7 @@ body:not(.layout-fixed) .main-sidebar .sidebar {
 [class*="sidebar-green-"] .nav-treeview>.nav-item>.nav-link {
   color: #FFF;
   margin-left: 15px;
+  width: calc(250px - 1rem * 2);
 }
 
 [class*="sidebar-green-"] .nav-treeview>.nav-item>.nav-link:hover,

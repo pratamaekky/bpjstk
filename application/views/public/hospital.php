@@ -3,7 +3,7 @@
 
 <head>
     <?php include(APPPATH . "views/layout/html_header_script.php"); ?>
-    <link href="<?php echo base_url("assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css"); ?>" rel="stylesheet">
+    <link href="<?php echo base_url("assets/plugins/datatables/jquery.dataTables.min.css"); ?>" rel="stylesheet">
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -46,17 +46,17 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-body">
-                                    <table id="tableHospitalLists" class="table table-bordered table-hover">
+                                    <table id="tableHospitalLists" class="table table-hover">
                                         <thead>
                                             <tr>
-                                                <th align="center">No</th>
-                                                <th align="center">Nama Rumah Sakit</th>
-                                                <th>Alamat</th>
-                                                <th>No Telp</th>
-                                                <th>Jenis</th>
-                                                <th>Kelas</th>
-                                                <th>Kepemilikan</th>
-                                                <th>Aksi</th>
+                                                <th class="dt-head-center">No</th>
+                                                <th class="dt-head-center">Nama Rumah Sakit</th>
+                                                <th class="dt-head-center">Alamat</th>
+                                                <th class="dt-head-center">No Telp</th>
+                                                <th class="dt-head-center">Jenis</th>
+                                                <th class="dt-head-center">Kelas</th>
+                                                <th class="dt-head-center">Kepemilikan</th>
+                                                <th class="dt-head-center">Aksi</th>
                                             </tr>
                                         </thead>
                                     </table>
@@ -98,8 +98,13 @@
                                     <div class="input-group">
                                         <select name="type" id="type" class="form-control" required="required">
                                             <option value="">-- Pilih Jenis Rumah Sakit --</option>
-                                            <option value="1">Rumah Sakit Umum</option>
-                                            <option value="2">Rumah Sakit Swasta</option>
+                                            <?php 
+                                            if (!is_null($getHospitalType)) {
+                                                foreach ($getHospitalType as $hospitalType) {
+                                                    echo '<option value="' . $hospitalType->id . '">' . $hospitalType->value . '</option>';
+                                                }
+                                            }
+                                            ?>
                                         </select>
                                     </div>
                                 </div>
@@ -120,9 +125,13 @@
                                     <div class="input-group">
                                         <select name="owner" id="owner" class="form-control" required="required">
                                             <option value="">-- Pilih Kepemilikan Rumah Sakit --</option>
-                                            <option value="0">Pemerintah Provinsi</option>
-                                            <option value="1">Pemerintah Daerah</option>
-                                            <option value="2">Swasta</option>
+                                            <?php 
+                                            if (!is_null($getHospitalOwner)) {
+                                                foreach ($getHospitalOwner as $hospitalOwner) {
+                                                    echo '<option value="' . $hospitalOwner->id . '">' . $hospitalOwner->value . '</option>';
+                                                }
+                                            }
+                                            ?>
                                         </select>
                                     </div>
                                 </div>
@@ -201,7 +210,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer justify-content-between">
+                    <div class="modal-footer">
                         <div class="button-seg">
                             <input type="hidden" name="todo" id="todo" value="" />
                             <button type="button" class="btn btn-default" id="modal-close" data-dismiss="modal">Batal</button>
@@ -222,14 +231,29 @@
     <script>
         $(document).ready(function(){
             $('#tableHospitalLists').DataTable({
+                destroy:true,
                 'processing': true,
                 'serverSide': true,
                 'serverMethod': 'post',
+                'pagingType': 'full_numbers',
+                'paging': true,
+                language: {
+                    paginate: {
+                        previous: '<i class="fas fa-angle-double-left"></i> Prev',
+                        next: '<i class="fas fa-angle-double-right"></i> Next'
+                    },
+                    searchPlaceholder: "Search",
+                    emptyTable: "No record found",
+                    search: "",
+                    infoFiltered: ""
+                },
                 'ajax': {
-                    'url':'<?php echo base_url("master/hospital/data"); ?>'
+                    'url':'<?php echo base_url("master/hospital/data"); ?>',
+                    'type': 'POST',
+                    'data': {'action':'#tableHospitalLists'}
                 },
                 'columns': [
-                    { data: 'no' },
+                    { data: 'no', className: 'dt-body-center' },
                     { data: 'name' },
                     { data: 'address' },
                     { data: 'telp' },
@@ -237,6 +261,12 @@
                     { data: 'class' },
                     { data: 'owner' },
                     { data: 'action' },
+                ],
+                "columnDefs":[
+                    {
+                        "targets":[0, 2, 3, 7],
+                        "orderable":false,
+                    },
                 ]
             });
         });
@@ -314,7 +344,7 @@
                 success: function(response) {
                     var kodeposOption = '<option value="">-- Pilih Kodepos --</option>';
                     $.each(response, function(k, v) {
-                        kodeposOption += '<option value="' + v.postal_code + '">' + v.village + ' (' + v.postal_code + ')</option>'
+                        kodeposOption += '<option value="' + v.postal_code + '" data-village-id="' + v.id_village + '">' + v.village + ' (' + v.postal_code + ')</option>'
                     })
                     $("#postalcode").html(kodeposOption);
                     $("#postalcode").removeAttr("disabled");
@@ -325,6 +355,11 @@
                     show_notif("error", "Gagal Update Data! Ulangi beberapa saat lagi")
                 }
             });
+        })
+
+        $("#postalcode").on("change", function(e) {
+            var idVillage = $('option:selected', this).attr('data-village-id');
+            $("#village_id").val(idVillage);
         })
 
         $(function() {
@@ -343,7 +378,7 @@
                         contentType: false,
                         processData: false,
                         success: function(response) {
-                            if (response.result == 200) {
+                            if (response.result == 200 || response.message == 'Success') {
                                 $(".overlay-loading").hide();
                                 location.reload();
                             } else {
