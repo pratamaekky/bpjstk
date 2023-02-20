@@ -48,11 +48,13 @@
                                                 <th class="dt-head-center">No</th>
                                                 <th class="dt-head-center">Nama Rumah Sakit</th>
                                                 <th class="dt-head-center">Kamar</th>
-                                                <th class="dt-head-center">Layanan</th>
-                                                <th class="dt-head-center">Tindakan</th>
+                                                <th class="dt-head-center">Radiologi</th>
+                                                <th class="dt-head-center">Medikal</th>
                                                 <th class="dt-head-center">Laboratorium</th>
                                                 <th class="dt-head-center">Dokter</th>
+                                                <th class="dt-head-center">Rehabitasi</th>
                                                 <th class="dt-head-center">Biaya</th>
+                                                <th class="dt-head-center">Users</th>
                                             </tr>
                                         </thead>
                                     </table>
@@ -99,12 +101,14 @@
                 'columns': [
                     { data: 'no', className: 'dt-body-center' },
                     { data: 'name' },
-                    { data: 'room' },
-                    { data: 'service' },
-                    { data: 'measure' },
-                    { data: 'laboratory' },
-                    { data: 'doctor' },
-                    { data: 'fee' },
+                    { data: 'room', className: 'dt-body-center' },
+                    { data: 'radiology', className: 'dt-body-center' },
+                    { data: 'medic', className: 'dt-body-center' },
+                    { data: 'laboratory', className: 'dt-body-center' },
+                    { data: 'doctor', className: 'dt-body-center' },
+                    { data: 'rehabilitation', className: 'dt-body-center' },
+                    { data: 'fee', className: 'dt-body-center' },
+                    { data: 'users', className: 'dt-body-center' },
                 ],
                 "columnDefs":[
                     {

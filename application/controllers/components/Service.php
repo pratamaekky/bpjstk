@@ -1,9 +1,10 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
+require_once APPPATH . 'controllers/base/web_base.php';
 require_once APPPATH . 'controllers/api/v60/Masters.php';
 include_once(APPPATH . "controllers/base/Transformer.php");
 
-class Service
+class Service extends web_base
 {
     protected $CI;
     protected $appSrc;
@@ -18,6 +19,10 @@ class Service
             'form_validation'
         ));
 
+        $session_userdata = $this->CI->session->userdata("plkk.pm");
+        $this->plkk_session = $session_userdata;
+
+        $this->rsId = intval($this->CI->uri->segment(5));
         $this->_command = $command;
         $this->_flag = $flag;
         $this->_params = $params;
@@ -58,12 +63,14 @@ class Service
                     $row = [
                         "no" => ($key  + 1),
                         "name" => $hospital->name,
-                        "room" => "<a class='btn btn-block btn-primary' href='" . base_url("master/service/room/lists/$hospital->id") . "' aria-expanded='true'><i class='far fa-eye mr-2'></i> Kamar</a>",
-                        "service" => "<a class='btn btn-block btn-secondary' href='" . base_url("master/service/service/lists/$hospital->id") . "' aria-expanded='true'><i class='far fa-eye mr-2'></i> Layanan</a>",
-                        "measure" => "<a class='btn btn-block btn-danger' href='" . base_url("master/service/measure/lists/$hospital->id") . "' aria-expanded='true'><i class='far fa-eye mr-2'></i> Tindakan</a>",
-                        "laboratory" => "<a class='btn btn-block btn-info' href='" . base_url("master/service/laboratory/lists/$hospital->id") . "' aria-expanded='true'><i class='far fa-eye mr-2'></i> Laboratorium</a>",
-                        "doctor" => "<a class='btn btn-block btn-success' href='" . base_url("master/service/doctor/lists/$hospital->id") . "' aria-expanded='true'><i class='far fa-eye mr-2'></i> Dokter</a>",
-                        "fee" => "<a class='btn btn-block btn-warning' href='" . base_url("master/service/fee/lists/$hospital->id") . "' aria-expanded='true'><i class='far fa-eye mr-2'></i> Biaya</a>"
+                        "room" => "<a class='btn btn-sm btn-primary' href='" . base_url("master/service/room/lists/$hospital->id") . "' aria-expanded='true'><i class='fas fa-bed mr-2 ml-2'></i></a>",
+                        "radiology" => "<a class='btn btn-sm btn-secondary' href='" . base_url("master/service/radiology/lists/$hospital->id") . "' aria-expanded='true'><i class='fas fa-radiation-alt mr-2 ml-2'></i></a>",
+                        "medic" => "<a class='btn btn-sm btn-danger' href='" . base_url("master/service/medic/lists/$hospital->id") . "' aria-expanded='true'><i class='fas fa-notes-medical mr-2 ml-2'></i></a>",
+                        "laboratory" => "<a class='btn btn-sm btn-info' href='" . base_url("master/service/laboratory/lists/$hospital->id") . "' aria-expanded='true'><i class='fas fa-vials mr-2 ml-2'></i></a>",
+                        "doctor" => "<a class='btn btn-sm btn-success' href='" . base_url("master/service/doctor/lists/$hospital->id") . "' aria-expanded='true'><i class='fas fa-user-md mr-2 ml-2'></i></a>",
+                        "rehabilitation" => "<a class='btn btn-sm btn-success' href='" . base_url("master/service/rehabilitation/lists/$hospital->id") . "' aria-expanded='true' style='background-color: #a52a2a;'><i class='fas fa-hand-holding-medical mr-2 ml-2'></i></a>",
+                        "fee" => "<a class='btn btn-sm btn-warning' href='" . base_url("master/service/fee/lists/$hospital->id") . "' aria-expanded='true'><i class='fas fa-file-invoice-dollar mr-2 ml-2'></i></a>",
+                        "users" => "<a class='btn btn-sm btn-success' href='" . base_url("master/service/users/lists/$hospital->id") . "' aria-expanded='true' style='background-color: #6610f2;'><i class='fas fa-user-shield mr-2 ml-2'></i></a>"
                     ];
 
                     $items[] = $row;
@@ -88,10 +95,9 @@ class Service
     private function _room()
     {
         if (!is_null($this->_flag) && $this->_flag == "lists") {
-            $rsId = $this->CI->uri->segment(5);
-            if (!is_null($rsId)) {
-                $data["rsId"] = $rsId;
-                $hospital = $this->Masters->data("hospital", "detail", ["rsId" => $rsId]);
+            if (!is_null($this->rsId)) {
+                $data["rsId"] = $this->rsId;
+                $hospital = $this->Masters->data("hospital", "detail", ["rsId" => $this->rsId]);
                 $hospital = json_decode($hospital);
                 $data["hospital"] = ($hospital->result == 200) ? $hospital->data->item : null;
                 $this->CI->load->view("public/service/room.php", $data);
@@ -143,25 +149,15 @@ class Service
         }
     }
 
-    private function _measure()
+    private function _radiology()
     {
         if (!is_null($this->_flag) && $this->_flag == "lists") {
-            $rsId = $this->CI->uri->segment(5);
-            if (!is_null($rsId)) {
-                $data["rsId"] = $rsId;
-                $hospital = $this->Masters->data("hospital", "detail", ["rsId" => $rsId]);
+            if (!is_null($this->rsId)) {
+                $data["rsId"] = $this->rsId;
+                $hospital = $this->Masters->data("hospital", "detail", ["rsId" => $this->rsId]);
                 $hospital = json_decode($hospital);
-
-                $responseOtCategory = $this->Masters->data("general", "ot_category");
-                $responseOtCategory = json_decode($responseOtCategory);
-
-                $responseOtSpecialist = $this->Masters->data("general", "ot_specialist");
-                $responseOtSpecialist = json_decode($responseOtSpecialist);
-
-                $data["otCategory"] = ($responseOtCategory->result == 200) ? $responseOtCategory->data->item : $responseOtCategory->data;
-                $data["otSpecialist"] = ($responseOtSpecialist->result == 200) ? $responseOtSpecialist->data->item : $responseOtSpecialist->data;
                 $data["hospital"] = ($hospital->result == 200) ? $hospital->data->item : null;
-                $this->CI->load->view("public/service/measure.php", $data);
+                $this->CI->load->view("public/service/radiology.php", $data);
             } else {
                 $this->CI->load->view("public/service/lists.php", []);
             }
@@ -170,28 +166,26 @@ class Service
             $draw = 1;
             $totalRecods = 0;
             $totalDisplays = 0;
-            $responseMeasure = $this->Masters->data("measure", null, $this->_params);
-            $responseMeasure = json_decode($responseMeasure);
+            $responseRoom = $this->Masters->data("radiology", null, $this->_params);
+            $responseRoom = json_decode($responseRoom);
 
-            if ($responseMeasure->result == 200) {
-                $resMeasure = $responseMeasure->data->item->aaData;
+            if ($responseRoom->result == 200) {
+                $resRoom = $responseRoom->data->item->aaData;
 
-                if (!empty($resMeasure)) {
-                    foreach ($resMeasure as $key => $measure) {
+                if (!empty($resRoom)) {
+                    foreach ($resRoom as $key => $room) {
                         $row = [
                             "no" => ($key  + 1),
-                            "ot_category" => $measure->ot_category,
-                            "ot_specialist" => $measure->ot_specialist,
-                            "value" => $measure->value,
-                            "fare" => "Rp " . number_format($measure->fare, 0, ",",".")
+                            "value" => $room->value,
+                            "fare" => "Rp " . number_format($room->fare, 0, ",",".")
                         ];
 
                         $items[] = $row;
                     }
 
-                    $draw = $responseMeasure->data->item->draw;
-                    $totalRecods = $responseMeasure->data->item->iTotalRecords;
-                    $totalDisplays = $responseMeasure->data->item->iTotalDisplayRecords;
+                    $draw = $responseRoom->data->item->draw;
+                    $totalRecods = $responseRoom->data->item->iTotalRecords;
+                    $totalDisplays = $responseRoom->data->item->iTotalDisplayRecords;
                 }
             }
 
@@ -206,7 +200,121 @@ class Service
         } else if (!is_null($this->_flag) && $this->_flag == "save") {
             unset($this->_params["todo"]);
             unset($this->_params["btnTodo"]);
-            $saveHospital = $this->Masters->save("measure", $this->_params);
+            $saveHospital = $this->Masters->save("radiology", $this->_params);
+
+            echo $saveHospital;
+        }
+    }
+
+    private function _rehabilitation()
+    {
+        if (!is_null($this->_flag) && $this->_flag == "lists") {
+            if (!is_null($this->rsId)) {
+                $data["rsId"] = $this->rsId;
+                $hospital = $this->Masters->data("hospital", "detail", ["rsId" => $this->rsId]);
+                $hospital = json_decode($hospital);
+                $data["hospital"] = ($hospital->result == 200) ? $hospital->data->item : null;
+                $this->CI->load->view("public/service/rehabilitation.php", $data);
+            } else {
+                $this->CI->load->view("public/service/lists.php", []);
+            }
+        } else if (!is_null($this->_flag) && $this->_flag == "data") {
+            $items = [];
+            $draw = 1;
+            $totalRecods = 0;
+            $totalDisplays = 0;
+            $responseRehabilitation = $this->Masters->data("rehabilitation", null, $this->_params);
+            $responseRehabilitation = json_decode($responseRehabilitation);
+
+            if ($responseRehabilitation->result == 200) {
+                $resRehabilitation = $responseRehabilitation->data->item->aaData;
+
+                if (!empty($resRehabilitation)) {
+                    foreach ($resRehabilitation as $key => $rehab) {
+                        $row = [
+                            "no" => ($key  + 1),
+                            "value" => $rehab->value,
+                            "fare" => "Rp " . number_format($rehab->fare, 0, ",",".")
+                        ];
+
+                        $items[] = $row;
+                    }
+
+                    $draw = $responseRehabilitation->data->item->draw;
+                    $totalRecods = $responseRehabilitation->data->item->iTotalRecords;
+                    $totalDisplays = $responseRehabilitation->data->item->iTotalDisplayRecords;
+                }
+            }
+
+            $result = [
+                "draw" => $draw,
+                "recordsTotal" => $totalRecods,
+                "recordsFiltered" => $totalDisplays,
+                "data" => $items
+            ];
+
+            echo json_encode($result);
+        } else if (!is_null($this->_flag) && $this->_flag == "save") {
+            unset($this->_params["todo"]);
+            unset($this->_params["btnTodo"]);
+            $saveHospital = $this->Masters->save("rehabilitation", $this->_params);
+
+            echo $saveHospital;
+        }
+    }
+
+    private function _medic()
+    {
+        if (!is_null($this->_flag) && $this->_flag == "lists") {
+            if (!is_null($this->rsId)) {
+                $data["rsId"] = $this->rsId;
+                $hospital = $this->Masters->data("hospital", "detail", ["rsId" => $this->rsId]);
+                $hospital = json_decode($hospital);
+                $data["hospital"] = ($hospital->result == 200) ? $hospital->data->item : null;
+                $this->CI->load->view("public/service/medic.php", $data);
+            } else {
+                $this->CI->load->view("public/service/lists.php", []);
+            }
+        } else if (!is_null($this->_flag) && $this->_flag == "data") {
+            $items = [];
+            $draw = 1;
+            $totalRecods = 0;
+            $totalDisplays = 0;
+            $responseMedic = $this->Masters->data("medic", null, $this->_params);
+            $responseMedic = json_decode($responseMedic);
+
+            if ($responseMedic->result == 200) {
+                $resMedic = $responseMedic->data->item->aaData;
+
+                if (!empty($resMedic)) {
+                    foreach ($resMedic as $key => $medic) {
+                        $row = [
+                            "no" => ($key  + 1),
+                            "value" => $medic->value,
+                            "fare" => "Rp " . number_format($medic->fare, 0, ",",".")
+                        ];
+
+                        $items[] = $row;
+                    }
+
+                    $draw = $responseMedic->data->item->draw;
+                    $totalRecods = $responseMedic->data->item->iTotalRecords;
+                    $totalDisplays = $responseMedic->data->item->iTotalDisplayRecords;
+                }
+            }
+
+            $result = [
+                "draw" => $draw,
+                "recordsTotal" => $totalRecods,
+                "recordsFiltered" => $totalDisplays,
+                "data" => $items
+            ];
+
+            echo json_encode($result);
+        } else if (!is_null($this->_flag) && $this->_flag == "save") {
+            unset($this->_params["todo"]);
+            unset($this->_params["btnTodo"]);
+            $saveHospital = $this->Masters->save("medic", $this->_params);
 
             echo $saveHospital;
         }
@@ -215,10 +323,9 @@ class Service
     private function _doctor()
     {
         if (!is_null($this->_flag) && $this->_flag == "lists") {
-            $rsId = $this->CI->uri->segment(5);
-            if (!is_null($rsId)) {
-                $data["rsId"] = $rsId;
-                $hospital = $this->Masters->data("hospital", "detail", ["rsId" => $rsId]);
+            if (!is_null($this->rsId)) {
+                $data["rsId"] = $this->rsId;
+                $hospital = $this->Masters->data("hospital", "detail", ["rsId" => $this->rsId]);
                 $hospital = json_decode($hospital);
 
                 $responseDoctorSpecialist = $this->Masters->data("general", "doctor_specialist");
@@ -276,18 +383,12 @@ class Service
         }
     }
 
-    private function _service()
-    {
-        var_dump("Halaman Service");
-    }
-
     private function _laboratory()
     {
         if (!is_null($this->_flag) && $this->_flag == "lists") {
-            $rsId = $this->CI->uri->segment(5);
-            if (!is_null($rsId)) {
-                $data["rsId"] = $rsId;
-                $hospital = $this->Masters->data("hospital", "detail", ["rsId" => $rsId]);
+            if (!is_null($this->rsId)) {
+                $data["rsId"] = $this->rsId;
+                $hospital = $this->Masters->data("hospital", "detail", ["rsId" => $this->rsId]);
                 $hospital = json_decode($hospital);
 
                 $responseLabCategory = $this->Masters->data("general", "lab_category");
@@ -348,10 +449,9 @@ class Service
     private function _fee()
     {
         if (!is_null($this->_flag) && $this->_flag == "lists") {
-            $rsId = $this->CI->uri->segment(5);
-            if (!is_null($rsId)) {
-                $data["rsId"] = $rsId;
-                $hospital = $this->Masters->data("hospital", "detail", ["rsId" => $rsId]);
+            if (!is_null($this->rsId)) {
+                $data["rsId"] = $this->rsId;
+                $hospital = $this->Masters->data("hospital", "detail", ["rsId" => $this->rsId]);
                 $hospital = json_decode($hospital);
 
                 $responseFee = $this->Masters->data("general", "other_fee");
@@ -409,8 +509,69 @@ class Service
         }
     }
 
+    private function _users()
+    {
+        if (!is_null($this->_flag) && $this->_flag == "lists") {
+            if (!is_null($this->rsId)) {
+                $data["rsId"] = $this->rsId;
+                $hospital = $this->Masters->data("hospital", "detail", ["rsId" => $this->rsId]);
+                $hospital = json_decode($hospital);
+                $data["hospital"] = ($hospital->result == 200) ? $hospital->data->item : null;
+                $this->CI->load->view("public/service/users.php", $data);
+            } else {
+                $this->CI->load->view("public/service/lists.php", []);
+            }
+        } else if (!is_null($this->_flag) && $this->_flag == "data") {
+            $items = [];
+            $draw = 1;
+            $totalRecods = 0;
+            $totalDisplays = 0;
+            $responseUsers = $this->Masters->data("users", null, $this->_params);
+            $responseUsers = json_decode($responseUsers);
+
+            if ($responseUsers->result == 200) {
+                $resUser = $responseUsers->data->item->aaData;
+
+                if (!empty($resUser)) {
+                    foreach ($resUser as $key => $user) {
+                        $row = [
+                            "no" => ($key  + 1),
+                            "name" => $user->name,
+                            "username" => $user->username,
+                            "last_login" => (!is_null($user->last_login)) ? date("d F Y H:i:s", strtotime($user->last_login)) : "-"
+                        ];
+
+                        $items[] = $row;
+                    }
+
+                    $draw = $responseUsers->data->item->draw;
+                    $totalRecods = $responseUsers->data->item->iTotalRecords;
+                    $totalDisplays = $responseUsers->data->item->iTotalDisplayRecords;
+                }
+            }
+
+            $result = [
+                "draw" => $draw,
+                "recordsTotal" => $totalRecods,
+                "recordsFiltered" => $totalDisplays,
+                "data" => $items
+            ];
+
+            echo json_encode($result);
+        } else if (!is_null($this->_flag) && $this->_flag == "save") {
+            unset($this->_params["todo"]);
+            unset($this->_params["btnTodo"]);
+            $saveHospital = $this->Masters->save("users", $this->_params);
+
+            echo $saveHospital;
+        }
+    }
+
     public function action()
     {
+        if ($this->plkk_session->user_role == 1 && $this->plkk_session->rs_id != $this->rsId)
+            $this->rsId = $this->plkk_session->rs_id;
+
         switch ($this->_command) {
             case 'lists':
                 $this->_lists();
@@ -421,11 +582,14 @@ class Service
             case 'room':
                 $this->_room();
                 break;
-            case 'service':
-                $this->_service();
+            case 'radiology':
+                $this->_radiology();
                 break;
-            case 'measure':
-                $this->_measure();
+            case 'rehabilitation':
+                $this->_rehabilitation();
+                break;
+            case 'medic':
+                $this->_medic();
                 break;
             case 'doctor':
                 $this->_doctor();
@@ -435,6 +599,9 @@ class Service
                 break;
             case 'fee':
                 $this->_fee();
+                break;
+            case 'users':
+                $this->_users();
                 break;
         }
     }

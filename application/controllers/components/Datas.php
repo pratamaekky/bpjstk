@@ -56,6 +56,55 @@ class Datas
         echo json_encode($result);
     }
 
+    private function _layanan()
+    {
+        $rs_id = $this->_params["rs_id"];
+        $result = [];
+        $responseRoom = $this->Masters->data("room", null, ["rsid" => $rs_id, "length" => 1000]);
+        $responseRoom = json_decode($responseRoom);
+        if ($responseRoom->result == 200) {
+            $result["room"] = $responseRoom->data->item->aaData;
+        }
+
+        $responseFee = $this->Masters->data("fee", null, ["rsid" => $rs_id, "length" => 1000]);
+        $responseFee = json_decode($responseFee);
+        if ($responseFee->result == 200) {
+            $result["fee"] = $responseFee->data->item->aaData;
+        }
+
+        $responseDocter = $this->Masters->data("doctor", null, ["rsid" => $rs_id, "length" => 1000]);
+        $responseDocter = json_decode($responseDocter);
+        if ($responseDocter->result == 200) {
+            $result["docter"] = $responseDocter->data->item->aaData;
+        }
+
+        $responseLaboratory = $this->Masters->data("laboratory", null, ["rsid" => $rs_id, "length" => 1000]);
+        $responseLaboratory = json_decode($responseLaboratory);
+        if ($responseLaboratory->result == 200) {
+            $result["laboratory"] = $responseLaboratory->data->item->aaData;
+        }
+
+        $responseRadiology = $this->Masters->data("radiology", null, ["rsid" => $rs_id, "length" => 1000]);
+        $responseRadiology = json_decode($responseRadiology);
+        if ($responseRadiology->result == 200) {
+            $result["radiology"] = $responseRadiology->data->item->aaData;
+        }
+
+        $responseMedic = $this->Masters->data("medic", null, ["rsid" => $rs_id, "length" => 1000]);
+        $responseMedic = json_decode($responseMedic);
+        if ($responseMedic->result == 200) {
+            $result["medic"] = $responseMedic->data->item->aaData;
+        }
+
+        $responseRehab = $this->Masters->data("rehabilitation", null, ["rsid" => $rs_id, "length" => 1000]);
+        $responseRehab = json_decode($responseRehab);
+        if ($responseRehab->result == 200) {
+            $result["rehab"] = $responseRehab->data->item->aaData;
+        }
+
+        echo json_encode($result);
+    }
+
     public function action()
     {
         switch ($this->_command) {
@@ -67,6 +116,9 @@ class Datas
                 break;
             case 'postalcode':
                 $this->_postalcode();
+                break;
+            case 'layanan':
+                $this->_layanan();
                 break;
             default:
                 # code...

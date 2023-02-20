@@ -83,4 +83,14 @@ class Mhospital extends CI_Model
 
         return null;
     }
+
+    public function saveBills($data)
+    {
+        $this->db->insert("tbl_bills", $data);
+        if ($this->db->affected_rows() > 0) {
+            return $this->db->insert_id();
+        } else {
+            return false;
+        }
+    }
 }

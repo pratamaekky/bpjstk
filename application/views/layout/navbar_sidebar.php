@@ -21,99 +21,126 @@
         <!-- Sidebar Menu -->
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <?php if ($this->plkk_session->user_role == -1) { ?>
+                    <li class="nav-item">
+                        <a href="<?php echo base_url("master/hospital"); ?>" class="nav-link <?php echo ($this->controller == "master" && $this->module == "hospital") ? "active" : ""; ?>">
+                            <i class="fas fa-hospital nav-icon"></i>
+                            <p>Data Rumah Sakit</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="<?php echo base_url("master/service"); ?>" class="nav-link <?php echo ($this->controller == "master" && $this->module == "service") ? "active" : ""; ?>">
+                            <i class="fas fa-procedures nav-icon"></i>
+                            <p>Data Pelayanan</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="<?php echo base_url("bills/lists/"); ?>" class="nav-link <?php echo ($this->controller == "bills") ? "active" : ""; ?>">
+                            <i class="nav-icon fas fa-wallet"></i>
+                            <p>Tagihan</i></p>
+                        </a>
+                    </li>
+                <?php } ?>
+                <?php if ($this->plkk_session->user_role == 1) { ?>
+                    <li class="nav-item">
+                        <a href="<?php echo base_url("master/service/room/lists/" . $this->plkk_session->rs_id); ?>" class="nav-link">
+                            <i class="nav-icon fas fa-bed"></i>
+                            <p>Kamar</i></p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="<?php echo base_url("master/service/radiology/lists/" . $this->plkk_session->rs_id); ?>" class="nav-link">
+                            <i class="nav-icon fas fa-radiation-alt"></i>
+                            <p>Radiologi</i></p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="<?php echo base_url("master/service/medic/lists/" . $this->plkk_session->rs_id); ?>" class="nav-link">
+                            <i class="nav-icon fas fa-notes-medical"></i>
+                            <p>Tindakan Medik</i></p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="<?php echo base_url("master/service/laboratory/lists/" . $this->plkk_session->rs_id); ?>" class="nav-link">
+                            <i class="nav-icon fas fa-vials"></i>
+                            <p>Laboratorium</i></p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="<?php echo base_url("master/service/doctor/lists/" . $this->plkk_session->rs_id); ?>" class="nav-link">
+                            <i class="nav-icon fas fa-user-md"></i>
+                            <p>Dokter</i></p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="<?php echo base_url("master/service/rehabilitation/lists/" . $this->plkk_session->rs_id); ?>" class="nav-link">
+                            <i class="nav-icon fas fa-hand-holding-medical"></i>
+                            <p>Rehabilitasi</i></p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="<?php echo base_url("master/service/fee/lists/" . $this->plkk_session->rs_id); ?>" class="nav-link">
+                            <i class="nav-icon fas fa-file-invoice-dollar"></i>
+                            <p>Biaya Lainnya</i></p>
+                        </a>
+                    </li>
+                <?php } ?>
+
                 <?php if ($this->plkk_session->user_role == -1 || $this->plkk_session->user_role == 0) { ?>
-                    <li class="nav-item <?php echo ($this->controller == "master" && ($this->module == "hospital" || $this->module == "service")) ? "menu-open": ""; ?>">
-                        <a href="javascript:void(0);" class="nav-link">
-                            <i class="nav-icon fas fa-hospital-alt"></i>
-                            <p>Rumah Sakit<i class="right fas fa-angle-left"></i></p>
+                    <li class="nav-item <?php echo ($this->controller == "master" && $this->module != "hospital" && $this->module != "service") ? "menu-open": ""; ?>">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-database"></i>
+                            <p>
+                                Master Data
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="<?php echo base_url("master/hospital"); ?>" class="nav-link <?php echo ($this->module == "hospital") ? "active" : ""; ?>">
-                                    <i class="fas fa-clinic-medical nav-icon"></i>
-                                    <p>Data Rumah Sakit</p>
+                                <a href="<?php echo base_url("master/generals/lists/hospital_type"); ?>" class="nav-link <?php echo ($this->module == "generals" && $this->last_segment == "hospital_type") ? "active" : ""; ?>">
+                                    <i class="fas fa-h-square nav-icon"></i>
+                                    <p>Tipe Rumah Sakit</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="<?php echo base_url("master/service"); ?>" class="nav-link <?php echo ($this->module == "service") ? "active" : ""; ?>">
-                                    <i class="fas fa-procedures nav-icon"></i>
-                                    <p>Data Pelayanan</p>
+                                <a href="<?php echo base_url("master/generals/lists/hospital_owner"); ?>" class="nav-link <?php echo ($this->module == "generals" && $this->last_segment == "hospital_owner") ? "active" : ""; ?>">
+                                    <i class="fas fa-users nav-icon nav-icon"></i>
+                                    <p>Pemilik RS</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="<?php echo base_url("master/generals/lists/ot_category"); ?>" class="nav-link <?php echo ($this->module == "generals" && $this->last_segment == "ot_category") ? "active" : ""; ?>">
+                                    <i class="fas fa-database nav-icon"></i>
+                                    <p>Kategori Operasi</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="<?php echo base_url("master/generals/lists/ot_specialist"); ?>" class="nav-link <?php echo ($this->module == "generals" && $this->last_segment == "ot_specialist") ? "active" : ""; ?>">
+                                    <i class="fas fa-user-tag nav-icon"></i>
+                                    <p>Dokter Umum/IGD</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="<?php echo base_url("master/generals/lists/doctor_specialist"); ?>" class="nav-link <?php echo ($this->module == "generals" && $this->last_segment == "doctor_specialist") ? "active" : ""; ?>">
+                                    <i class="fas fa-user-md nav-icon"></i>
+                                    <p>Dokter Spesialisasi</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="<?php echo base_url("master/generals/lists/lab_category"); ?>" class="nav-link <?php echo ($this->module == "generals" && $this->last_segment == "lab_category") ? "active" : ""; ?>">
+                                    <i class="fas fa-vials nav-icon"></i>
+                                    <p>Kategori Lab</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="<?php echo base_url("master/generals/lists/other_fee"); ?>" class="nav-link <?php echo ($this->module == "generals" && $this->last_segment == "other_fee") ? "active" : ""; ?>">
+                                    <i class="fas fa-money-check-alt nav-icon"></i>
+                                    <p>Biaya Lainnya</p>
                                 </a>
                             </li>
                         </ul>
                     </li>
                 <?php } ?>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-user-md"></i>
-                        <p>Data Dokter</i></p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-hospital-user"></i>
-                        <p>Data Pasien</i></p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-pills"></i>
-                        <p>Data Obat-obatan</i></p>
-                    </a>
-                </li>
-                <li class="nav-item <?php echo ($this->controller == "master" && $this->module != "hospital" && $this->module != "service") ? "menu-open": ""; ?>">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-database"></i>
-                        <p>
-                            Master Data
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="<?php echo base_url("master/generals/lists/hospital_type"); ?>" class="nav-link <?php echo ($this->module == "generals" && $this->last_segment == "hospital_type") ? "active" : ""; ?>">
-                                <i class="fas fa-h-square nav-icon"></i>
-                                <p>Tipe Rumah Sakit</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="<?php echo base_url("master/generals/lists/hospital_owner"); ?>" class="nav-link <?php echo ($this->module == "generals" && $this->last_segment == "hospital_owner") ? "active" : ""; ?>">
-                                <i class="fas fa-users nav-icon nav-icon"></i>
-                                <p>Pemilik RS</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="<?php echo base_url("master/generals/lists/ot_category"); ?>" class="nav-link <?php echo ($this->module == "generals" && $this->last_segment == "ot_category") ? "active" : ""; ?>">
-                                <i class="fas fa-database nav-icon"></i>
-                                <p>Kategori Operasi</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="<?php echo base_url("master/generals/lists/ot_specialist"); ?>" class="nav-link <?php echo ($this->module == "generals" && $this->last_segment == "ot_specialist") ? "active" : ""; ?>">
-                                <i class="fas fa-user-tag nav-icon"></i>
-                                <p>Spesialis Operasi</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="<?php echo base_url("master/generals/lists/doctor_specialist"); ?>" class="nav-link <?php echo ($this->module == "generals" && $this->last_segment == "doctor_specialist") ? "active" : ""; ?>">
-                                <i class="fas fa-user-md nav-icon"></i>
-                                <p>Dokter Spesialisasi</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="<?php echo base_url("master/generals/lists/lab_category"); ?>" class="nav-link <?php echo ($this->module == "generals" && $this->last_segment == "lab_category") ? "active" : ""; ?>">
-                                <i class="fas fa-vials nav-icon"></i>
-                                <p>Kategori Lab</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="<?php echo base_url("master/generals/lists/other_fee"); ?>" class="nav-link <?php echo ($this->module == "generals" && $this->last_segment == "other_fee") ? "active" : ""; ?>">
-                                <i class="fas fa-money-check-alt nav-icon"></i>
-                                <p>Biaya Lainnya</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
             </ul>
             <ul class="nav nav-pills nav-sidebar flex-column nav-bottom" data-widget="treeview" role="menu" data-accordion="false">
                 <li class="nav-item">

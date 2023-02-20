@@ -31,7 +31,7 @@
                             </ol>
                         </div><!-- /.col -->
                         <div class="col-sm-6">
-                            <button type="button" class="btn btn-success float-sm-right ml-2" data-toggle="modal" data-target="#modal-measure"><i class="fas fa-plus"></i> Tambah Tindakan</button>
+                            <button type="button" class="btn btn-success float-sm-right ml-2" data-toggle="modal" data-target="#modal-measure"><i class="fas fa-plus"></i> Tambah</button>
                         </div><!-- /.col -->
                     </div><!-- /.row -->
                 </div><!-- /.container-fluid -->

@@ -33,6 +33,7 @@ class Data
         $query = (isset($this->_params["search"]["value"]) && !empty($this->_params["search"]["value"])) ? $this->_params["search"]["value"] : null;
         $column = isset($this->_params["order"][0]["column"]) ? $this->_params["order"][0]["column"] : null;
         $order = isset($this->_params["order"][0]["dir"]) ? $this->_params["order"][0]["dir"] : "asc";
+        $sortColumn = "name";
         if (!is_null($column)) {
             switch ($column) {
                 case 1:
@@ -269,7 +270,67 @@ class Data
         ];
     }
 
-    private function _data_measure(&$responseObj, &$responsecode, &$responseMessage)
+    private function _data_radiology(&$responseObj, &$responsecode, &$responseMessage)
+    {
+        $result = [];
+        $idRs = isset($this->_params["rsid"]) ? $this->_params["rsid"] : 0;
+        $draw = isset($this->_params["draw"]) ? intval($this->_params["draw"]) : 1;
+        $start = isset($this->_params["start"]) ? intval($this->_params["start"]) : 0;
+        $limit = isset($this->_params["length"]) ? intval($this->_params["length"]) : 10;
+        $query = (isset($this->_params["search"]["value"]) && !empty($this->_params["search"]["value"])) ? $this->_params["search"]["value"] : null;
+        $column = isset($this->_params["order"][0]["column"]) ? $this->_params["order"][0]["column"] : null;
+        $order = isset($this->_params["order"][0]["dir"]) ? $this->_params["order"][0]["dir"] : "asc";
+        $sortColumn = "id";
+
+        $totalRadiology = $this->CI->general->totalRadiology();
+
+        if ($totalRadiology > 0) {
+            $result = $this->CI->general->getRadiology($idRs, $query, $start, $limit, $sortColumn, $order);
+            $responsecode = 200;
+        }
+
+        $responseObj = [
+            "name" => "Data Radiology",
+            "item" => [
+                "draw" => $draw,
+                "iTotalRecords" => intval($limit),
+                "iTotalDisplayRecords" => intval($totalRadiology),
+                "aaData" => $result
+            ]
+        ];
+    }
+
+    private function _data_rehabilitation(&$responseObj, &$responsecode, &$responseMessage)
+    {
+        $result = [];
+        $idRs = isset($this->_params["rsid"]) ? $this->_params["rsid"] : 0;
+        $draw = isset($this->_params["draw"]) ? intval($this->_params["draw"]) : 1;
+        $start = isset($this->_params["start"]) ? intval($this->_params["start"]) : 0;
+        $limit = isset($this->_params["length"]) ? intval($this->_params["length"]) : 10;
+        $query = (isset($this->_params["search"]["value"]) && !empty($this->_params["search"]["value"])) ? $this->_params["search"]["value"] : null;
+        $column = isset($this->_params["order"][0]["column"]) ? $this->_params["order"][0]["column"] : null;
+        $order = isset($this->_params["order"][0]["dir"]) ? $this->_params["order"][0]["dir"] : "asc";
+        $sortColumn = "id";
+
+        $totalRehabilitation = $this->CI->general->totalRehabilitation();
+
+        if ($totalRehabilitation > 0) {
+            $result = $this->CI->general->getRehabilitation($idRs, $query, $start, $limit, $sortColumn, $order);
+            $responsecode = 200;
+        }
+
+        $responseObj = [
+            "name" => "Data Rehabilitation",
+            "item" => [
+                "draw" => $draw,
+                "iTotalRecords" => intval($limit),
+                "iTotalDisplayRecords" => intval($totalRehabilitation),
+                "aaData" => $result
+            ]
+        ];
+    }
+
+    private function _data_medic(&$responseObj, &$responsecode, &$responseMessage)
     {
         $totalPage = 1;
         $result = [];
@@ -281,39 +342,20 @@ class Data
         $column = isset($this->_params["order"][0]["column"]) ? $this->_params["order"][0]["column"] : null;
         $order = isset($this->_params["order"][0]["dir"]) ? $this->_params["order"][0]["dir"] : "asc";
         $sortColumn = "id";
-        if (!is_null($column)) {
-            switch ($column) {
-                case 1:
-                    $sortColumn = "name";
-                    break;
-                case 4:
-                    $sortColumn = "hospital_type";
-                    break;
-                case 5:
-                    $sortColumn = "class";
-                    break;
-                case 6:
-                    $sortColumn = "hospital_owner";
-                    break;
-                default:
-                    $sortColumn = "id";
-                    break;
-            }
-        }
 
-        $totalMeasure = $this->CI->general->totalMeasure();
+        $totalMedic = $this->CI->general->totalMedic();
 
-        if ($totalMeasure > 0) {
-            $result = $this->CI->general->getMeasure($idRs, $query, $start, $limit, $sortColumn, $order);
+        if ($totalMedic > 0) {
+            $result = $this->CI->general->getMedic($idRs, $query, $start, $limit, $sortColumn, $order);
             $responsecode = 200;
         }
 
         $responseObj = [
-            "name" => "Data Measure",
+            "name" => "Data Medic",
             "item" => [
                 "draw" => $draw,
                 "iTotalRecords" => intval($limit),
-                "iTotalDisplayRecords" => intval($totalMeasure),
+                "iTotalDisplayRecords" => intval($totalMedic),
                 "aaData" => $result
             ]
         ];
@@ -469,6 +511,37 @@ class Data
         ];
     }
 
+    private function _data_users(&$responseObj, &$responsecode, &$responseMessage)
+    {
+        $totalPage = 1;
+        $result = [];
+        $idRs = isset($this->_params["rsid"]) ? $this->_params["rsid"] : 0;
+        $draw = isset($this->_params["draw"]) ? intval($this->_params["draw"]) : 1;
+        $start = isset($this->_params["start"]) ? intval($this->_params["start"]) : 0;
+        $limit = isset($this->_params["length"]) ? intval($this->_params["length"]) : 10;
+        $query = (isset($this->_params["search"]["value"]) && !empty($this->_params["search"]["value"])) ? $this->_params["search"]["value"] : null;
+        $column = isset($this->_params["order"][0]["column"]) ? $this->_params["order"][0]["column"] : null;
+        $order = isset($this->_params["order"][0]["dir"]) ? $this->_params["order"][0]["dir"] : "asc";
+        $sortColumn = "id";
+
+        $totalUsers = $this->CI->muser->totalUserByRsId($idRs);
+
+        if ($totalUsers > 0) {
+            $result = $this->CI->muser->getUserByRsId($idRs, $query, $start, $limit, $sortColumn, $order);
+            $responsecode = 200;
+        }
+
+        $responseObj = [
+            "name" => "Data Fee",
+            "item" => [
+                "draw" => $draw,
+                "iTotalRecords" => intval($limit),
+                "iTotalDisplayRecords" => intval($totalUsers),
+                "aaData" => $result
+            ]
+        ];
+    }
+
     public function action(&$responseObj, &$responsecode, &$responseMessage)
     {
         switch ($this->_command) {
@@ -499,8 +572,14 @@ class Data
             case "room":
                 $this->_data_room($responseObj, $responsecode, $responseMessage);
                 break;
-            case "measure":
-                $this->_data_measure($responseObj, $responsecode, $responseMessage);
+            case "radiology":
+                $this->_data_radiology($responseObj, $responsecode, $responseMessage);
+                break;
+            case "rehabilitation":
+                $this->_data_rehabilitation($responseObj, $responsecode, $responseMessage);
+                break;
+            case "medic":
+                $this->_data_medic($responseObj, $responsecode, $responseMessage);
                 break;
             case "doctor":
                 $this->_data_doctor($responseObj, $responsecode, $responseMessage);
@@ -510,6 +589,9 @@ class Data
                 break;
             case "fee":
                 $this->_data_fee($responseObj, $responsecode, $responseMessage);
+                break;
+            case "users":
+                $this->_data_users($responseObj, $responsecode, $responseMessage);
                 break;
         }
     }

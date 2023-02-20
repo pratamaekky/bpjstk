@@ -41,6 +41,9 @@ class Master extends web_base
     public function service($command = "lists", $flag = null)
     {
         try {
+            if ($command == "lists" && $this->plkk_session->user_role != -1)
+                redirect(base_url());
+
             $params = (!is_null($this->input->post()) && !empty($this->input->post())) ? $this->input->post() : null;
             $service = new Service($command, $flag, $params);
             $service->action();

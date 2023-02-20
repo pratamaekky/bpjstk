@@ -58,9 +58,41 @@ body {
         margin-top: -1px;
         margin-right: -1px;
     }
+.no-padding {
+    padding: 0;
+}
 .modal .form-group label {
     font-size: 14px;
 }
+.modal-seg {
+    color: #007bff;
+    margin-left: 0;
+    padding-left: 18px !important;
+    font-size: 15px !important;
+}
+    .modal-seg::before,
+    .modal-seg-pic::before {
+        display: block;
+        float: left;
+        width: 5px;
+        content: "";
+        background: #39B54A;
+        border-radius: 0 20px 20px 0;
+        margin-left: -26px;
+        height: 26px;
+    }
+        #modal-bills .modal-body {
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }    	
+        #modal-bills .form-group {
+            margin-bottom: 0.5rem;
+        }
+    	.modal-overflow .modal-body .add-pic {
+    	    cursor: pointer;
+    	    color: #F86F54;
+            font-weight: 500;
+    	}
 .login-content {
     margin-top: 0;
     overflow: hidden;

@@ -176,10 +176,10 @@ class General extends CI_Model
         }
     }
 
-    public function totalMeasure()
+    public function totalRadiology()
     {
         $this->db->select("count(id) as total");
-        $this->db->from("tbl_measure");
+        $this->db->from("tbl_radiology");
 
         $query = $this->db->get();
         if (!is_null($query) && $query->num_rows() > 0) {
@@ -190,16 +190,13 @@ class General extends CI_Model
         return 0;
     }
 
-    public function getMeasure($rsId, $query, $offset, $limit, $order, $sort)
+    public function getRadiology($rsId, $query, $offset, $limit, $order, $sort)
     {
-        $this->db->select("a.*, b.value as ot_category, c.value as ot_specialist");
-        $this->db->from("tbl_measure as a");
-        $this->db->join("tbl_general as b", "b.id=a.category_id", "LEFT");
-        $this->db->join("tbl_general as c", "c.id=a.specialist_id", "LEFT");
-        $this->db->where("a.id_rs", $rsId);
-
+        $this->db->select("*");
+        $this->db->from("tbl_radiology");
+        $this->db->where("id_rs", $rsId);
         if (!is_null($query))
-            $this->db->like("a.value", $query);
+            $this->db->like("value", $query);
 
         $this->db->order_by($order, $sort);
 
@@ -214,9 +211,101 @@ class General extends CI_Model
         return null;
     }
 
-    public function saveMeasure($data)
+    public function saveRadiology($data)
     {
-        $this->db->insert("tbl_measure", $data);
+        $this->db->insert("tbl_radiology", $data);
+        if ($this->db->affected_rows() > 0) {
+            return $this->db->insert_id();
+        } else {
+            return false;
+        }
+    }
+
+    public function totalRehabilitation()
+    {
+        $this->db->select("count(id) as total");
+        $this->db->from("tbl_rehabilitation");
+
+        $query = $this->db->get();
+        if (!is_null($query) && $query->num_rows() > 0) {
+            $row = $query->row();
+            return $row->total;
+        }
+
+        return 0;
+    }
+
+    public function getRehabilitation($rsId, $query, $offset, $limit, $order, $sort)
+    {
+        $this->db->select("*");
+        $this->db->from("tbl_rehabilitation");
+        $this->db->where("id_rs", $rsId);
+        if (!is_null($query))
+            $this->db->like("value", $query);
+
+        $this->db->order_by($order, $sort);
+
+        if ($limit > 0)
+            $this->db->limit($limit, $offset);
+        
+        $query = $this->db->get();
+        if (!is_null($query) && $query->num_rows() > 0) {
+            return $query->result();
+        }
+
+        return null;
+    }
+
+    public function saveRehabilitation($data)
+    {
+        $this->db->insert("tbl_rehabilitation", $data);
+        if ($this->db->affected_rows() > 0) {
+            return $this->db->insert_id();
+        } else {
+            return false;
+        }
+    }
+
+    public function totalMedic()
+    {
+        $this->db->select("count(id) as total");
+        $this->db->from("tbl_medic");
+
+        $query = $this->db->get();
+        if (!is_null($query) && $query->num_rows() > 0) {
+            $row = $query->row();
+            return $row->total;
+        }
+
+        return 0;
+    }
+
+    public function getMedic($rsId, $query, $offset, $limit, $order, $sort)
+    {
+        $this->db->select("*");
+        $this->db->from("tbl_medic");
+        $this->db->where("id_rs", $rsId);
+
+        if (!is_null($query))
+            $this->db->like("value", $query);
+
+        $this->db->order_by($order, $sort);
+
+        if ($limit > 0)
+            $this->db->limit($limit, $offset);
+        
+        $query = $this->db->get();
+
+        if (!is_null($query) && $query->num_rows() > 0) {
+            return $query->result();
+        }
+
+        return null;
+    }
+
+    public function saveMedic($data)
+    {
+        $this->db->insert("tbl_medic", $data);
         if ($this->db->affected_rows() > 0) {
             return $this->db->insert_id();
         } else {

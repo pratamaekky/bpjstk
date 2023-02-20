@@ -23,15 +23,15 @@
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0">Data Laboratorium Rumah Sakit</h1>
+                            <h1 class="m-0">Data Users Rumah Sakit</h1>
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item"><a href="<?php echo base_url("master/service"); ?>">Data Pelayanan</a></li>
+                                <li class="breadcrumb-item"><a href="<?php echo base_url("master/service"); ?>">Data Users</a></li>
                                 <li class="breadcrumb-item active"><?php echo (!is_null($hospital) ? $hospital->name : "") ?></li>
                             </ol>
                         </div><!-- /.col -->
                         <div class="col-sm-6">
-                            <button type="button" class="btn btn-success float-sm-right ml-2" data-toggle="modal" data-target="#modal-laboratory"><i class="fas fa-plus"></i> Tambah</button>
+                            <button type="button" class="btn btn-success float-sm-right ml-2" data-toggle="modal" data-target="#modal-users"><i class="fas fa-plus"></i> Tambah</button>
                         </div><!-- /.col -->
                     </div><!-- /.row -->
                 </div><!-- /.container-fluid -->
@@ -46,13 +46,13 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-body">
-                                    <table id="tableLaboratoryLists" class="table table-hover">
+                                    <table id="tableUsersLists" class="table table-hover">
                                         <thead>
                                             <tr>
                                                 <th class="dt-head-center">No</th>
-                                                <th class="dt-head-center">Nama Tindakan</th>
-                                                <th class="dt-head-center">Kategori</th>
-                                                <th class="dt-head-center">Tarif</th>
+                                                <th class="dt-head-center">Nama User</th>
+                                                <th class="dt-head-center">Username</th>
+                                                <th class="dt-head-center">Last Login</th>
                                             </tr>
                                         </thead>
                                     </table>
@@ -69,13 +69,15 @@
         <?php include(APPPATH . "views/layout/html_footer.php"); ?>
     </div>
 
-    <div class="modal fade modal-overflow" id="modal-laboratory">
-        <form name="laboratoryForm" id="laboratoryForm" enctype="multipart/form-data" novalidate="novalidate">
-            <input type="hidden" name="id_rs" id="id_rs" value="<?php echo (!is_null($hospital) ? $hospital->id : 0) ?>" />
+    <div class="modal fade modal-overflow" id="modal-users">
+        <form name="usersForm" id="usersForm" enctype="multipart/form-data" novalidate="novalidate">
+            <input type="hidden" name="rs_id" id="rs_id" value="<?php echo (!is_null($hospital) ? $hospital->id : 0) ?>" />
+            <input type="hidden" name="created" id="created" value="<?php echo date("Y-m-d H:i:s") ?>" />
+            <input type="hidden" name="role" id="role" value="1" />
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title" id="title-modal-form">Tambah Dokter Rumah Sakit</h4>
+                        <h4 class="modal-title" id="title-modal-form">Tambah Tindakan Rumah Sakit</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -84,30 +86,21 @@
                         <div class="col-12 col-sm-12">
                             <div class="row">
                                 <div class="form-group col-12">
-                                    <label for="id_lab_category">Kategori</label>
+                                    <label for="name">Nama User</label>
                                     <div class="input-group">
-                                        <select name="id_lab_category" id="id_lab_category" class="form-control" required="required">
-                                            <option value="">-- Pilih Kategori --</option>
-                                            <?php 
-                                            if (!is_null($labCategory)) {
-                                                foreach ($labCategory as $labCat) {
-                                                    echo '<option value="' . $labCat->id . '">' . $labCat->value . '</option>';
-                                                }
-                                            }
-                                            ?>
-                                        </select>
+                                        <input type="text" name="name" id="name" class="form-control" placeholder="Contoh: Lades Sagita" autocomplete="off" required="required" />
                                     </div>
                                 </div>
                                 <div class="form-group col-12">
-                                    <label for="name">Nama Tindakan</label>
+                                    <label for="username">Username</label>
                                     <div class="input-group">
-                                        <input type="text" name="name" id="name" class="form-control" placeholder="Contoh: Kamar Inap Kelas II" autocomplete="off" required="required" />
+                                        <input type="text" name="username" id="username" class="form-control" placeholder="Contoh: lades.sagita" autocomplete="off" required="required" />
                                     </div>
                                 </div>
                                 <div class="form-group col-12">
-                                    <label for="fare">Tarif Tindakan</label>
+                                    <label for="password">Password [Default: "!Plkkrates123"]</label>
                                     <div class="input-group">
-                                        <input type="text" name="fare" id="fare" class="form-control" placeholder="Contoh: 2000000" autocomplete="off" required="required" />
+                                        <input type="password" name="password" id="password" class="form-control" value="!Plkkrates123" autocomplete="off" required="required" disabled />
                                     </div>
                                 </div>
                             </div>
@@ -132,7 +125,7 @@
     <script src="<?php echo base_url("assets/plugins/jquery-validation/jquery.validate.min.js"); ?>"></script>
     <script>
         $(document).ready(function(){
-            $('#tableLaboratoryLists').DataTable({
+            $('#tableUsersLists').DataTable({
                 'processing': true,
                 'serverSide': true,
                 'serverMethod': 'post',
@@ -149,15 +142,15 @@
                     infoFiltered: ""
                 },
                 'ajax': {
-                    'url':'<?php echo base_url("master/service/laboratory/data"); ?>',
+                    'url':'<?php echo base_url("master/service/users/data"); ?>',
                     'type': 'POST',
-                    'data': {"rsid": <?php echo $rsId; ?>, 'action':'#tableLaboratoryLists'}
+                    'data': {"rsid": <?php echo $rsId; ?>, 'action':'#tableUsersLists'}
                 },
                 'columns': [
                     { data: 'no', className: 'dt-body-center', width: '20px' },
                     { data: 'name' },
-                    { data: 'lab_category' },
-                    { data: 'fare' },
+                    { data: 'username' },
+                    { data: 'last_login' },
                 ]
             });
         });
@@ -169,7 +162,7 @@
                     $('.overlay-loading').show();
 
                     $.ajax({
-                        url: "<?php echo base_url('master/service/laboratory/save'); ?>",
+                        url: "<?php echo base_url('master/service/users/save'); ?>",
                         type: "POST",
                         data: new FormData(form),
                         async: true,
@@ -193,7 +186,7 @@
                     });
                 }
             });
-            $('#laboratoryForm').validate({
+            $('#usersForm').validate({
                 errorElement: 'span',
                 errorPlacement: function(error, element) {
                     error.addClass('invalid-feedback');
@@ -207,7 +200,7 @@
                 }
             });
 
-            $('#laboratoryForm').validate({
+            $('#usersForm').validate({
                 errorElement: 'span',
                 errorPlacement: function(error, element) {
                     error.addClass('invalid-feedback');

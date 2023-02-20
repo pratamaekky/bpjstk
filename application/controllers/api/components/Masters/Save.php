@@ -51,16 +51,44 @@ class Save
         ];
     }
 
-    private function _save_measure(&$responseObj, &$responsecode, &$responseMessage)
+    private function _save_radiology(&$responseObj, &$responsecode, &$responseMessage)
     {
-        $saveMeasure = $this->CI->general->saveMeasure($this->_params);
+        $saveRadiology = $this->CI->general->saveRadiology($this->_params);
 
-        if ($saveMeasure > 0) {
+        if ($saveRadiology > 0) {
             $responsecode = 200;
         }
 
         $responseObj = [
-            "name" => "Save New Measure",
+            "name" => "Save New Radiology",
+            "item" => []
+        ];
+    }
+
+    private function _save_rehabilitation(&$responseObj, &$responsecode, &$responseMessage)
+    {
+        $saveRehabilitation = $this->CI->general->saveRehabilitation($this->_params);
+
+        if ($saveRehabilitation > 0) {
+            $responsecode = 200;
+        }
+
+        $responseObj = [
+            "name" => "Save New Rehabilitation",
+            "item" => []
+        ];
+    }
+
+    private function _save_medic(&$responseObj, &$responsecode, &$responseMessage)
+    {
+        $saveMedic = $this->CI->general->saveMedic($this->_params);
+
+        if ($saveMedic > 0) {
+            $responsecode = 200;
+        }
+
+        $responseObj = [
+            "name" => "Save New Medic",
             "item" => []
         ];
     }
@@ -121,6 +149,67 @@ class Save
         ];
     }
 
+    private function _save_users(&$responseObj, &$responsecode, &$responseMessage)
+    {
+        if (!isset($this->_params['username']) || !isset($this->_params['name']) || !isset($this->_params['rs_id']))
+            throw new Exception("Data tidak lengkap. Silahkan cek kembali!", 201);
+            
+        $userInfo = $this->CI->muser->getUserByUsername(strtolower($this->_params["username"]));
+        if (!is_null($userInfo))
+            throw new Exception("Username sudah ada. Silahkan coba kembali dengan username yang berbeda!", 401);
+
+        $password = isset($this->_params["password"]) ? $this->_params["password"] : "!Plkkrates123";
+        $generatePassword = $this->CI->myutils->generatePassword($password);
+        $this->_params["password"] = $generatePassword;
+        $this->_params["role"] = isset($this->_params["role"]) ? intval($this->_params["role"]) : 1;
+
+        $saveUsers = $this->CI->muser->addUser($this->_params);
+
+        if ($saveUsers->result > 0) {
+            $responsecode = 200;
+        }
+
+        $responseObj = [
+            "name" => "Save New Users",
+            "item" => []
+        ];
+    }
+
+    private function _save_patient(&$responseObj, &$responsecode, &$responseMessage)
+    {
+        if (!isset($this->_params['kpj']) || !isset($this->_params['name']) || !isset($this->_params['company']))
+            throw new Exception("Data tidak lengkap. Silahkan cek kembali!", 201);
+            
+        $patientInfo = $this->CI->muser->getPatientByKPJ(strtolower($this->_params["kpj"]));
+        $patientId = (!is_null($patientInfo) ? $patientInfo->id : 0);
+
+        if (is_null($patientInfo)) {
+            $savePatient = $this->CI->muser->addPatient($this->_params);
+            $patientId = $savePatient->result;
+        }
+
+        $responsecode = 200;
+        $responseObj = [
+            "name" => "Save New Patient",
+            "item" => (!is_null($patientInfo) ? $patientInfo : array_merge(["id" => $patientId], $this->_params))
+        ];
+    }
+
+    private function _save_bills(&$responseObj, &$responsecode, &$responseMessage)
+    {
+        $saveBills = $this->CI->mhospital->saveBills($this->_params);
+
+        if ($saveBills > 0) {
+            $responsecode = 200;
+        }
+
+        $responseObj = [
+            "name" => "Save New Bills",
+            "item" => []
+        ];
+
+    }
+
     public function action(&$responseObj, &$responsecode, &$responseMessage)
     {
         switch ($this->_command) {
@@ -130,8 +219,14 @@ class Save
             case "room":
                 $this->_save_room($responseObj, $responsecode, $responseMessage);
                 break;
-            case "measure":
-                $this->_save_measure($responseObj, $responsecode, $responseMessage);
+            case "radiology":
+                $this->_save_radiology($responseObj, $responsecode, $responseMessage);
+                break;
+            case "rehabilitation":
+                $this->_save_rehabilitation($responseObj, $responsecode, $responseMessage);
+                break;
+            case "medic":
+                $this->_save_medic($responseObj, $responsecode, $responseMessage);
                 break;
             case "doctor":
                 $this->_save_doctor($responseObj, $responsecode, $responseMessage);
@@ -144,6 +239,15 @@ class Save
                 break;
             case "general":
                 $this->_save_general($responseObj, $responsecode, $responseMessage);
+                break;
+            case "users":
+                $this->_save_users($responseObj, $responsecode, $responseMessage);
+                break;
+            case "patient":
+                $this->_save_patient($responseObj, $responsecode, $responseMessage);
+                break;
+            case "bills":
+                $this->_save_bills($responseObj, $responsecode, $responseMessage);
                 break;
         }
     }
