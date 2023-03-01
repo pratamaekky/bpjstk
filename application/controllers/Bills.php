@@ -25,10 +25,11 @@ class Bills extends web_base
         ));
     }
 
-    public function lists()
+    public function lists($command = "")
     {
         try {
-            $lists = new Lists();
+            $params = (!is_null($this->input->post()) && !empty($this->input->post())) ? $this->input->post() : null;
+            $lists = new Lists($command, $params);
             $lists->action();
         } catch (Exception $e) {
             // return $this->sendResponseError($e);

@@ -47,7 +47,7 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-body">
-                                    <table id="tableGeneralLists" class="table table-hover">
+                                    <table id="tableBillsLists" class="table table-hover">
                                         <thead>
                                             <tr>
                                                 <th class="dt-head-center">No</th>
@@ -376,41 +376,41 @@
     <!-- Daterangepicker -->
     <script src="<?php echo base_url("assets/plugins/daterangepicker/daterangepicker.js"); ?>"></script>
     <script>
-        // $(document).ready(function(){
-        //     $('#tableGeneralLists').DataTable({
-        //         destroy:true,
-        //         'processing': true,
-        //         'serverSide': true,
-        //         'serverMethod': 'post',
-        //         'pagingType': 'full_numbers',
-        //         'paging': true,
-        //         language: {
-        //             paginate: {
-        //                 previous: '<i class="fas fa-angle-double-left"></i> Prev',
-        //                 next: '<i class="fas fa-angle-double-right"></i> Next'
-        //             },
-        //             searchPlaceholder: "Search",
-        //             emptyTable: "No record found",
-        //             search: "",
-        //             infoFiltered: ""
-        //         },
-        //         'ajax': {
-        //             'url':'<?php echo base_url("master/generals/data/"); ?>',
-        //             'type': 'POST',
-        //             'data': {'action':'#tableGeneralLists'}
-        //         },
-        //         'columns': [
-        //             { data: 'no', className: 'dt-body-center', width: '20px' },
-        //             { data: 'value' },
-        //         ],
-        //         "columnDefs":[
-        //             {
-        //                 "targets":[0],
-        //                 "orderable":false,
-        //             },
-        //         ]
-        //     });
-        // });
+        $(document).ready(function(){
+            $('#tableBillsLists').DataTable({
+                destroy:true,
+                'processing': true,
+                'serverSide': true,
+                'serverMethod': 'post',
+                'pagingType': 'full_numbers',
+                'paging': true,
+                language: {
+                    paginate: {
+                        previous: '<i class="fas fa-angle-double-left"></i> Prev',
+                        next: '<i class="fas fa-angle-double-right"></i> Next'
+                    },
+                    searchPlaceholder: "Search",
+                    emptyTable: "No record found",
+                    search: "",
+                    infoFiltered: ""
+                },
+                'ajax': {
+                    'url':'<?php echo base_url("bills/lists/data/"); ?>',
+                    'type': 'POST',
+                    'data': {'action':'#tableBillsLists'}
+                },
+                'columns': [
+                    { data: 'no', className: 'dt-body-center', width: '20px' },
+                    { data: 'value' },
+                ],
+                "columnDefs":[
+                    {
+                        "targets":[0],
+                        "orderable":false,
+                    },
+                ]
+            });
+        });
 
         $("#rs_id").on("change", function() {
             $.ajax({
