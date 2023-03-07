@@ -51,7 +51,12 @@
                                         <thead>
                                             <tr>
                                                 <th class="dt-head-center">No</th>
-                                                <th class="dt-head-center">Value</th>
+                                                <th class="dt-head-center">Nama Pasien</th>
+                                                <th class="dt-head-center">KPJ</th>
+                                                <th class="dt-head-center">Rumah Sakit</th>
+                                                <th class="dt-head-center">Diagnosis</th>
+                                                <th class="dt-head-center">Kondisi Terakhir</th>
+                                                <th class="dt-head-center">Action</th>
                                             </tr>
                                         </thead>
                                     </table>
@@ -170,11 +175,14 @@
                                     </div>
                                 </div>
                                 <div class="form-group col-6">
-                                    <div class="row">
+                                    <div class="row" id="elem-stmb">
                                         <label for="stmb" class="col-form-label col-sm-3 col-3">STMB</label>
                                         <div class="input-group col-sm-9 col-9">
-                                            <input type="text" name="stmb" id="stmb" class="form-control" placeholder="STMB" autocomplete="off" />
+                                            <input type="text" name="stmb[]" id="stmb-1" class="form-control stmb" placeholder="STMB" autocomplete="off" />
                                         </div>
+                                    </div>
+                                    <div class="col-sm-12 col-12 text-right">
+                                        <label class="add-pic" onclick="appendNewStmb('elem-stmb', 'stmb');">+ STMBB</label>
                                     </div>
                                 </div>
                             </div>
@@ -275,11 +283,12 @@
                                         <label for="yankes_medicine" class="col-form-label col-sm-3 col-3">Obat-Obatan</label>
                                         <div class="input-group col-sm-9 col-9">
                                             <div class="col-sm-12 col-12">
-                                                <div class="row">
-                                                    <input type="text" name="yankes_medicine_value[]" id="yankes_medicine_value" placeholder="Contoh: Paracetamol" class="form-control col-sm-9 col-9" required="required" disabled />
-                                                    <input type="text" name="yankes_medicine_fare[]" id="yankes_medicine_fare" placeholder="200000" class="form-control col-sm-3 col-3" required="required" disabled />
+                                                <div class="row row-medicine" id="row-medicine-1" data-count="1">
+                                                    <input type="text" name="yankes_medicine_value[]" id="yankes_medicine_value" placeholder="Contoh: Paracetamol" class="form-control col-sm-8 col-8" required="required" />
+                                                    <div class="col-form-label col-sm-1 col-1 text-right">IDR</div>
+                                                    <input type="text" name="yankes_medicine_fare[]" id="yankes_medicine_fare" placeholder="200000" class="form-control col-sm-2 col-2" required="required" />
                                                 </div>
-                                                <label class="col-form-label add-pic">+ Tambahkan Obat-Obatan</label>
+                                                <label class="col-form-label add-pic" onclick="appendMedicineElem();">+ Tambahkan Obat-Obatan</label>
                                             </div>
                                         </div>
                                     </div>
@@ -379,7 +388,7 @@
         $(document).ready(function(){
             $('#tableBillsLists').DataTable({
                 destroy:true,
-                'processing': true,
+                'processing': false,
                 'serverSide': true,
                 'serverMethod': 'post',
                 'pagingType': 'full_numbers',
@@ -390,7 +399,8 @@
                         next: '<i class="fas fa-angle-double-right"></i> Next'
                     },
                     searchPlaceholder: "Search",
-                    emptyTable: "No record found",
+                    emptyTable: "Tidak ada data yang ditemukan",
+                    zeroRecords: "Tidak ada data yang cocok",
                     search: "",
                     infoFiltered: ""
                 },
@@ -401,11 +411,20 @@
                 },
                 'columns': [
                     { data: 'no', className: 'dt-body-center', width: '20px' },
-                    { data: 'value' },
+                    { data: 'patient_name' },
+                    { data: 'kpj' },
+                    { data: 'hospital_name' },
+                    { data: 'diagnose' },
+                    { data: 'last_condition' },
+                    { data: 'action' },
                 ],
                 "columnDefs":[
                     {
                         "targets":[0],
+                        "orderable":false,
+                    },
+                    {
+                        "targets":[3],
                         "orderable":false,
                     },
                 ]
@@ -545,13 +564,39 @@
             });
         });
 
-        $("#stmb").on("focus", function() {
-            $('#stmb').daterangepicker({
+        $(".stmb").on("focus", function() {
+            $('.stmb').daterangepicker({
                 locale: {
                     format: 'DD-MM-YYYY'
                 }
             });
         });
+
+        function appendNewStmb(elemId, inputName) {
+            var elem = $("#" + elemId);
+            var countInput = $("." + inputName).length;
+            
+            elem.append('<label for="stmb" class="col-form-label col-sm-3 col-3 mt-2 row-stmb-' + (countInput + 1) + '"></label>' + 
+                        '<div class="input-group col-sm-8 col-8 mt-2 row-stmb-' + (countInput + 1) + '">' +
+                        '   <input type="text" name="stmb[]" id="stmb-' + (countInput + 1) + '" class="form-control stmb" placeholder="STMB" onfocus="javascript:$(this).daterangepicker({locale: {format: \'DD-MM-YYYY\'}});" autocomplete="off" />' +
+                        '</div>' + 
+                        '<div class="col-sm-1 col-1 pt-3 add-pic row-stmb-' + (countInput + 1) + '" onclick="javascript:$(\'.row-stmb-' + (countInput + 1) + '\').remove();"><i class="far fa-window-close"></i></div>');
+        }
+
+        function appendMedicineElem() {
+            // var xElem = $(".row-medicine").length;
+            var xElem = parseInt($(".row-medicine").attr("data-count"));
+            $(".row-medicine").attr("data-count", (xElem + 1));
+
+            $("#row-medicine-" + xElem).after(''+
+                '<div class="row" id="row-medicine-' + (xElem + 1) + '">' +
+                '   <input type="text" name="yankes_medicine_value[]" id="yankes_medicine_value" placeholder="Contoh: Paracetamol" class="form-control col-sm-8 col-8 mt-2" required="required" />' +
+                '   <div class="col-form-label col-sm-1 col-1 mt-2 text-right">IDR</div>' +
+                '   <input type="text" name="yankes_medicine_fare[]" id="yankes_medicine_fare" placeholder="200000" class="form-control col-sm-2 col-2 mt-2" required="required" />' +
+                '   <div class="col-sm-1 col-1 pt-3 add-pic text-right row-medicine-' + (xElem + 1) + '" onclick="javascript:$(\'#row-medicine-' + (xElem + 1) + '\').remove();"><i class="far fa-window-close"></i></div>' +
+                '</div>' +
+            '');
+        }
 
         $(function() {
             $.validator.setDefaults({

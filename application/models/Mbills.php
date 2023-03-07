@@ -31,8 +31,11 @@ class Mbills extends CI_Model
         $this->db->from("tbl_bills as a");
         $this->db->join("tbl_patient as b", "b.id=a.id_patient");
         $this->db->join("tbl_hospital as c", "c.id=a.rs_id");
-        if (!is_null($query))
+        if (!is_null($query)) {
             $this->db->like("b.name", $query);
+            $this->db->or_like("c.name", $query);
+            $this->db->or_like("a.diagnose", $query);
+        }
 
         $this->db->order_by($order, $sort);
 

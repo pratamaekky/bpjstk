@@ -27,10 +27,43 @@ class Lists
     public function action()
     {
         if ($this->_command == "data") {
-            $dataBills = $this->ABills->data($this->_params);
-            $dataBills = json_decode($dataBills);
+            $items = [];
+            $draw = 1;
+            $totalRecods = 0;
+            $totalDisplays = 0;
+            $responseBills = $this->ABills->data($this->_params);
+            $responseBills = json_decode($responseBills);
 
-            $result = ($dataBills->result == 200) ? $dataBills->data->item : $dataBills->data;
+            if ($responseBills->result == 200) {
+                $resBills = $responseBills->data->item->aaData;
+                if (!empty($resBills)) {
+                    foreach ($resBills as $key => $bills) {
+                        $row = [
+                            "no" => ($key  + 1),
+                            "patient_name" => $bills->patient_name,
+                            "kpj" => $bills->kpj,
+                            "hospital_name" => $bills->hospital_name,
+                            "diagnose" => $bills->diagnose,
+                            "last_condition" => $bills->last_condition,
+                            "action" => "<a class='nav-link' href='#' aria-expanded='true'><i class='far fa-edit'></i></a>"
+                        ];
+
+                        $items[] = $row;
+
+                    }
+                }
+
+                $draw = $responseBills->data->item->draw;
+                $totalRecods = $responseBills->data->item->iTotalRecords;
+                $totalDisplays = $responseBills->data->item->iTotalDisplayRecords;
+            }
+            $result = [
+                "draw" => $draw,
+                "recordsTotal" => $totalRecods,
+                "recordsFiltered" => $totalDisplays,
+                "data" => $items
+            ];
+
             echo json_encode($result);
         } else {
             $hospitals = [];
