@@ -49,6 +49,33 @@ class Mbills extends CI_Model
         }
 
         return null;
+    }
 
+    public function save($data)
+    {
+        $this->db->insert("tbl_bills", $data);
+        if ($this->db->affected_rows() > 0) {
+            return $this->db->insert_id();
+        } else {
+            return 0;
+        }
+    }
+
+    public function updateTotalBills($data)
+    {
+        $this->db->where("id", $data["id"]);
+        $this->db->update("tbl_bills", $data);
+
+        return $this->db->affected_rows();
+    }
+
+    public function saveBillsDetail($data)
+    {
+        $this->db->insert("tbl_bills_detail", $data);
+        if ($this->db->affected_rows() > 0) {
+            return $this->db->insert_id();
+        } else {
+            return 0;
+        }
     }
 }

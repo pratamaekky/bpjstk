@@ -255,105 +255,178 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group col-12" id="div_yankes_room" style="display: none;">
+                                <div class="form-group col-12" id="div_room" style="display: none;">
                                     <div class="row">
-                                        <label for="yankes_room" class="col-form-label col-sm-3 col-3">Kamar</label>
+                                        <label for="room" class="col-form-label col-sm-3 col-3">Kamar</label>
                                         <div class="input-group col-sm-9 col-9">
-                                            <select name="yankes_room[]" id="yankes_room" class="form-control" disabled>
-                                                <option value="">-- Pilih Kamar --</option>
-                                            </select>
+                                            <div class="col-sm-12 col-12">
+                                                <div class="row row-room-div" id="row-room-div" data-count="1">
+                                                    <div class="row row-room col-sm-12 col-12" id="row-room-1">
+                                                        <select name="room[]" id="room_1" class="room form-control col-sm-4" data-id="1">
+                                                            <option value="">-- Pilih Kamar --</option>
+                                                        </select>
+                                                        <div class="row-flex col-sm-2 col-2">
+                                                            <input type="number" name="room_days[]" id="room_days_1" class="room_days form-control col-sm-8 col-8" min="1" value="1" data-id="1">
+                                                            <label class="col-form-label col-sm-4 col-4 text-left"> Hari</label>
+                                                        </div>
+                                                        <div class="row-flex col-sm-3 col-3">
+                                                            <label class="col-form-label col-sm-1 col-1 text-right"> X</label>
+                                                            <label class="col-form-label col-sm-3 col-3 text-right"> IDR </label>
+                                                            <input type="text" name="room_rate[]" id="room_rate_1" class="room_rate form-control text-right col-sm-8 col-8" value="0" readonly />
+                                                        </div>
+                                                        <div class="row-flex col-sm-3 col-3">
+                                                            <label class="col-form-label col-sm-1 col-1 text-right"> = </label>
+                                                            <label class="col-form-label col-sm-3 col-3 text-right"> IDR </label>
+                                                            <input type="text" name="room_subtotal[]" id="room_subtotal_1" class="room_subtotal form-control text-right col-sm-8 col-8" value="0" readonly />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <label class="col-form-label add-pic" onclick="appendRoomElem();">+ Tambahkan Kamar</label>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group col-12" id="div_yankes_admin" style="display: none;">
+                                <div class="form-group col-12" id="div_admin" style="display: none;">
                                     <div class="row">
-                                        <label for="yankes_administration" class="col-form-label col-sm-3 col-3">Administrasi</label>
+                                        <label for="admin" class="col-form-label col-sm-3 col-3">Administrasi</label>
                                         <div class="input-group col-sm-9 col-9">
-                                            <div class="no-padding col-sm-12 col-12">
-                                                <select name="yankes_administration[]" id="yankes_administration" class="form-control" disabled>
-                                                    <option value="">-- Pilih Administrasi --</option>
-                                                </select>
-                                                <label class="col-form-label add-pic">+ Tambahkan Administrasi</label>
+                                            <div class="col-sm-12 col-12">
+                                                <div class="row row-admin-div" id="row-admin-div" data-count="1">
+                                                    <div class="row row-admin col-sm-12 col-12" id="row-admin-1">
+                                                        <select name="admin[]" id="admin_1" class="admin form-control col-sm-9 col-9" data-id="1" onchange="calculation_admin(this);">
+                                                            <option value="">-- Pilih Administrasi --</option>
+                                                        </select>
+                                                        <div class="row-flex col-sm-3 col-3">
+                                                            <label class="col-form-label col-sm-3 col-3 text-right"> IDR </label>
+                                                            <input type="text" name="admin_subtotal[]" id="admin_subtotal_1" class="form-control text-right col-sm-8 col-8" value="0" readonly />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <label class="col-form-label add-pic" onclick="appendAdminElem();">+ Tambahkan Administrasi</label>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group col-12">
                                     <div class="row">
-                                        <label for="yankes_medicine" class="col-form-label col-sm-3 col-3">Obat-Obatan</label>
+                                        <label for="medicine" class="col-form-label col-sm-3 col-3">Obat-Obatan</label>
                                         <div class="input-group col-sm-9 col-9">
                                             <div class="col-sm-12 col-12">
-                                                <div class="row row-medicine" id="row-medicine-1" data-count="1">
-                                                    <input type="text" name="yankes_medicine_value[]" id="yankes_medicine_value" placeholder="Contoh: Paracetamol" class="form-control col-sm-8 col-8" required="required" />
-                                                    <div class="col-form-label col-sm-1 col-1 text-right">IDR</div>
-                                                    <input type="text" name="yankes_medicine_fare[]" id="yankes_medicine_fare" placeholder="200000" class="form-control col-sm-2 col-2" required="required" />
+                                                <div class="row row-medicine-div" id="row-medicine-div" data-count="1">
+                                                    <div class="row row-medicine col-sm-12 col-12" id="row-medicine-1">
+                                                        <input type="text" name="medicine_value[]" id="medicine_value_1" placeholder="Contoh: Paracetamol" class="form-control col-sm-9 col-9" />
+                                                        <div class="row-flex col-sm-3 col-3">
+                                                            <label class="col-form-label col-sm-3 col-3 text-right"> IDR </label>
+                                                            <input type="text" name="medicine_fare[]" id="medicine_fare_1" placeholder="200000" class="form-control col-sm-8 col-8" />
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 <label class="col-form-label add-pic" onclick="appendMedicineElem();">+ Tambahkan Obat-Obatan</label>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group col-12" id="div_yankes_docter" style="display: none;">
+                                <div class="form-group col-12" id="div_docter" style="display: none;">
                                     <div class="row">
-                                        <label for="yankes_docter" class="col-form-label col-sm-3 col-3">Dokter</label>
+                                        <label for="docter" class="col-form-label col-sm-3 col-3">Dokter</label>
                                         <div class="input-group col-sm-9 col-9">
-                                            <div class="no-padding col-sm-12 col-12">
-                                                <select name="yankes_docter[]" id="yankes_docter" class="form-control" disabled>
-                                                    <option value="">-- Pilih Dokter --</option>
-                                                </select>
-                                                <label class="col-form-label add-pic">+ Tambahkan Dokter</label>
+                                            <div class="col-sm-12 col-12">
+                                                <div class="row row-docter-div" id="row-docter-div" data-count="1">
+                                                    <div class="row row-docter col-sm-12 col-12" id="row-docter-1">
+                                                        <select name="docter[]" id="docter_1" class="docter form-control col-sm-9 col-9" data-id="1" onchange="calculation_docter(this);">
+                                                            <option value="">-- Pilih Dokter --</option>
+                                                        </select>
+                                                        <div class="row-flex col-sm-3 col-3">
+                                                            <label class="col-form-label col-sm-3 col-3 text-right"> IDR </label>
+                                                            <input type="text" name="docter_fare[]" id="docter_fare_1" class="form-control text-right col-sm-8 col-8" value="0" readonly />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <label class="col-form-label add-pic" onclick="appendDocterElem();">+ Tambahkan Dokter</label>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group col-12" id="div_yankes_lab" style="display: none;">
+                                <div class="form-group col-12" id="div_lab" style="display: none;">
                                     <div class="row">
-                                        <label for="yankes_lab" class="col-form-label col-sm-3 col-3">Laboratorium</label>
+                                        <label for="lab" class="col-form-label col-sm-3 col-3">Laboratorium</label>
                                         <div class="input-group col-sm-9 col-9">
-                                            <div class="no-padding col-sm-12 col-12">
-                                                <select name="yankes_lab[]" id="yankes_lab" class="form-control" disabled>
-                                                    <option value="">-- Pilih Laboratorium --</option>
-                                                </select>
-                                                <label class="col-form-label add-pic">+ Tambahkan Laboratorium</label>
+                                            <div class="col-sm-12 col-12">
+                                                <div class="row row-lab-div" id="row-lab-div" data-count="1">
+                                                    <div class="row row-lab col-sm-12 col-12" id="row-lab-1">
+                                                        <select name="lab[]" id="lab_1" class="lab form-control col-sm-9 col-9" data-id="1" onchange="calculation_lab(this);">
+                                                            <option value="">-- Pilih Laboratorium --</option>
+                                                        </select>
+                                                        <div class="row-flex col-sm-3 col-3">
+                                                            <label class="col-form-label col-sm-3 col-3 text-right"> IDR </label>
+                                                            <input type="text" name="lab_fare[]" id="lab_fare_1" class="form-control text-right col-sm-8 col-8" value="0" readonly />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <label class="col-form-label add-pic" onclick="appendLabElem();">+ Tambahkan Laboratorium</label>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group col-12" id="div_yankes_radiology" style="display: none;">
+                                <div class="form-group col-12" id="div_radiology" style="display: none;">
                                     <div class="row">
-                                        <label for="yankes_radiology" class="col-form-label col-sm-3 col-3">Radiologi</label>
+                                        <label for="radiology" class="col-form-label col-sm-3 col-3">Radiologi</label>
                                         <div class="input-group col-sm-9 col-9">
-                                            <div class="no-padding col-sm-12 col-12">
-                                                <select name="yankes_radiology[]" id="yankes_radiology" class="form-control" disabled>
-                                                    <option value="">-- Pilih Radiologi --</option>
-                                                </select>
-                                                <label class="col-form-label add-pic">+ Tambahkan Radiologi</label>
+                                            <div class="col-sm-12 col-12">
+                                                <div class="row row-radiology-div" id="row-radiology-div" data-count="1">
+                                                    <div class="row row-radiology col-sm-12 col-12" id="row-radiology-1">
+                                                        <select name="radiology[]" id="radiology_1" class="radiology form-control col-sm-9 col-9" data-id="1" onchange="calculation_radiology(this);">
+                                                            <option value="">-- Pilih Radiologi --</option>
+                                                        </select>
+                                                        <div class="row-flex col-sm-3 col-3">
+                                                            <label class="col-form-label col-sm-3 col-3 text-right"> IDR </label>
+                                                            <input type="text" name="radiology_fare[]" id="radiology_fare_1" class="form-control text-right col-sm-8 col-8" value="0" readonly />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <label class="col-form-label add-pic" onclick="appendRadiologyElem();">+ Tambahkan Radiologi</label>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group col-12" id="div_yankes_medic" style="display: none;">
+                                <div class="form-group col-12" id="div_medic" style="display: none;">
                                     <div class="row">
-                                        <label for="yankes_medic" class="col-form-label col-sm-3 col-3">Medikal</label>
+                                        <label for="medic" class="col-form-label col-sm-3 col-3">Medikal</label>
                                         <div class="input-group col-sm-9 col-9">
-                                            <div class="no-padding col-sm-12 col-12">
-                                                <select name="yankes_medic[]" id="yankes_medic" class="form-control" disabled>
-                                                    <option value="">-- Pilih Medikal --</option>
-                                                </select>
-                                                <label class="col-form-label add-pic">+ Tambahkan Medikal</label>
+                                            <div class="col-sm-12 col-12">
+                                                <div class="row row-medic-div" id="row-medic-div" data-count="1">
+                                                    <div class="row row-medic col-sm-12 col-12" id="row-medic-1">
+                                                        <select name="medic[]" id="medic_1" class="medic form-control col-sm-9 col-9" data-id="1" onchange="calculation_medic(this);">
+                                                            <option value="">-- Pilih Medikal --</option>
+                                                        </select>
+                                                        <div class="row-flex col-sm-3 col-3">
+                                                            <label class="col-form-label col-sm-3 col-3 text-right"> IDR </label>
+                                                            <input type="text" name="medic_fare[]" id="medic_fare_1" class="form-control text-right col-sm-8 col-8" value="0" readonly />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <label class="col-form-label add-pic" onclick="appendMedicElem();">+ Tambahkan Medikal</label>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group col-12" id="div_yankes_rehab" style="display: none;">
+                                <div class="form-group col-12" id="div_rehab" style="display: none;">
                                     <div class="row">
-                                        <label for="yankes_rehab" class="col-form-label col-sm-3 col-3">Rehabilitasi</label>
+                                        <label for="rehab" class="col-form-label col-sm-3 col-3">Rehabilitasi</label>
                                         <div class="input-group col-sm-9 col-9">
-                                            <div class="no-padding col-sm-12 col-12">
-                                                <select name="yankes_rehab[]" id="yankes_rehab" class="form-control" disabled>
-                                                    <option value="">-- Pilih Rehabilitasi --</option>
-                                                </select>
-                                                <label class="col-form-label add-pic">+ Tambahkan Rehabilitasi</label>
+                                            <div class="col-sm-12 col-12">
+                                                <div class="row row-rehab-div" id="row-rehab-div" data-count="1">
+                                                    <div class="row row-rehab col-sm-12 col-12" id="row-rehab-1">
+                                                        <select name="rehab[]" id="rehab_1" class="rehab form-control col-sm-9 col-9" data-id="1" onchange="calculation_rehab(this);">
+                                                            <option value="">-- Pilih Rehabilitasi --</option>
+                                                        </select>
+                                                        <div class="row-flex col-sm-3 col-3">
+                                                            <label class="col-form-label col-sm-3 col-3 text-right"> IDR </label>
+                                                            <input type="text" name="rehab_fare[]" id="rehab_fare_1" class="form-control text-right col-sm-8 col-8" value="0" readonly />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <label class="col-form-label add-pic" onclick="appendRehabElem();">+ Tambahkan Rehabilitasi</label>
                                             </div>
                                         </div>
                                     </div>
@@ -410,7 +483,7 @@
                     'data': {'action':'#tableBillsLists'}
                 },
                 'columns': [
-                    { data: 'no', className: 'dt-body-center', width: '20px' },
+                    { data: 'no', className: 'dt-body-center' },
                     { data: 'patient_name' },
                     { data: 'kpj' },
                     { data: 'hospital_name' },
@@ -442,80 +515,73 @@
                 success: function(response) {
                     $('.overlay-loading').hide();
                     if (response.hasOwnProperty('room')) {
-                        $("#div_yankes_room").show();
+                        $("#div_room").show();
                         var htmlRoom = '<option value="">-- Pilih Kamar --</option>';
 
                         $.each(response.room, function(index, value) {
-                            htmlRoom += '<option value="' + value.id + '-' + value.fare + '">' + value.value + ' ( Rp ' + number_format(value.fare, 0, ',', '.') + ' )</option>';
+                            htmlRoom += '<option value="' + value.id + '-' + value.fare + '">' + value.value + '</option>';
                         })
-                        $("#yankes_room").html(htmlRoom)
-                        $("#yankes_room").removeAttr("disabled")
+                        $(".room").html(htmlRoom)
                     }
 
                     if (response.hasOwnProperty('fee')) {
-                        $("#div_yankes_admin").show();
+                        $("#div_admin").show();
                         var htmlFee = '<option value="">-- Pilih Administrasi --</option>';
 
                         $.each(response.fee, function(index, value) {
-                            htmlFee += '<option value="' + value.id + '-' + value.fare + '">' + value.name + ' ( Rp ' + number_format(value.fare, 0, ',', '.') + ' )</option>';
+                            htmlFee += '<option value="' + value.id + '-' + value.fare + '">' + value.name + '</option>';
                         })
-                        $("#yankes_administration").html(htmlFee)
-                        $("#yankes_administration").removeAttr("disabled")
+                        $(".admin").html(htmlFee)
                     }
 
                     if (response.hasOwnProperty('docter')) {
-                        $("#div_yankes_docter").show();
+                        $("#div_docter").show();
                         var htmlDocter = '<option value="">-- Pilih Dokter --</option>';
 
                         $.each(response.docter, function(index, value) {
-                            htmlDocter += '<option value="' + value.id + '-' + value.fare + '">' + value.name + ' ( Rp ' + number_format(value.fare, 0, ',', '.') + ' )</option>';
+                            htmlDocter += '<option value="' + value.id + '-' + value.fare + '">' + value.name + '</option>';
                         })
-                        $("#yankes_docter").html(htmlDocter)
-                        $("#yankes_docter").removeAttr("disabled")
+                        $(".docter").html(htmlDocter)
                     }
 
                     if (response.hasOwnProperty('laboratory')) {
-                        $("#div_yankes_lab").show();
+                        $("#div_lab").show();
                         var htmlLaboratory = '<option value="">-- Pilih Laboratorium --</option>';
 
                         $.each(response.laboratory, function(index, value) {
-                            htmlLaboratory += '<option value="' + value.id + '-' + value.fare + '">' + value.name + ' ( Rp ' + number_format(value.fare, 0, ',', '.') + ' )</option>';
+                            htmlLaboratory += '<option value="' + value.id + '-' + value.fare + '">' + value.name + '</option>';
                         })
-                        $("#yankes_lab").html(htmlLaboratory)
-                        $("#yankes_lab").removeAttr("disabled")
+                        $(".lab").html(htmlLaboratory)
                     }
 
                     if (response.hasOwnProperty('radiology')) {
-                        $("#div_yankes_radiology").show();
+                        $("#div_radiology").show();
                         var htmlRadiology = '<option value="">-- Pilih Radiologi --</option>';
 
                         $.each(response.radiology, function(index, value) {
-                            htmlRadiology += '<option value="' + value.id + '-' + value.fare + '">' + value.value + ' ( Rp ' + number_format(value.fare, 0, ',', '.') + ' )</option>';
+                            htmlRadiology += '<option value="' + value.id + '-' + value.fare + '">' + value.value + '</option>';
                         })
-                        $("#yankes_radiology").html(htmlRadiology)
-                        $("#yankes_radiology").removeAttr("disabled")
+                        $(".radiology").html(htmlRadiology)
                     }
 
                     if (response.hasOwnProperty('medic')) {
-                        $("#div_yankes_medic").show();
+                        $("#div_medic").show();
                         var htmlMedic = '<option value="">-- Pilih Medikal --</option>';
 
                         $.each(response.medic, function(index, value) {
-                            htmlMedic += '<option value="' + value.id + '-' + value.fare + '">' + value.value + ' ( Rp ' + number_format(value.fare, 0, ',', '.') + ' )</option>';
+                            htmlMedic += '<option value="' + value.id + '-' + value.fare + '">' + value.value + '</option>';
                         })
-                        $("#yankes_medic").html(htmlMedic)
-                        $("#yankes_medic").removeAttr("disabled")
+                        $(".medic").html(htmlMedic)
                     }
 
                     if (response.hasOwnProperty('rehab')) {
-                        $("#div_yankes_rehab").show();
+                        $("#div_rehab").show();
                         var htmlRehab = '<option value="">-- Pilih Rehabilitasi --</option>';
 
                         $.each(response.rehab, function(index, value) {
-                            htmlRehab += '<option value="' + value.id + '-' + value.fare + '">' + value.value + ' ( Rp ' + number_format(value.fare, 0, ',', '.') + ' )</option>';
+                            htmlRehab += '<option value="' + value.id + '-' + value.fare + '">' + value.value + '</option>';
                         })
-                        $("#yankes_rehab").html(htmlRehab)
-                        $("#yankes_rehab").removeAttr("disabled")
+                        $(".rehab").html(htmlRehab)
                     }
                 }
             });
@@ -583,19 +649,396 @@
                         '<div class="col-sm-1 col-1 pt-3 add-pic row-stmb-' + (countInput + 1) + '" onclick="javascript:$(\'.row-stmb-' + (countInput + 1) + '\').remove();"><i class="far fa-window-close"></i></div>');
         }
 
-        function appendMedicineElem() {
-            // var xElem = $(".row-medicine").length;
-            var xElem = parseInt($(".row-medicine").attr("data-count"));
-            $(".row-medicine").attr("data-count", (xElem + 1));
+        function calculation_room(e, is_rooms = false) {
+            var room_fare;
+            var room_id = $(e).attr("data-id");
+            var days = $("#room_days_" + room_id).val();
+            
+            if (is_rooms === true) {
+                room_fare = $("#room_rate_" + room_id).val();
+            } else {
+                room_fare = $(e).val();
+                room_fare = room_fare.split("-");
+                room_fare = room_fare[1];
+            }
 
-            $("#row-medicine-" + xElem).after(''+
-                '<div class="row" id="row-medicine-' + (xElem + 1) + '">' +
-                '   <input type="text" name="yankes_medicine_value[]" id="yankes_medicine_value" placeholder="Contoh: Paracetamol" class="form-control col-sm-8 col-8 mt-2" required="required" />' +
-                '   <div class="col-form-label col-sm-1 col-1 mt-2 text-right">IDR</div>' +
-                '   <input type="text" name="yankes_medicine_fare[]" id="yankes_medicine_fare" placeholder="200000" class="form-control col-sm-2 col-2 mt-2" required="required" />' +
-                '   <div class="col-sm-1 col-1 pt-3 add-pic text-right row-medicine-' + (xElem + 1) + '" onclick="javascript:$(\'#row-medicine-' + (xElem + 1) + '\').remove();"><i class="far fa-window-close"></i></div>' +
+            $("#room_rate_" + room_id).val(room_fare);
+            $("#room_subtotal_" + room_id).val(room_fare * days);
+        }
+
+        $(".room").on("change", function() {
+            calculation_room(this);
+        })
+
+        $(".room_days").on("change", function() {
+            calculation_room(this, true);
+        })
+
+        function appendRoomElem() {
+            var xElem = parseInt($(".row-room-div").attr("data-count"));
+            var nXElem = xElem + 1;
+            $(".row-room-div").attr("data-count", (xElem + 1));
+
+            var rs_id = ($("#rs_id").find(":selected").val());
+            $.ajax({
+                url: '<?php echo base_url("master/datas/layanan"); ?>',
+                type: "post",
+                dataType: "json",
+                data: {
+                    rs_id: rs_id
+                },
+                success: function(response) {
+                    $('.overlay-loading').hide();
+                    if (response.hasOwnProperty('room')) {
+                        var htmlRoom = '' +
+                            '<div class="row room col-sm-12 col-12 mt-2" id="row-room-' + nXElem + '">' +
+                            '    <select name="room[]" id="room_' + nXElem + '" class="room form-control col-sm-4" data-id="' + nXElem + '" onchange="calculation_room(this);">' +
+                            '        <option value="">-- Pilih Kamar --</option>';
+
+                        $.each(response.room, function(index, value) {
+                            htmlRoom += '<option value="' + value.id + '-' + value.fare + '">' + value.value + '</option>';
+                        })
+
+                        htmlRoom += '' +
+                            '    </select>' +
+                            '    <div class="row-flex col-sm-2 col-2">' +
+                            '        <input type="number" name="[]" id="room_days_' + nXElem + '" class="room_days form-control col-sm-8 col-8" min="1" value="1" data-id="' + nXElem + '" onchange="calculation_room(this, true);">' +
+                            '        <label class="col-form-label col-sm-4 col-4 text-left"> Hari</label>' +
+                            '    </div>' +
+                            '    <div class="row-flex col-sm-3 col-3">' +
+                            '        <label class="col-form-label col-sm-1 col-1 text-right"> X</label>' +
+                            '        <label class="col-form-label col-sm-3 col-3 text-right"> IDR </label>' +
+                            '        <input type="text" name="room_rate[]" id="room_rate_' + nXElem + '" class="room_rate form-control text-right col-sm-8 col-8" value="0" readonly />' +
+                            '    </div>' +
+                            '    <div class="row-flex col-sm-3 col-3">' +
+                            '        <label class="col-form-label col-sm-1 col-1 text-right"> = </label>' +
+                            '        <label class="col-form-label col-sm-3 col-3 text-right"> IDR </label>' +
+                            '        <input type="text" name="room_subtotal[]" id="room_subtotal_' + nXElem + '" class="room_subtotal form-control text-right col-sm-8 col-8" value="0" readonly />' +
+                            '        <div class="col-sm-1 col-1 pt-2 add-pic text-right row-room-' + nXElem + '" onclick="javascript:$(\'#row-room-' + nXElem + '\').remove();"><i class="far fa-window-close"></i></div>' +
+                            '    </div>' +
+                            '</div>';
+
+                        $(".row-room-div").append(htmlRoom)
+                    }
+                }
+            })
+        }
+
+        function calculation_admin(e) {
+            var admin_id = $(e).attr("data-id");
+            
+            var fare = $(e).val();
+                fare = fare.split("-");
+                fare = fare[1];
+
+            $("#admin_subtotal_" + admin_id).val(fare);
+        }
+
+        function appendAdminElem() {
+            var xElem = parseInt($(".row-admin-div").attr("data-count"));
+            var nXElem = xElem + 1;
+            $(".row-admin-div").attr("data-count", (xElem + 1));
+
+            var rs_id = ($("#rs_id").find(":selected").val());
+            $.ajax({
+                url: '<?php echo base_url("master/datas/layanan"); ?>',
+                type: "post",
+                dataType: "json",
+                data: {
+                    rs_id: rs_id
+                },
+                success: function(response) {
+                    $('.overlay-loading').hide();
+                    if (response.hasOwnProperty('fee')) {
+                        var htmlFee = '' +
+                            '<div class="row row-admin col-sm-12 col-12 mt-2" id="row-admin-' + nXElem + '">'+
+                            '   <select name="admin[]" id="admin_' + nXElem + '" class="admin form-control col-sm-9 col-9" data-id="' + nXElem + '" onchange="calculation_admin(this);">' +
+                            '       <option value="">-- Pilih Administrasi --</option>';
+
+                        $.each(response.fee, function(index, value) {
+                            htmlFee += '<option value="' + value.id + '-' + value.fare + '">' + value.name + '</option>';
+                        })
+
+                        htmlFee += '' +
+                            '   </select>' +
+                            '   <div class="row-flex col-sm-3 col-3">' +
+                            '       <label class="col-form-label col-sm-3 col-3 text-right"> IDR </label>' +
+                            '       <input type="text" name="admin_subtotal[]" id="admin_subtotal_' + nXElem + '" class="admin_subtotal form-control text-right col-sm-8 col-8" value="0" readonly />' +
+                            '       <div class="col-sm-1 col-1 pt-2 add-pic text-right row-admin-' + nXElem + '" onclick="javascript:$(\'#row-admin-' + nXElem + '\').remove();"><i class="far fa-window-close"></i></div>' +
+                            '   </div>' +
+                            '</div>';
+
+                        $(".row-admin-div").append(htmlFee)
+                    }
+                }
+            })
+        }
+
+        function appendMedicineElem() {
+            var xElem = parseInt($(".row-medicine-div").attr("data-count"));
+            var nXElem = xElem + 1;
+            $(".row-medicine-div").attr("data-count", (xElem + 1));
+
+            $(".row-medicine-div").append(''+
+                '<div class="row row-medicine col-sm-12 col-12 mt-2" id="row-medicine-' + nXElem + '">' +
+                '   <input type="text" name="medicine_value[]" id="medicine_value_' + nXElem + '" placeholder="Contoh: Paracetamol" class="form-control col-sm-9 col-9" />' +
+                '   <div class="row-flex col-sm-3 col-3">' +
+                '       <label class="col-form-label col-sm-3 col-3 text-right"> IDR </label>' +
+                '       <input type="text" name="medicine_fare[]" id="medicine_fare" placeholder="200000" class="form-control col-sm-8 col-8" />' +
+                '       <div class="col-sm-1 col-1 pt-2 add-pic text-right row-medicine-' + nXElem + '" onclick="javascript:$(\'#row-medicine-' + nXElem + '\').remove();"><i class="far fa-window-close"></i></div>' +
+                '   </div>' +
                 '</div>' +
             '');
+        }
+
+        function calculation_docter(e) {
+            var docter_id = $(e).attr("data-id");
+            
+            var docter_fare = $(e).val();
+                docter_fare = docter_fare.split("-");
+                docter_fare = docter_fare[1];
+
+            $("#docter_fare_" + docter_id).val(docter_fare);
+        }
+
+        function appendDocterElem() {
+            var xElem = parseInt($(".row-docter-div").attr("data-count"));
+            var nXElem = xElem + 1;
+            $(".row-docter-div").attr("data-count", (xElem + 1));
+
+            var rs_id = ($("#rs_id").find(":selected").val());
+            $.ajax({
+                url: '<?php echo base_url("master/datas/layanan"); ?>',
+                type: "post",
+                dataType: "json",
+                data: {
+                    rs_id: rs_id
+                },
+                success: function(response) {
+                    $('.overlay-loading').hide();
+                    if (response.hasOwnProperty('docter')) {
+                        var htmlFee = '' +
+                            '<div class="row row-docter col-sm-12 col-12 mt-2" id="row-docter-' + nXElem + '">'+
+                            '   <select name="docter[]" id="docter_' + nXElem + '" class="docter form-control col-sm-9 col-9" data-id="' + nXElem + '" onchange="calculation_docter(this);">' +
+                            '       <option value="">-- Pilih Dokter --</option>';
+
+                        $.each(response.docter, function(index, value) {
+                            htmlFee += '<option value="' + value.id + '-' + value.fare + '">' + value.name + '</option>';
+                        })
+
+                        htmlFee += '' +
+                            '   </select>' +
+                            '   <div class="row-flex col-sm-3 col-3">' +
+                            '       <label class="col-form-label col-sm-3 col-3 text-right"> IDR </label>' +
+                            '       <input type="text" name="docter_fare[]" id="docter_fare_' + nXElem + '" class="docter_fare form-control text-right col-sm-8 col-8" value="0" readonly />' +
+                            '       <div class="col-sm-1 col-1 pt-2 add-pic text-right row-docter-' + nXElem + '" onclick="javascript:$(\'#row-docter-' + nXElem + '\').remove();"><i class="far fa-window-close"></i></div>' +
+                            '   </div>' +
+                            '</div>';
+
+                        $(".row-docter-div").append(htmlFee)
+                    }
+                }
+            })
+        }
+
+        function calculation_lab(e) {
+            var lab_id = $(e).attr("data-id");
+            
+            var lab_fare = $(e).val();
+                lab_fare = lab_fare.split("-");
+                lab_fare = lab_fare[1];
+
+            $("#lab_fare_" + lab_id).val(lab_fare);
+        }
+
+        function appendLabElem() {
+            var xElem = parseInt($(".row-lab-div").attr("data-count"));
+            var nXElem = xElem + 1;
+            $(".row-lab-div").attr("data-count", (xElem + 1));
+
+            var rs_id = ($("#rs_id").find(":selected").val());
+            $.ajax({
+                url: '<?php echo base_url("master/datas/layanan"); ?>',
+                type: "post",
+                dataType: "json",
+                data: {
+                    rs_id: rs_id
+                },
+                success: function(response) {
+                    $('.overlay-loading').hide();
+                    if (response.hasOwnProperty('laboratory')) {
+                        var htmlFee = '' +
+                            '<div class="row row-lab col-sm-12 col-12 mt-2" id="row-lab-' + nXElem + '">'+
+                            '   <select name="lab[]" id="lab_' + nXElem + '" class="lab form-control col-sm-9 col-9" data-id="' + nXElem + '" onchange="calculation_lab(this);">' +
+                            '       <option value="">-- Pilih Laboratorium --</option>';
+
+                        $.each(response.laboratory, function(index, value) {
+                            htmlFee += '<option value="' + value.id + '-' + value.fare + '">' + value.name + '</option>';
+                        })
+
+                        htmlFee += '' +
+                            '   </select>' +
+                            '   <div class="row-flex col-sm-3 col-3">' +
+                            '       <label class="col-form-label col-sm-3 col-3 text-right"> IDR </label>' +
+                            '       <input type="text" name="lab_fare[]" id="lab_fare_' + nXElem + '" class="lab_fare form-control text-right col-sm-8 col-8" value="0" readonly />' +
+                            '       <div class="col-sm-1 col-1 pt-2 add-pic text-right row-lab-' + nXElem + '" onclick="javascript:$(\'#row-lab-' + nXElem + '\').remove();"><i class="far fa-window-close"></i></div>' +
+                            '   </div>' +
+                            '</div>';
+
+                        $(".row-lab-div").append(htmlFee)
+                    }
+                }
+            })
+        }
+
+        function calculation_radiology(e) {
+            var radiology_id = $(e).attr("data-id");
+            
+            var radiology_fare = $(e).val();
+                radiology_fare = radiology_fare.split("-");
+                radiology_fare = radiology_fare[1];
+
+            $("#radiology_fare_" + radiology_id).val(radiology_fare);
+        }
+
+        function appendRadiologyElem() {
+            var xElem = parseInt($(".row-radiology-div").attr("data-count"));
+            var nXElem = xElem + 1;
+            $(".row-radiology-div").attr("data-count", (xElem + 1));
+
+            var rs_id = ($("#rs_id").find(":selected").val());
+            $.ajax({
+                url: '<?php echo base_url("master/datas/layanan"); ?>',
+                type: "post",
+                dataType: "json",
+                data: {
+                    rs_id: rs_id
+                },
+                success: function(response) {
+                    $('.overlay-loading').hide();
+                    if (response.hasOwnProperty('radiology')) {
+                        var htmlFee = '' +
+                            '<div class="row row-radiology col-sm-12 col-12 mt-2" id="row-radiology-' + nXElem + '">'+
+                            '   <select name="radiology[]" id="radiology_' + nXElem + '" class="radiology form-control col-sm-9 col-9" data-id="' + nXElem + '" onchange="calculation_radiology(this);">' +
+                            '       <option value="">-- Pilih Radiologi --</option>';
+
+                        $.each(response.radiology, function(index, value) {
+                            htmlFee += '<option value="' + value.id + '-' + value.fare + '">' + value.value + '</option>';
+                        })
+
+                        htmlFee += '' +
+                            '   </select>' +
+                            '   <div class="row-flex col-sm-3 col-3">' +
+                            '       <label class="col-form-label col-sm-3 col-3 text-right"> IDR </label>' +
+                            '       <input type="text" name="radiology_fare[]" id="radiology_fare_' + nXElem + '" class="radiology_fare form-control text-right col-sm-8 col-8" value="0" readonly />' +
+                            '       <div class="col-sm-1 col-1 pt-2 add-pic text-right row-radiology-' + nXElem + '" onclick="javascript:$(\'#row-radiology-' + nXElem + '\').remove();"><i class="far fa-window-close"></i></div>' +
+                            '   </div>' +
+                            '</div>';
+
+                        $(".row-radiology-div").append(htmlFee)
+                    }
+                }
+            })
+        }
+
+        function calculation_medic(e) {
+            var medic_id = $(e).attr("data-id");
+            
+            var medic_fare = $(e).val();
+                medic_fare = medic_fare.split("-");
+                medic_fare = medic_fare[1];
+
+            $("#medic_fare_" + medic_id).val(medic_fare);
+        }
+
+        function appendMedicElem() {
+            var xElem = parseInt($(".row-medic-div").attr("data-count"));
+            var nXElem = xElem + 1;
+            $(".row-medic-div").attr("data-count", (xElem + 1));
+
+            var rs_id = ($("#rs_id").find(":selected").val());
+            $.ajax({
+                url: '<?php echo base_url("master/datas/layanan"); ?>',
+                type: "post",
+                dataType: "json",
+                data: {
+                    rs_id: rs_id
+                },
+                success: function(response) {
+                    $('.overlay-loading').hide();
+                    if (response.hasOwnProperty('medic')) {
+                        var htmlFee = '' +
+                            '<div class="row row-medic col-sm-12 col-12 mt-2" id="row-medic-' + nXElem + '">'+
+                            '   <select name="medic[]" id="medic_' + nXElem + '" class="medic form-control col-sm-9 col-9" data-id="' + nXElem + '" onchange="calculation_medic(this);">' +
+                            '       <option value="">-- Pilih Medikal --</option>';
+
+                        $.each(response.medic, function(index, value) {
+                            htmlFee += '<option value="' + value.id + '-' + value.fare + '">' + value.value + '</option>';
+                        })
+
+                        htmlFee += '' +
+                            '   </select>' +
+                            '   <div class="row-flex col-sm-3 col-3">' +
+                            '       <label class="col-form-label col-sm-3 col-3 text-right"> IDR </label>' +
+                            '       <input type="text" name="medic_fare[]" id="medic_fare_' + nXElem + '" class="medic_fare form-control text-right col-sm-8 col-8" value="0" readonly />' +
+                            '       <div class="col-sm-1 col-1 pt-2 add-pic text-right row-medic-' + nXElem + '" onclick="javascript:$(\'#row-medic-' + nXElem + '\').remove();"><i class="far fa-window-close"></i></div>' +
+                            '   </div>' +
+                            '</div>';
+
+                        $(".row-medic-div").append(htmlFee)
+                    }
+                }
+            })
+        }
+
+        function calculation_rehab(e) {
+            var rehab_id = $(e).attr("data-id");
+            
+            var rehab_fare = $(e).val();
+                rehab_fare = rehab_fare.split("-");
+                rehab_fare = rehab_fare[1];
+
+            $("#rehab_fare_" + rehab_id).val(rehab_fare);
+        }
+
+        function appendRehabElem() {
+            var xElem = parseInt($(".row-rehab-div").attr("data-count"));
+            var nXElem = xElem + 1;
+            $(".row-rehab-div").attr("data-count", (xElem + 1));
+
+            var rs_id = ($("#rs_id").find(":selected").val());
+            $.ajax({
+                url: '<?php echo base_url("master/datas/layanan"); ?>',
+                type: "post",
+                dataType: "json",
+                data: {
+                    rs_id: rs_id
+                },
+                success: function(response) {
+                    $('.overlay-loading').hide();
+                    if (response.hasOwnProperty('rehab')) {
+                        var htmlFee = '' +
+                            '<div class="row row-rehab col-sm-12 col-12 mt-2" id="row-rehab-' + nXElem + '">'+
+                            '   <select name="rehab[]" id="rehab_' + nXElem + '" class="rehab form-control col-sm-9 col-9" data-id="' + nXElem + '" onchange="calculation_rehab(this);">' +
+                            '       <option value="">-- Pilih Rehabilitasi --</option>';
+
+                        $.each(response.rehab, function(index, value) {
+                            htmlFee += '<option value="' + value.id + '-' + value.fare + '">' + value.value + '</option>';
+                        })
+
+                        htmlFee += '' +
+                            '   </select>' +
+                            '   <div class="row-flex col-sm-3 col-3">' +
+                            '       <label class="col-form-label col-sm-3 col-3 text-right"> IDR </label>' +
+                            '       <input type="text" name="rehab_fare[]" id="rehab_fare_' + nXElem + '" class="rehab_fare form-control text-right col-sm-8 col-8" value="0" readonly />' +
+                            '       <div class="col-sm-1 col-1 pt-2 add-pic text-right row-rehab-' + nXElem + '" onclick="javascript:$(\'#row-rehab-' + nXElem + '\').remove();"><i class="far fa-window-close"></i></div>' +
+                            '   </div>' +
+                            '</div>';
+
+                        $(".row-rehab-div").append(htmlFee)
+                    }
+                }
+            })
         }
 
         $(function() {
@@ -605,7 +1048,7 @@
                     $('.overlay-loading').show();
 
                     $.ajax({
-                        url: "<?php echo base_url('bills/save_patient/'); ?>",
+                        url: "<?php echo base_url('bills/save_bills/'); ?>",
                         type: "POST",
                         data: new FormData(form),
                         async: true,
@@ -657,6 +1100,19 @@
                 }
             });
         });
+
+        function detail_bills(id) {
+            $.ajax({
+                url: '<?php echo base_url("bills/detail"); ?>',
+                type: "post",
+                dataType: "json",
+                data: {
+                    id: id
+                },
+                success: function(response) {
+                }
+            });
+        }
     </script>
 </body>
 

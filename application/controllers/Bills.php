@@ -3,7 +3,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 date_default_timezone_set("Asia/Jakarta");
 require_once APPPATH . 'controllers/base/web_base.php';
 require_once APPPATH . "controllers/components/Bills/Lists.php";
-require_once APPPATH . "controllers/components/Bills/Save_patient.php";
+require_once APPPATH . "controllers/components/Bills/Save_bills.php";
+require_once APPPATH . "controllers/components/Bills/Detail_bills.php";
 
 class Bills extends web_base
 {
@@ -40,8 +41,18 @@ class Bills extends web_base
     {
         try {
             $params = (!is_null($this->input->post()) && !empty($this->input->post())) ? $this->input->post() : null;
-            $save = new Save_patient($params);
+            $save = new Save_bills($params);
             $save->action();
+        } catch (Exception $e) {
+        }
+    }
+
+    public function detail()
+    {
+        try {
+            $params = (!is_null($this->input->post()) && !empty($this->input->post())) ? $this->input->post() : null;
+            $detail = new Detail_bills($params);
+            $detail->action();
         } catch (Exception $e) {
         }
     }

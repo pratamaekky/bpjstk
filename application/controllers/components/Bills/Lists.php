@@ -45,7 +45,7 @@ class Lists
                             "hospital_name" => $bills->hospital_name,
                             "diagnose" => $bills->diagnose,
                             "last_condition" => $bills->last_condition,
-                            "action" => "<a class='nav-link' href='#' aria-expanded='true'><i class='far fa-edit'></i></a>"
+                            "action" => "<a class='nav-link' href='#' onclick='detail_bills(" . $bills->id . ")' aria-expanded='true'><i class='far fa-edit'></i></a>"
                         ];
 
                         $items[] = $row;
