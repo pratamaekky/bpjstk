@@ -393,7 +393,7 @@ class Data
             }
         }
 
-        $totalDoctor = $this->CI->general->totalDoctor();
+        $totalDoctor = $this->CI->general->totalDoctor($idRs);
 
         if ($totalDoctor > 0) {
             $result = $this->CI->general->getDoctor($idRs, $query, $start, $limit, $sortColumn, $order);
@@ -406,6 +406,36 @@ class Data
                 "draw" => $draw,
                 "iTotalRecords" => intval($limit),
                 "iTotalDisplayRecords" => intval($totalDoctor),
+                "aaData" => $result
+            ]
+        ];
+    }
+
+    private function _data_surgery(&$responseObj, &$responsecode, &$responseMessage)
+    {
+        $totalPage = 1;
+        $result = [];
+        $idRs = isset($this->_params["rsid"]) ? $this->_params["rsid"] : 0;
+        $draw = isset($this->_params["draw"]) ? intval($this->_params["draw"]) : 1;
+        $start = isset($this->_params["start"]) ? intval($this->_params["start"]) : 0;
+        $limit = isset($this->_params["length"]) ? intval($this->_params["length"]) : 10;
+        $query = (isset($this->_params["search"]["value"]) && !empty($this->_params["search"]["value"])) ? $this->_params["search"]["value"] : null;
+        $column = isset($this->_params["order"][0]["column"]) ? $this->_params["order"][0]["column"] : null;
+        $order = isset($this->_params["order"][0]["dir"]) ? $this->_params["order"][0]["dir"] : "asc";
+        $sortColumn = "id";
+        $totalSurgery = $this->CI->general->totalSurgery($idRs);
+
+        if ($totalSurgery > 0) {
+            $result = $this->CI->general->getSurgery($idRs, $query, $start, $limit, $sortColumn, $order);
+            $responsecode = 200;
+        }
+
+        $responseObj = [
+            "name" => "Data Surgery",
+            "item" => [
+                "draw" => $draw,
+                "iTotalRecords" => intval($limit),
+                "iTotalDisplayRecords" => intval($totalSurgery),
                 "aaData" => $result
             ]
         ];
@@ -583,6 +613,9 @@ class Data
                 break;
             case "doctor":
                 $this->_data_doctor($responseObj, $responsecode, $responseMessage);
+                break;
+            case "surgery":
+                $this->_data_surgery($responseObj, $responsecode, $responseMessage);
                 break;
             case "laboratory":
                 $this->_data_laboratory($responseObj, $responsecode, $responseMessage);

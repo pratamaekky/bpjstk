@@ -107,6 +107,20 @@ class Save
         ];
     }
 
+    private function _save_surgery(&$responseObj, &$responsecode, &$responseMessage)
+    {
+        $saveSurgery = $this->CI->general->saveSurgery($this->_params);
+
+        if ($saveSurgery > 0) {
+            $responsecode = 200;
+        }
+
+        $responseObj = [
+            "name" => "Save New Surgery",
+            "item" => []
+        ];
+    }
+
     private function _save_laboratory(&$responseObj, &$responsecode, &$responseMessage)
     {
         $saveLaboratory = $this->CI->general->saveLaboratory($this->_params);
@@ -230,6 +244,9 @@ class Save
                 break;
             case "doctor":
                 $this->_save_doctor($responseObj, $responsecode, $responseMessage);
+                break;
+            case "surgery":
+                $this->_save_surgery($responseObj, $responsecode, $responseMessage);
                 break;
             case "laboratory":
                 $this->_save_laboratory($responseObj, $responsecode, $responseMessage);

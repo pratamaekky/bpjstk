@@ -313,10 +313,11 @@ class General extends CI_Model
         }
     }
 
-    public function totalDoctor()
+    public function totalDoctor($rsId)
     {
         $this->db->select("count(id) as total");
         $this->db->from("tbl_doctor");
+        $this->db->where("id_rs", $rsId);
 
         $query = $this->db->get();
         if (!is_null($query) && $query->num_rows() > 0) {
@@ -353,6 +354,54 @@ class General extends CI_Model
     public function saveDoctor($data)
     {
         $this->db->insert("tbl_doctor", $data);
+        if ($this->db->affected_rows() > 0) {
+            return $this->db->insert_id();
+        } else {
+            return false;
+        }
+    }
+
+    public function totalSurgery($rsId)
+    {
+        $this->db->select("count(id) as total");
+        $this->db->from("tbl_surgery");
+        $this->db->where("id_rs", $rsId);
+
+        $query = $this->db->get();
+        if (!is_null($query) && $query->num_rows() > 0) {
+            $row = $query->row();
+            return $row->total;
+        }
+
+        return 0;
+    }
+
+    public function getSurgery($rsId, $query, $offset, $limit, $order, $sort)
+    {
+        $this->db->select("a.*, b.value as ot_category");
+        $this->db->from("tbl_surgery as a");
+        $this->db->join("tbl_general as b", "b.id=a.id_ot_category", "LEFT");
+        $this->db->where("a.id_rs", $rsId);
+
+        if (!is_null($query))
+            $this->db->like("a.value", $query);
+
+        $this->db->order_by($order, $sort);
+
+        if ($limit > 0)
+            $this->db->limit($limit, $offset);
+        
+        $query = $this->db->get();
+        if (!is_null($query) && $query->num_rows() > 0) {
+            return $query->result();
+        }
+
+        return null;
+    }
+
+    public function saveSurgery($data)
+    {
+        $this->db->insert("tbl_surgery", $data);
         if ($this->db->affected_rows() > 0) {
             return $this->db->insert_id();
         } else {
