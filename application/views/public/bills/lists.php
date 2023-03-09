@@ -4,6 +4,9 @@
 <head>
     <?php include(APPPATH . "views/layout/html_header_script.php"); ?>
     <link href="<?php echo base_url("assets/plugins/datatables/jquery.dataTables.min.css"); ?>" rel="stylesheet">
+    <!-- Select2 -->
+    <link href="<?php echo base_url("assets/plugins/select2/css/select2.min.css"); ?>" rel="stylesheet">
+    <link href="<?php echo base_url("assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css"); ?>" rel="stylesheet">
     <!-- Date Range Picker -->
     <link rel="stylesheet" href="<?php echo base_url("assets/plugins/daterangepicker/daterangepicker.css"); ?>" type="text/css">
 </head>
@@ -246,9 +249,27 @@
                             <div class="row">
                                 <div class="form-group col-12">
                                     <div class="row">
+                                        <label for="cob" class="col-form-label col-sm-3 col-3">COB Jasa Raharja</label>
+                                        <div class="input-group col-sm-9 col-9">
+                                            <div class="col-sm-12 col-12">
+                                                <div class="row row-cob-div" id="row-cob-div" data-count="1">
+                                                    <div class="row-flex row-cob col-sm-12 col-12 no-padding" id="row-cob-1">
+                                                        <!-- <input type="text" name="cob_value[]" id="cob_value_1" placeholder="Contoh: Paracetamol" class="form-control col-sm-9 col-9" /> -->
+                                                        <div class="row-flex col-sm-12 col-12 no-padding">
+                                                            <label class="col-form-label col-sm-1 col-1 text-left"> IDR </label>
+                                                            <input type="text" name="cob_fare[]" id="cob_fare_1" placeholder="200000" class="form-control col-sm-11 col-11" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-12">
+                                    <div class="row">
                                         <label for="yankes" class="col-form-label col-sm-3 col-3">Jenis Pelayanan</label>
                                         <div class="input-group col-sm-9 col-9">
-                                            <select name="yankes" class="form-control" required="required">
+                                            <select name="yankes" class="form-control select2" required="required">
                                                 <option value="">-- Pilih Jenis Pelayanan -- </option>
                                                 <option value="ranap">Rawat Inap</option>
                                                 <option value="rajal">Rawat jalan</option>
@@ -263,7 +284,7 @@
                                             <div class="col-sm-12 col-12">
                                                 <div class="row row-room-div" id="row-room-div" data-count="1">
                                                     <div class="row row-room col-sm-12 col-12" id="row-room-1">
-                                                        <select name="room[]" id="room_1" class="room form-control col-sm-4" data-id="1">
+                                                        <select name="room[]" id="room_1" class="room form-control select2 col-sm-4" data-id="1">
                                                             <option value="">-- Pilih Kamar --</option>
                                                         </select>
                                                         <div class="row-flex col-sm-2 col-2">
@@ -294,7 +315,7 @@
                                             <div class="col-sm-12 col-12">
                                                 <div class="row row-admin-div" id="row-admin-div" data-count="1">
                                                     <div class="row row-admin col-sm-12 col-12" id="row-admin-1">
-                                                        <select name="admin[]" id="admin_1" class="admin form-control col-sm-9 col-9" data-id="1" onchange="calculation_admin(this);">
+                                                        <select name="admin[]" id="admin_1" class="admin form-control select2 col-sm-9 col-9" data-id="1" onchange="calculation_admin(this);">
                                                             <option value="">-- Pilih Administrasi --</option>
                                                         </select>
                                                         <div class="row-flex col-sm-3 col-3">
@@ -334,7 +355,7 @@
                                             <div class="col-sm-12 col-12">
                                                 <div class="row row-docter-div" id="row-docter-div" data-count="1">
                                                     <div class="row row-docter col-sm-12 col-12" id="row-docter-1">
-                                                        <select name="docter[]" id="docter_1" class="docter form-control col-sm-9 col-9" data-id="1" onchange="calculation_docter(this);">
+                                                        <select name="docter[]" id="docter_1" class="docter form-control select2 col-sm-9 col-9" data-id="1" onchange="calculation_docter(this);">
                                                             <option value="">-- Pilih Dokter --</option>
                                                         </select>
                                                         <div class="row-flex col-sm-3 col-3">
@@ -355,12 +376,22 @@
                                             <div class="col-sm-12 col-12">
                                                 <div class="row row-lab-div" id="row-lab-div" data-count="1">
                                                     <div class="row row-lab col-sm-12 col-12" id="row-lab-1">
-                                                        <select name="lab[]" id="lab_1" class="lab form-control col-sm-9 col-9" data-id="1" onchange="calculation_lab(this);">
+                                                        <select name="lab[]" id="lab_1" class="lab form-control select2 col-sm-4 col-4" data-id="1" onchange="calculation_lab(this);">
                                                             <option value="">-- Pilih Laboratorium --</option>
                                                         </select>
+                                                        <div class="row-flex col-sm-2 col-2">
+                                                            <input type="number" name="lab_qty[]" id="lab_qty_1" class="lab_qty form-control col-sm-8 col-8" min="1" value="1" onchange="calculation_lab(this, true);" data-id="1">
+                                                            <label class="col-form-label col-sm-4 col-4 text-left"> Pcs</label>
+                                                        </div>
                                                         <div class="row-flex col-sm-3 col-3">
+                                                            <label class="col-form-label col-sm-1 col-1 text-right"> X</label>
                                                             <label class="col-form-label col-sm-3 col-3 text-right"> IDR </label>
-                                                            <input type="text" name="lab_fare[]" id="lab_fare_1" class="form-control text-right col-sm-8 col-8" value="0" readonly />
+                                                            <input type="text" name="lab_rate[]" id="lab_rate_1" class="lab_rate form-control text-right col-sm-8 col-8" value="0" readonly />
+                                                        </div>
+                                                        <div class="row-flex col-sm-3 col-3">
+                                                            <label class="col-form-label col-sm-1 col-1 text-right"> = </label>
+                                                            <label class="col-form-label col-sm-3 col-3 text-right"> IDR </label>
+                                                            <input type="text" name="lab_subtotal[]" id="lab_subtotal_1" class="lab_subtotal form-control text-right col-sm-8 col-8" value="0" readonly />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -376,12 +407,22 @@
                                             <div class="col-sm-12 col-12">
                                                 <div class="row row-radiology-div" id="row-radiology-div" data-count="1">
                                                     <div class="row row-radiology col-sm-12 col-12" id="row-radiology-1">
-                                                        <select name="radiology[]" id="radiology_1" class="radiology form-control col-sm-9 col-9" data-id="1" onchange="calculation_radiology(this);">
+                                                        <select name="radiology[]" id="radiology_1" class="radiology form-control select2 col-sm-4 col-4" data-id="1" onchange="calculation_radiology(this);">
                                                             <option value="">-- Pilih Radiologi --</option>
                                                         </select>
+                                                        <div class="row-flex col-sm-2 col-2">
+                                                            <input type="number" name="radiology_qty[]" id="radiology_qty_1" class="radiology_qty form-control col-sm-8 col-8" min="1" value="1" onchange="calculation_radiology(this, true);" data-id="1">
+                                                            <label class="col-form-label col-sm-4 col-4 text-left"> Pcs</label>
+                                                        </div>
                                                         <div class="row-flex col-sm-3 col-3">
+                                                            <label class="col-form-label col-sm-1 col-1 text-right"> X</label>
                                                             <label class="col-form-label col-sm-3 col-3 text-right"> IDR </label>
-                                                            <input type="text" name="radiology_fare[]" id="radiology_fare_1" class="form-control text-right col-sm-8 col-8" value="0" readonly />
+                                                            <input type="text" name="radiology_rate[]" id="radiology_rate_1" class="radiology_rate form-control text-right col-sm-8 col-8" value="0" readonly />
+                                                        </div>
+                                                        <div class="row-flex col-sm-3 col-3">
+                                                            <label class="col-form-label col-sm-1 col-1 text-right"> = </label>
+                                                            <label class="col-form-label col-sm-3 col-3 text-right"> IDR </label>
+                                                            <input type="text" name="radiology_subtotal[]" id="radiology_subtotal_1" class="radiology_subtotal form-control text-right col-sm-8 col-8" value="0" readonly />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -397,12 +438,22 @@
                                             <div class="col-sm-12 col-12">
                                                 <div class="row row-medic-div" id="row-medic-div" data-count="1">
                                                     <div class="row row-medic col-sm-12 col-12" id="row-medic-1">
-                                                        <select name="medic[]" id="medic_1" class="medic form-control col-sm-9 col-9" data-id="1" onchange="calculation_medic(this);">
+                                                        <select name="medic[]" id="medic_1" class="medic form-control select2 col-sm-4 col-4" data-id="1" onchange="calculation_medic(this);">
                                                             <option value="">-- Pilih Medikal --</option>
                                                         </select>
+                                                        <div class="row-flex col-sm-2 col-2">
+                                                            <input type="number" name="medic_qty[]" id="medic_qty_1" class="medic_qty form-control col-sm-8 col-8" min="1" value="1" onchange="calculation_medic(this, true);" data-id="1">
+                                                            <label class="col-form-label col-sm-4 col-4 text-left"> Pcs</label>
+                                                        </div>
                                                         <div class="row-flex col-sm-3 col-3">
+                                                            <label class="col-form-label col-sm-1 col-1 text-right"> X</label>
                                                             <label class="col-form-label col-sm-3 col-3 text-right"> IDR </label>
-                                                            <input type="text" name="medic_fare[]" id="medic_fare_1" class="form-control text-right col-sm-8 col-8" value="0" readonly />
+                                                            <input type="text" name="medic_rate[]" id="medic_rate_1" class="medic_rate form-control text-right col-sm-8 col-8" value="0" readonly />
+                                                        </div>
+                                                        <div class="row-flex col-sm-3 col-3">
+                                                            <label class="col-form-label col-sm-1 col-1 text-right"> = </label>
+                                                            <label class="col-form-label col-sm-3 col-3 text-right"> IDR </label>
+                                                            <input type="text" name="medic_subtotal[]" id="medic_subtotal_1" class="medic_subtotal form-control text-right col-sm-8 col-8" value="0" readonly />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -418,12 +469,22 @@
                                             <div class="col-sm-12 col-12">
                                                 <div class="row row-rehab-div" id="row-rehab-div" data-count="1">
                                                     <div class="row row-rehab col-sm-12 col-12" id="row-rehab-1">
-                                                        <select name="rehab[]" id="rehab_1" class="rehab form-control col-sm-9 col-9" data-id="1" onchange="calculation_rehab(this);">
+                                                        <select name="rehab[]" id="rehab_1" class="rehab form-control select2 col-sm-4 col-4" data-id="1" onchange="calculation_rehab(this);">
                                                             <option value="">-- Pilih Rehabilitasi --</option>
                                                         </select>
+                                                        <div class="row-flex col-sm-2 col-2">
+                                                            <input type="number" name="rehab_qty[]" id="rehab_qty_1" class="rehab_qty form-control col-sm-8 col-8" min="1" value="1" onchange="calculation_rehab(this, true);" data-id="1">
+                                                            <label class="col-form-label col-sm-4 col-4 text-left"> Pcs</label>
+                                                        </div>
                                                         <div class="row-flex col-sm-3 col-3">
+                                                            <label class="col-form-label col-sm-1 col-1 text-right"> X</label>
                                                             <label class="col-form-label col-sm-3 col-3 text-right"> IDR </label>
-                                                            <input type="text" name="rehab_fare[]" id="rehab_fare_1" class="form-control text-right col-sm-8 col-8" value="0" readonly />
+                                                            <input type="text" name="rehab_rate[]" id="rehab_rate_1" class="rehab_rate form-control text-right col-sm-8 col-8" value="0" readonly />
+                                                        </div>
+                                                        <div class="row-flex col-sm-3 col-3">
+                                                            <label class="col-form-label col-sm-1 col-1 text-right"> = </label>
+                                                            <label class="col-form-label col-sm-3 col-3 text-right"> IDR </label>
+                                                            <input type="text" name="rehab_subtotal[]" id="rehab_subtotal_1" class="rehab_subtotal form-control text-right col-sm-8 col-8" value="0" readonly />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -458,6 +519,8 @@
     <script src="<?php echo base_url("assets/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"); ?>"></script>
     <!-- Daterangepicker -->
     <script src="<?php echo base_url("assets/plugins/daterangepicker/daterangepicker.js"); ?>"></script>
+    <!-- Select2 -->
+    <script src="<?php echo base_url("assets/plugins/select2/js/select2.full.min.js"); ?>"></script>
     <script>
         $(document).ready(function(){
             $('#tableBillsLists').DataTable({
@@ -721,6 +784,9 @@
                             '</div>';
 
                         $(".row-room-div").append(htmlRoom)
+                        $("#room_" + nXElem).select2({
+                            theme: 'bootstrap4'
+                        });
                     }
                 }
             })
@@ -770,7 +836,10 @@
                             '   </div>' +
                             '</div>';
 
-                        $(".row-admin-div").append(htmlFee)
+                        $(".row-admin-div").append(htmlFee);
+                        $("#admin_" + nXElem).select2({
+                            theme: 'bootstrap4'
+                        });
                     }
                 }
             })
@@ -838,19 +907,29 @@
                             '</div>';
 
                         $(".row-docter-div").append(htmlFee)
+                        $("#docter_" + nXElem).select2({
+                            theme: 'bootstrap4'
+                        });
                     }
                 }
             })
         }
 
-        function calculation_lab(e) {
+        function calculation_lab(e, is_lab = false) {
+            var lab_rate;
             var lab_id = $(e).attr("data-id");
+            var pcs = $("#lab_qty_" + lab_id).val();
             
-            var lab_fare = $(e).val();
-                lab_fare = lab_fare.split("-");
-                lab_fare = lab_fare[1];
+            if (is_lab === true) {
+                lab_rate = $("#lab_rate_" + lab_id).val();
+            } else {
+                lab_rate = $(e).val();
+                lab_rate = lab_rate.split("-");
+                lab_rate = lab_rate[1];
+            }
 
-            $("#lab_fare_" + lab_id).val(lab_fare);
+            $("#lab_rate_" + lab_id).val(lab_rate);
+            $("#lab_subtotal_" + lab_id).val(lab_rate * pcs);
         }
 
         function appendLabElem() {
@@ -871,7 +950,7 @@
                     if (response.hasOwnProperty('laboratory')) {
                         var htmlFee = '' +
                             '<div class="row row-lab col-sm-12 col-12 mt-2" id="row-lab-' + nXElem + '">'+
-                            '   <select name="lab[]" id="lab_' + nXElem + '" class="lab form-control col-sm-9 col-9" data-id="' + nXElem + '" onchange="calculation_lab(this);">' +
+                            '   <select name="lab[]" id="lab_' + nXElem + '" class="lab form-control col-sm-4 col-4" data-id="' + nXElem + '" onchange="calculation_lab(this);">' +
                             '       <option value="">-- Pilih Laboratorium --</option>';
 
                         $.each(response.laboratory, function(index, value) {
@@ -879,28 +958,48 @@
                         })
 
                         htmlFee += '' +
-                            '   </select>' +
-                            '   <div class="row-flex col-sm-3 col-3">' +
-                            '       <label class="col-form-label col-sm-3 col-3 text-right"> IDR </label>' +
-                            '       <input type="text" name="lab_fare[]" id="lab_fare_' + nXElem + '" class="lab_fare form-control text-right col-sm-8 col-8" value="0" readonly />' +
-                            '       <div class="col-sm-1 col-1 pt-2 add-pic text-right row-lab-' + nXElem + '" onclick="javascript:$(\'#row-lab-' + nXElem + '\').remove();"><i class="far fa-window-close"></i></div>' +
-                            '   </div>' +
+                            '    </select>' +
+                            '    <div class="row-flex col-sm-2 col-2">' +
+                            '        <input type="number" name="[]" id="lab_qty_' + nXElem + '" class="lab_qty form-control col-sm-8 col-8" min="1" value="1" data-id="' + nXElem + '" onchange="calculation_lab(this, true);">' +
+                            '        <label class="col-form-label col-sm-4 col-4 text-left"> Pcs</label>' +
+                            '    </div>' +
+                            '    <div class="row-flex col-sm-3 col-3">' +
+                            '        <label class="col-form-label col-sm-1 col-1 text-right"> X</label>' +
+                            '        <label class="col-form-label col-sm-3 col-3 text-right"> IDR </label>' +
+                            '        <input type="text" name="lab_rate[]" id="lab_rate_' + nXElem + '" class="lab_rate form-control text-right col-sm-8 col-8" value="0" readonly />' +
+                            '    </div>' +
+                            '    <div class="row-flex col-sm-3 col-3">' +
+                            '        <label class="col-form-label col-sm-1 col-1 text-right"> = </label>' +
+                            '        <label class="col-form-label col-sm-3 col-3 text-right"> IDR </label>' +
+                            '        <input type="text" name="lab_subtotal[]" id="lab_subtotal_' + nXElem + '" class="room_subtotal form-control text-right col-sm-8 col-8" value="0" readonly />' +
+                            '        <div class="col-sm-1 col-1 pt-2 add-pic text-right row-lab-' + nXElem + '" onclick="javascript:$(\'#row-lab-' + nXElem + '\').remove();"><i class="far fa-window-close"></i></div>' +
+                            '    </div>' +
                             '</div>';
 
                         $(".row-lab-div").append(htmlFee)
+                        $("#lab_" + nXElem).select2({
+                            theme: 'bootstrap4'
+                        });
                     }
                 }
             })
         }
 
-        function calculation_radiology(e) {
+        function calculation_radiology(e, is_radiology = false) {
+            var radiology_rate;
             var radiology_id = $(e).attr("data-id");
+            var pcs = $("#radiology_qty_" + radiology_id).val();
             
-            var radiology_fare = $(e).val();
-                radiology_fare = radiology_fare.split("-");
-                radiology_fare = radiology_fare[1];
+            if (is_radiology === true) {
+                radiology_rate = $("#radiology_rate_" + radiology_id).val();
+            } else {
+                radiology_rate = $(e).val();
+                radiology_rate = radiology_rate.split("-");
+                radiology_rate = radiology_rate[1];
+            }
 
-            $("#radiology_fare_" + radiology_id).val(radiology_fare);
+            $("#radiology_rate_" + radiology_id).val(radiology_rate);
+            $("#radiology_subtotal_" + radiology_id).val(radiology_rate * pcs);
         }
 
         function appendRadiologyElem() {
@@ -921,7 +1020,7 @@
                     if (response.hasOwnProperty('radiology')) {
                         var htmlFee = '' +
                             '<div class="row row-radiology col-sm-12 col-12 mt-2" id="row-radiology-' + nXElem + '">'+
-                            '   <select name="radiology[]" id="radiology_' + nXElem + '" class="radiology form-control col-sm-9 col-9" data-id="' + nXElem + '" onchange="calculation_radiology(this);">' +
+                            '   <select name="radiology[]" id="radiology_' + nXElem + '" class="radiology form-control col-sm-4 col-4" data-id="' + nXElem + '" onchange="calculation_radiology(this);">' +
                             '       <option value="">-- Pilih Radiologi --</option>';
 
                         $.each(response.radiology, function(index, value) {
@@ -929,28 +1028,48 @@
                         })
 
                         htmlFee += '' +
-                            '   </select>' +
-                            '   <div class="row-flex col-sm-3 col-3">' +
-                            '       <label class="col-form-label col-sm-3 col-3 text-right"> IDR </label>' +
-                            '       <input type="text" name="radiology_fare[]" id="radiology_fare_' + nXElem + '" class="radiology_fare form-control text-right col-sm-8 col-8" value="0" readonly />' +
-                            '       <div class="col-sm-1 col-1 pt-2 add-pic text-right row-radiology-' + nXElem + '" onclick="javascript:$(\'#row-radiology-' + nXElem + '\').remove();"><i class="far fa-window-close"></i></div>' +
-                            '   </div>' +
+                            '    </select>' +
+                            '    <div class="row-flex col-sm-2 col-2">' +
+                            '        <input type="number" name="[]" id="radiology_qty_' + nXElem + '" class="radiology_qty form-control col-sm-8 col-8" min="1" value="1" data-id="' + nXElem + '" onchange="calculation_radiology(this, true);">' +
+                            '        <label class="col-form-label col-sm-4 col-4 text-left"> Pcs</label>' +
+                            '    </div>' +
+                            '    <div class="row-flex col-sm-3 col-3">' +
+                            '        <label class="col-form-label col-sm-1 col-1 text-right"> X</label>' +
+                            '        <label class="col-form-label col-sm-3 col-3 text-right"> IDR </label>' +
+                            '        <input type="text" name="radiology_rate[]" id="radiology_rate_' + nXElem + '" class="radiology_rate form-control text-right col-sm-8 col-8" value="0" readonly />' +
+                            '    </div>' +
+                            '    <div class="row-flex col-sm-3 col-3">' +
+                            '        <label class="col-form-label col-sm-1 col-1 text-right"> = </label>' +
+                            '        <label class="col-form-label col-sm-3 col-3 text-right"> IDR </label>' +
+                            '        <input type="text" name="radiology_subtotal[]" id="radiology_subtotal_' + nXElem + '" class="radiology_subtotal form-control text-right col-sm-8 col-8" value="0" readonly />' +
+                            '        <div class="col-sm-1 col-1 pt-2 add-pic text-right row-radiology-' + nXElem + '" onclick="javascript:$(\'#row-radiology-' + nXElem + '\').remove();"><i class="far fa-window-close"></i></div>' +
+                            '    </div>' +
                             '</div>';
 
                         $(".row-radiology-div").append(htmlFee)
+                        $("#radiology_" + nXElem).select2({
+                            theme: 'bootstrap4'
+                        });
                     }
                 }
             })
         }
 
-        function calculation_medic(e) {
+        function calculation_medic(e, is_medic = false) {
+            var medic_rate;
             var medic_id = $(e).attr("data-id");
+            var pcs = $("#medic_qty_" + medic_id).val();
             
-            var medic_fare = $(e).val();
-                medic_fare = medic_fare.split("-");
-                medic_fare = medic_fare[1];
+            if (is_medic === true) {
+                medic_rate = $("#medic_rate_" + medic_id).val();
+            } else {
+                medic_rate = $(e).val();
+                medic_rate = medic_rate.split("-");
+                medic_rate = medic_rate[1];
+            }
 
-            $("#medic_fare_" + medic_id).val(medic_fare);
+            $("#medic_rate_" + medic_id).val(medic_rate);
+            $("#medic_subtotal_" + medic_id).val(medic_rate * pcs);
         }
 
         function appendMedicElem() {
@@ -971,7 +1090,7 @@
                     if (response.hasOwnProperty('medic')) {
                         var htmlFee = '' +
                             '<div class="row row-medic col-sm-12 col-12 mt-2" id="row-medic-' + nXElem + '">'+
-                            '   <select name="medic[]" id="medic_' + nXElem + '" class="medic form-control col-sm-9 col-9" data-id="' + nXElem + '" onchange="calculation_medic(this);">' +
+                            '   <select name="medic[]" id="medic_' + nXElem + '" class="medic form-control col-sm-4 col-4" data-id="' + nXElem + '" onchange="calculation_medic(this);">' +
                             '       <option value="">-- Pilih Medikal --</option>';
 
                         $.each(response.medic, function(index, value) {
@@ -979,28 +1098,48 @@
                         })
 
                         htmlFee += '' +
-                            '   </select>' +
-                            '   <div class="row-flex col-sm-3 col-3">' +
-                            '       <label class="col-form-label col-sm-3 col-3 text-right"> IDR </label>' +
-                            '       <input type="text" name="medic_fare[]" id="medic_fare_' + nXElem + '" class="medic_fare form-control text-right col-sm-8 col-8" value="0" readonly />' +
-                            '       <div class="col-sm-1 col-1 pt-2 add-pic text-right row-medic-' + nXElem + '" onclick="javascript:$(\'#row-medic-' + nXElem + '\').remove();"><i class="far fa-window-close"></i></div>' +
-                            '   </div>' +
+                            '    </select>' +
+                            '    <div class="row-flex col-sm-2 col-2">' +
+                            '        <input type="number" name="[]" id="medic_qty_' + nXElem + '" class="medic_qty form-control col-sm-8 col-8" min="1" value="1" data-id="' + nXElem + '" onchange="calculation_medic(this, true);">' +
+                            '        <label class="col-form-label col-sm-4 col-4 text-left"> Pcs</label>' +
+                            '    </div>' +
+                            '    <div class="row-flex col-sm-3 col-3">' +
+                            '        <label class="col-form-label col-sm-1 col-1 text-right"> X</label>' +
+                            '        <label class="col-form-label col-sm-3 col-3 text-right"> IDR </label>' +
+                            '        <input type="text" name="medic_rate[]" id="medic_rate_' + nXElem + '" class="medic_rate form-control text-right col-sm-8 col-8" value="0" readonly />' +
+                            '    </div>' +
+                            '    <div class="row-flex col-sm-3 col-3">' +
+                            '        <label class="col-form-label col-sm-1 col-1 text-right"> = </label>' +
+                            '        <label class="col-form-label col-sm-3 col-3 text-right"> IDR </label>' +
+                            '        <input type="text" name="medic_subtotal[]" id="medic_subtotal_' + nXElem + '" class="medic_subtotal form-control text-right col-sm-8 col-8" value="0" readonly />' +
+                            '        <div class="col-sm-1 col-1 pt-2 add-pic text-right row-medic-' + nXElem + '" onclick="javascript:$(\'#row-medic-' + nXElem + '\').remove();"><i class="far fa-window-close"></i></div>' +
+                            '    </div>' +
                             '</div>';
 
                         $(".row-medic-div").append(htmlFee)
+                        $("#medic_" + nXElem).select2({
+                            theme: 'bootstrap4'
+                        });
                     }
                 }
             })
         }
 
-        function calculation_rehab(e) {
+        function calculation_rehab(e, is_rehab) {
+            var rehab_rate;
             var rehab_id = $(e).attr("data-id");
+            var pcs = $("#rehab_qty_" + rehab_id).val();
             
-            var rehab_fare = $(e).val();
-                rehab_fare = rehab_fare.split("-");
-                rehab_fare = rehab_fare[1];
+            if (is_rehab === true) {
+                rehab_rate = $("#rehab_rate_" + rehab_id).val();
+            } else {
+                rehab_rate = $(e).val();
+                rehab_rate = rehab_rate.split("-");
+                rehab_rate = rehab_rate[1];
+            }
 
-            $("#rehab_fare_" + rehab_id).val(rehab_fare);
+            $("#rehab_rate_" + rehab_id).val(rehab_rate);
+            $("#rehab_subtotal_" + rehab_id).val(rehab_rate * pcs);
         }
 
         function appendRehabElem() {
@@ -1021,7 +1160,7 @@
                     if (response.hasOwnProperty('rehab')) {
                         var htmlFee = '' +
                             '<div class="row row-rehab col-sm-12 col-12 mt-2" id="row-rehab-' + nXElem + '">'+
-                            '   <select name="rehab[]" id="rehab_' + nXElem + '" class="rehab form-control col-sm-9 col-9" data-id="' + nXElem + '" onchange="calculation_rehab(this);">' +
+                            '   <select name="rehab[]" id="rehab_' + nXElem + '" class="rehab form-control col-sm-4 col-4" data-id="' + nXElem + '" onchange="calculation_rehab(this);">' +
                             '       <option value="">-- Pilih Rehabilitasi --</option>';
 
                         $.each(response.rehab, function(index, value) {
@@ -1029,21 +1168,37 @@
                         })
 
                         htmlFee += '' +
-                            '   </select>' +
-                            '   <div class="row-flex col-sm-3 col-3">' +
-                            '       <label class="col-form-label col-sm-3 col-3 text-right"> IDR </label>' +
-                            '       <input type="text" name="rehab_fare[]" id="rehab_fare_' + nXElem + '" class="rehab_fare form-control text-right col-sm-8 col-8" value="0" readonly />' +
-                            '       <div class="col-sm-1 col-1 pt-2 add-pic text-right row-rehab-' + nXElem + '" onclick="javascript:$(\'#row-rehab-' + nXElem + '\').remove();"><i class="far fa-window-close"></i></div>' +
-                            '   </div>' +
+                            '    </select>' +
+                            '    <div class="row-flex col-sm-2 col-2">' +
+                            '        <input type="number" name="[]" id="rehab_qty_' + nXElem + '" class="rehab_qty form-control col-sm-8 col-8" min="1" value="1" data-id="' + nXElem + '" onchange="calculation_rehab(this, true);">' +
+                            '        <label class="col-form-label col-sm-4 col-4 text-left"> Pcs</label>' +
+                            '    </div>' +
+                            '    <div class="row-flex col-sm-3 col-3">' +
+                            '        <label class="col-form-label col-sm-1 col-1 text-right"> X</label>' +
+                            '        <label class="col-form-label col-sm-3 col-3 text-right"> IDR </label>' +
+                            '        <input type="text" name="rehab_rate[]" id="rehab_rate_' + nXElem + '" class="rehab_rate form-control text-right col-sm-8 col-8" value="0" readonly />' +
+                            '    </div>' +
+                            '    <div class="row-flex col-sm-3 col-3">' +
+                            '        <label class="col-form-label col-sm-1 col-1 text-right"> = </label>' +
+                            '        <label class="col-form-label col-sm-3 col-3 text-right"> IDR </label>' +
+                            '        <input type="text" name="rehab_subtotal[]" id="rehab_subtotal_' + nXElem + '" class="rehab_subtotal form-control text-right col-sm-8 col-8" value="0" readonly />' +
+                            '        <div class="col-sm-1 col-1 pt-2 add-pic text-right row-rehab-' + nXElem + '" onclick="javascript:$(\'#row-rehab-' + nXElem + '\').remove();"><i class="far fa-window-close"></i></div>' +
+                            '    </div>' +
                             '</div>';
 
                         $(".row-rehab-div").append(htmlFee)
+                        $("#rehab_" + nXElem).select2({
+                            theme: 'bootstrap4'
+                        });
                     }
                 }
             })
         }
 
         $(function() {
+            $('.select2').select2({
+                theme: 'bootstrap4'
+            });
             $.validator.setDefaults({
                 ignore: ":hidden, [contenteditable='true']:not([name])",
                 submitHandler: function(form) {
