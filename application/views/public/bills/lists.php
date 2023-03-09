@@ -56,6 +56,7 @@
                                                 <th class="dt-head-center">Rumah Sakit</th>
                                                 <th class="dt-head-center">Diagnosis</th>
                                                 <th class="dt-head-center">Kondisi Terakhir</th>
+                                                <th class="dt-head-center">Total</th>
                                                 <th class="dt-head-center">Action</th>
                                             </tr>
                                         </thead>
@@ -489,6 +490,7 @@
                     { data: 'hospital_name' },
                     { data: 'diagnose' },
                     { data: 'last_condition' },
+                    { data: 'total' },
                     { data: 'action' },
                 ],
                 "columnDefs":[
