@@ -59,6 +59,8 @@
                                                 <th class="dt-head-center">Rumah Sakit</th>
                                                 <th class="dt-head-center">Diagnosis</th>
                                                 <th class="dt-head-center">Kondisi Terakhir</th>
+                                                <th class="dt-head-center">Sub Total</th>
+                                                <th class="dt-head-center">COB</th>
                                                 <th class="dt-head-center">Total</th>
                                                 <th class="dt-head-center">Action</th>
                                             </tr>
@@ -240,6 +242,14 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="form-group col-12">
+                                    <div class="row">
+                                        <label for="action" class="col-form-label col-sm-3 col-3">Keterangan</label>
+                                        <div class="input-group col-sm-9 col-9">
+                                            <textarea name="verification" id="verification" class="form-control" placeholder="Hasil Verifikasi Pasien" autocomplete="off" rows="2" required="required"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -247,7 +257,7 @@
                         <label class="modal-seg col-12">Informasi Pelayanan Kesehatan</label>
                         <div class="col-12 col-sm-12">
                             <div class="row">
-                                <div class="form-group col-12">
+                                <div class="form-group col-12 separate-div-bottom">
                                     <div class="row">
                                         <label for="cob" class="col-form-label col-sm-3 col-3">COB Jasa Raharja</label>
                                         <div class="input-group col-sm-9 col-9">
@@ -257,7 +267,7 @@
                                                         <!-- <input type="text" name="cob_value[]" id="cob_value_1" placeholder="Contoh: Paracetamol" class="form-control col-sm-9 col-9" /> -->
                                                         <div class="row-flex col-sm-12 col-12 no-padding">
                                                             <label class="col-form-label col-sm-1 col-1 text-left"> IDR </label>
-                                                            <input type="text" name="cob_fare[]" id="cob_fare_1" placeholder="200000" class="form-control col-sm-11 col-11" />
+                                                            <input type="text" name="cob_subtotal[]" id="cob_subtotal_1" class="form-control col-sm-11 col-11" value="0" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -265,7 +275,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group col-12">
+                                <div class="form-group col-12 separate-div-bottom">
                                     <div class="row">
                                         <label for="yankes" class="col-form-label col-sm-3 col-3">Jenis Pelayanan</label>
                                         <div class="input-group col-sm-9 col-9">
@@ -277,7 +287,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group col-12" id="div_room" style="display: none;">
+                                <div class="form-group col-12 separate-div-bottom" id="div_room" style="display: none;">
                                     <div class="row">
                                         <label for="room" class="col-form-label col-sm-3 col-3">Kamar</label>
                                         <div class="input-group col-sm-9 col-9">
@@ -308,7 +318,26 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group col-12" id="div_admin" style="display: none;">
+                                <div class="form-group col-12 separate-div-bottom" id="div_room_nurse" style="display: none;">
+                                    <div class="row">
+                                        <label for="room-nurse" class="col-form-label col-sm-3 col-3">Jasa Perawat Kamar</label>
+                                        <div class="input-group col-sm-9 col-9">
+                                            <div class="col-sm-12 col-12">
+                                                <div class="row row-room-nurse-div" id="row-room-nurse-div" data-count="1">
+                                                    <div class="row row-room-nurse col-sm-12 col-12" id="row-room-nurse-1">
+                                                        <input type="text" name="room_nurse[]" id="room_nurse_1" placeholder="Contoh: Jasa Perawat Kamar" class="form-control col-sm-9 col-9" />
+                                                        <div class="row-flex col-sm-3 col-3">
+                                                            <label class="col-form-label col-sm-3 col-3 text-right"> IDR </label>
+                                                            <input type="text" name="room_nurse_subtotal[]" id="room_nurse_subtotal_1" class="form-control text-right col-sm-8 col-8" value="0" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <label class="col-form-label add-pic" onclick="appendRoomNurseElem();">+ Tambahkan Perawat Kamar</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-12 separate-div-bottom" id="div_admin" style="display: none;">
                                     <div class="row">
                                         <label for="admin" class="col-form-label col-sm-3 col-3">Administrasi</label>
                                         <div class="input-group col-sm-9 col-9">
@@ -329,7 +358,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group col-12">
+                                <div class="form-group col-12 separate-div-bottom" id="div_medicine" style="display: none;">
                                     <div class="row">
                                         <label for="medicine" class="col-form-label col-sm-3 col-3">Obat-Obatan</label>
                                         <div class="input-group col-sm-9 col-9">
@@ -339,7 +368,7 @@
                                                         <input type="text" name="medicine_value[]" id="medicine_value_1" placeholder="Contoh: Paracetamol" class="form-control col-sm-9 col-9" />
                                                         <div class="row-flex col-sm-3 col-3">
                                                             <label class="col-form-label col-sm-3 col-3 text-right"> IDR </label>
-                                                            <input type="text" name="medicine_fare[]" id="medicine_fare_1" placeholder="200000" class="form-control col-sm-8 col-8" />
+                                                            <input type="text" name="medicine_subtotal[]" id="medicine_subtotal_1" class="form-control text-right col-sm-8 col-8" value="0" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -348,7 +377,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group col-12" id="div_docter" style="display: none;">
+                                <div class="form-group col-12 separate-div-bottom" id="div_docter" style="display: none;">
                                     <div class="row">
                                         <label for="docter" class="col-form-label col-sm-3 col-3">Dokter</label>
                                         <div class="input-group col-sm-9 col-9">
@@ -360,16 +389,60 @@
                                                         </select>
                                                         <div class="row-flex col-sm-3 col-3">
                                                             <label class="col-form-label col-sm-3 col-3 text-right"> IDR </label>
-                                                            <input type="text" name="docter_fare[]" id="docter_fare_1" class="form-control text-right col-sm-8 col-8" value="0" readonly />
+                                                            <input type="text" name="docter_subtotal[]" id="docter_subtotal_1" class="form-control text-right col-sm-8 col-8" value="0" readonly />
                                                         </div>
                                                     </div>
+                                                    <div class="row row-docter-do-div col-sm-12 col-12" id="row-docter-do-div-1" data-count="0">
+                                                    </div>
+                                                    <label class="col-form-label add-pic ml-3" onclick="appendDocterDoElem(1);">+ Tambahkan Tindakan Dokter</label>
                                                 </div>
+
                                                 <label class="col-form-label add-pic" onclick="appendDocterElem();">+ Tambahkan Dokter</label>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group col-12" id="div_lab" style="display: none;">
+                                <div class="form-group col-12 separate-div-bottom" id="div_surgery" style="display: none;">
+                                    <div class="row">
+                                        <label for="surgery" class="col-form-label col-sm-3 col-3">Dokter Anestesi</label>
+                                        <div class="input-group col-sm-9 col-9">
+                                            <div class="col-sm-12 col-12">
+                                                <div class="row row-surgery-div" id="row-surgery-div" data-count="1">
+                                                    <div class="row row-surgery col-sm-12 col-12" id="row-surgery-1">
+                                                        <select name="surgery[]" id="surgery_1" class="surgery form-control select2 col-sm-9 col-9" data-id="1" onchange="calculation_surgery(this);">
+                                                            <option value="">-- Pilih Dokter Anestesi --</option>
+                                                        </select>
+                                                        <div class="row-flex col-sm-3 col-3">
+                                                            <label class="col-form-label col-sm-3 col-3 text-right"> IDR </label>
+                                                            <input type="text" name="surgery_subtotal[]" id="surgery_subtotal_1" class="form-control text-right col-sm-8 col-8" value="0" readonly />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <label class="col-form-label add-pic" onclick="appendSurgeryElem();">+ Tambahkan Dokter Anestesi</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-12 separate-div-bottom" id="div_surgery_nurse" style="display: none;">
+                                    <div class="row">
+                                        <label for="surgery-nurse" class="col-form-label col-sm-3 col-3">Jasa Perawat Operasi</label>
+                                        <div class="input-group col-sm-9 col-9">
+                                            <div class="col-sm-12 col-12">
+                                                <div class="row row-surgery-nurse-div" id="row-surgery-nurse-div" data-count="1">
+                                                    <div class="row row-surgery-nurse col-sm-12 col-12" id="row-surgery-nurse-1">
+                                                        <input type="text" name="surgery_nurse[]" id="surgery_nurse_1" placeholder="Contoh: Jasa Perawat Anestesi" class="form-control col-sm-9 col-9" />
+                                                        <div class="row-flex col-sm-3 col-3">
+                                                            <label class="col-form-label col-sm-3 col-3 text-right"> IDR </label>
+                                                            <input type="text" name="surgery_nurse_subtotal[]" id="surgery_nurse_subtotal_1" class="form-control text-right col-sm-8 col-8" value="0" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <label class="col-form-label add-pic" onclick="appendSurgeryNurseElem();">+ Tambahkan Perawat Operasi</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-12 separate-div-bottom" id="div_lab" style="display: none;">
                                     <div class="row">
                                         <label for="lab" class="col-form-label col-sm-3 col-3">Laboratorium</label>
                                         <div class="input-group col-sm-9 col-9">
@@ -400,7 +473,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group col-12" id="div_radiology" style="display: none;">
+                                <div class="form-group col-12 separate-div-bottom" id="div_radiology" style="display: none;">
                                     <div class="row">
                                         <label for="radiology" class="col-form-label col-sm-3 col-3">Radiologi</label>
                                         <div class="input-group col-sm-9 col-9">
@@ -431,7 +504,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group col-12" id="div_medic" style="display: none;">
+                                <div class="form-group col-12 separate-div-bottom" id="div_medic" style="display: none;">
                                     <div class="row">
                                         <label for="medic" class="col-form-label col-sm-3 col-3">Medikal</label>
                                         <div class="input-group col-sm-9 col-9">
@@ -462,7 +535,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group col-12" id="div_rehab" style="display: none;">
+                                <div class="form-group col-12 separate-div-bottom" id="div_rehab" style="display: none;">
                                     <div class="row">
                                         <label for="rehab" class="col-form-label col-sm-3 col-3">Rehabilitasi</label>
                                         <div class="input-group col-sm-9 col-9">
@@ -553,6 +626,8 @@
                     { data: 'hospital_name' },
                     { data: 'diagnose' },
                     { data: 'last_condition' },
+                    { data: 'subtotal' },
+                    { data: 'cob' },
                     { data: 'total' },
                     { data: 'action' },
                 ],
@@ -609,6 +684,16 @@
                         $(".docter").html(htmlDocter)
                     }
 
+                    if (response.hasOwnProperty('surgery')) {
+                        $("#div_surgery").show();
+                        var htmlDocter = '<option value="">-- Pilih Dokter Anestesi --</option>';
+
+                        $.each(response.surgery, function(index, value) {
+                            htmlDocter += '<option value="' + value.id + '-' + value.fare + '">' + value.name + '</option>';
+                        })
+                        $(".surgery").html(htmlDocter)
+                    }
+
                     if (response.hasOwnProperty('laboratory')) {
                         $("#div_lab").show();
                         var htmlLaboratory = '<option value="">-- Pilih Laboratorium --</option>';
@@ -648,6 +733,10 @@
                         })
                         $(".rehab").html(htmlRehab)
                     }
+
+                    $("#div_room_nurse").show();
+                    $("#div_medicine").show();
+                    $("#div_surgery_nurse").show();
                 }
             });
         })
@@ -715,20 +804,20 @@
         }
 
         function calculation_room(e, is_rooms = false) {
-            var room_fare;
+            var room_subtotal;
             var room_id = $(e).attr("data-id");
             var days = $("#room_days_" + room_id).val();
             
             if (is_rooms === true) {
-                room_fare = $("#room_rate_" + room_id).val();
+                room_subtotal = $("#room_rate_" + room_id).val();
             } else {
-                room_fare = $(e).val();
-                room_fare = room_fare.split("-");
-                room_fare = room_fare[1];
+                room_subtotal = $(e).val();
+                room_subtotal = room_subtotal.split("-");
+                room_subtotal = room_subtotal[1];
             }
 
-            $("#room_rate_" + room_id).val(room_fare);
-            $("#room_subtotal_" + room_id).val(room_fare * days);
+            $("#room_rate_" + room_id).val(room_subtotal);
+            $("#room_subtotal_" + room_id).val(room_subtotal * days);
         }
 
         $(".room").on("change", function() {
@@ -767,7 +856,7 @@
                         htmlRoom += '' +
                             '    </select>' +
                             '    <div class="row-flex col-sm-2 col-2">' +
-                            '        <input type="number" name="[]" id="room_days_' + nXElem + '" class="room_days form-control col-sm-8 col-8" min="1" value="1" data-id="' + nXElem + '" onchange="calculation_room(this, true);">' +
+                            '        <input type="number" name="room_days[]" id="room_days_' + nXElem + '" class="room_days form-control col-sm-8 col-8" min="1" value="1" data-id="' + nXElem + '" onchange="calculation_room(this, true);">' +
                             '        <label class="col-form-label col-sm-4 col-4 text-left"> Hari</label>' +
                             '    </div>' +
                             '    <div class="row-flex col-sm-3 col-3">' +
@@ -790,6 +879,23 @@
                     }
                 }
             })
+        }
+
+        function appendRoomNurseElem() {
+            var xElem = parseInt($(".row-room-nurse-div").attr("data-count"));
+            var nXElem = xElem + 1;
+            $(".row-room-nurse-div").attr("data-count", (xElem + 1));
+
+            $(".row-room-nurse-div").append(''+
+                '<div class="row row-room-nurse col-sm-12 col-12 mt-2" id="row-room-nurse-' + nXElem + '">' +
+                '   <input type="text" name="room_nurse[]" id="room_nurse_' + nXElem + '" placeholder="Contoh: Jasa Perawat kamar" class="form-control col-sm-9 col-9" />' +
+                '   <div class="row-flex col-sm-3 col-3">' +
+                '       <label class="col-form-label col-sm-3 col-3 text-right"> IDR </label>' +
+                '       <input type="text" name="room_nurse_subtotal[]" id="room_nurse_subtotal" class="form-control text-right col-sm-8 col-8" value="0" />' +
+                '       <div class="col-sm-1 col-1 pt-2 add-pic text-right row-room-nurse-' + nXElem + '" onclick="javascript:$(\'#row-room-nurse-' + nXElem + '\').remove();"><i class="far fa-window-close"></i></div>' +
+                '   </div>' +
+                '</div>' +
+            '');
         }
 
         function calculation_admin(e) {
@@ -855,7 +961,7 @@
                 '   <input type="text" name="medicine_value[]" id="medicine_value_' + nXElem + '" placeholder="Contoh: Paracetamol" class="form-control col-sm-9 col-9" />' +
                 '   <div class="row-flex col-sm-3 col-3">' +
                 '       <label class="col-form-label col-sm-3 col-3 text-right"> IDR </label>' +
-                '       <input type="text" name="medicine_fare[]" id="medicine_fare" placeholder="200000" class="form-control col-sm-8 col-8" />' +
+                '       <input type="text" name="medicine_subtotal[]" id="medicine_subtotal" class="form-control text-right col-sm-8 col-8" value="0" />' +
                 '       <div class="col-sm-1 col-1 pt-2 add-pic text-right row-medicine-' + nXElem + '" onclick="javascript:$(\'#row-medicine-' + nXElem + '\').remove();"><i class="far fa-window-close"></i></div>' +
                 '   </div>' +
                 '</div>' +
@@ -865,11 +971,11 @@
         function calculation_docter(e) {
             var docter_id = $(e).attr("data-id");
             
-            var docter_fare = $(e).val();
-                docter_fare = docter_fare.split("-");
-                docter_fare = docter_fare[1];
+            var docter_subtotal = $(e).val();
+                docter_subtotal = docter_subtotal.split("-");
+                docter_subtotal = docter_subtotal[1];
 
-            $("#docter_fare_" + docter_id).val(docter_fare);
+            $("#docter_subtotal_" + docter_id).val(docter_subtotal);
         }
 
         function appendDocterElem() {
@@ -901,10 +1007,13 @@
                             '   </select>' +
                             '   <div class="row-flex col-sm-3 col-3">' +
                             '       <label class="col-form-label col-sm-3 col-3 text-right"> IDR </label>' +
-                            '       <input type="text" name="docter_fare[]" id="docter_fare_' + nXElem + '" class="docter_fare form-control text-right col-sm-8 col-8" value="0" readonly />' +
+                            '       <input type="text" name="docter_subtotal[]" id="docter_subtotal_' + nXElem + '" class="docter_subtotal form-control text-right col-sm-8 col-8" value="0" readonly />' +
                             '       <div class="col-sm-1 col-1 pt-2 add-pic text-right row-docter-' + nXElem + '" onclick="javascript:$(\'#row-docter-' + nXElem + '\').remove();"><i class="far fa-window-close"></i></div>' +
                             '   </div>' +
-                            '</div>';
+                            '</div>' +
+                            '<div class="row row-docter-do-div col-sm-12 col-12" id="row-docter-do-div-' + nXElem + '" data-count="' + nXElem + '">' +
+                            '</div>' +
+                            '<label class="col-form-label add-pic ml-3" onclick="appendDocterDoElem(' + nXElem + ');">+ Tambahkan Tindakan Dokter</label>';
 
                         $(".row-docter-div").append(htmlFee)
                         $("#docter_" + nXElem).select2({
@@ -913,6 +1022,94 @@
                     }
                 }
             })
+        }
+
+        function appendDocterDoElem(id) {
+            var xElem = parseInt($(".row-docter-do-div").attr("data-count"));
+            var nXElem = xElem + 1;
+            $(".row-docter-do-div").attr("data-count", (xElem + 1));
+
+            htmlFee = ''+
+                '<div class="row row-docter-do mt-2 col-sm-12 col-12" id="row-docter-do-' + nXElem + '">' +
+                '    <input type="text" name="docter_do_value[' + id + '][]" id="docter_do_value_' + nXElem + '" placeholder="Contoh: Kunjungan" class="form-control col-sm-9 col-9" />' +
+                '    <div class="row-flex col-sm-3 col-3">' +
+                '        <label class="col-form-label col-sm-3 col-3 text-right"> IDR </label>' +
+                '        <input type="text" name="docter_do_subtotal[' + id + '][]" id="docter_do_subtotal_' + nXElem + '" class="form-control text-right col-sm-8 col-8" value="0" />' +
+                '        <div class="col-sm-1 col-1 pt-2 add-pic text-right row-docter-' + nXElem + '" onclick="javascript:$(\'#row-docter-do-' + nXElem + '\').remove();"><i class="far fa-window-close"></i></div>' +
+                '    </div>' +
+                '</div>';
+
+            $("#row-docter-do-div-" + id).append(htmlFee)
+        }
+
+        function calculation_surgery(e) {
+            var surgery_id = $(e).attr("data-id");
+            
+            var surgery_subtotal = $(e).val();
+                surgery_subtotal = surgery_subtotal.split("-");
+                surgery_subtotal = surgery_subtotal[1];
+
+            $("#surgery_subtotal_" + surgery_id).val(surgery_subtotal);
+        }
+
+        function appendSurgeryElem() {
+            var xElem = parseInt($(".row-surgery-div").attr("data-count"));
+            var nXElem = xElem + 1;
+            $(".row-surgery-div").attr("data-count", (xElem + 1));
+
+            var rs_id = ($("#rs_id").find(":selected").val());
+            $.ajax({
+                url: '<?php echo base_url("master/datas/layanan"); ?>',
+                type: "post",
+                dataType: "json",
+                data: {
+                    rs_id: rs_id
+                },
+                success: function(response) {
+                    $('.overlay-loading').hide();
+                    if (response.hasOwnProperty('surgery')) {
+                        var htmlFee = '' +
+                            '<div class="row row-surgery col-sm-12 col-12 mt-2" id="row-surgery-' + nXElem + '">'+
+                            '   <select name="surgery[]" id="surgery_' + nXElem + '" class="surgery form-control col-sm-9 col-9" data-id="' + nXElem + '" onchange="calculation_surgery(this);">' +
+                            '       <option value="">-- Pilih Dokter Anestesi --</option>';
+
+                        $.each(response.surgery, function(index, value) {
+                            htmlFee += '<option value="' + value.id + '-' + value.fare + '">' + value.name + '</option>';
+                        })
+
+                        htmlFee += '' +
+                            '   </select>' +
+                            '   <div class="row-flex col-sm-3 col-3">' +
+                            '       <label class="col-form-label col-sm-3 col-3 text-right"> IDR </label>' +
+                            '       <input type="text" name="surgery_subtotal[]" id="surgery_subtotal_' + nXElem + '" class="surgery_subtotal form-control text-right col-sm-8 col-8" value="0" readonly />' +
+                            '       <div class="col-sm-1 col-1 pt-2 add-pic text-right row-surgery-' + nXElem + '" onclick="javascript:$(\'#row-surgery-' + nXElem + '\').remove();"><i class="far fa-window-close"></i></div>' +
+                            '   </div>' +
+                            '</div>';
+
+                        $(".row-surgery-div").append(htmlFee)
+                        $("#surgery_" + nXElem).select2({
+                            theme: 'bootstrap4'
+                        });
+                    }
+                }
+            })
+        }
+
+        function appendSurgeryNurseElem() {
+            var xElem = parseInt($(".row-surgery-nurse-div").attr("data-count"));
+            var nXElem = xElem + 1;
+            $(".row-surgery-nurse-div").attr("data-count", (xElem + 1));
+
+            $(".row-surgery-nurse-div").append(''+
+                '<div class="row row-surgery-nurse col-sm-12 col-12 mt-2" id="row-surgery-nurse-' + nXElem + '">' +
+                '   <input type="text" name="surgery_nurse[]" id="surgery_nurse_' + nXElem + '" placeholder="Contoh: Jasa Perawat Anestesi" class="form-control col-sm-9 col-9" />' +
+                '   <div class="row-flex col-sm-3 col-3">' +
+                '       <label class="col-form-label col-sm-3 col-3 text-right"> IDR </label>' +
+                '       <input type="text" name="surgery_nurse_subtotal[]" id="surgery_nurse_subtotal" class="form-control text-right col-sm-8 col-8" value="0" />' +
+                '       <div class="col-sm-1 col-1 pt-2 add-pic text-right row-surgery-nurse-' + nXElem + '" onclick="javascript:$(\'#row-surgery-nurse-' + nXElem + '\').remove();"><i class="far fa-window-close"></i></div>' +
+                '   </div>' +
+                '</div>' +
+            '');
         }
 
         function calculation_lab(e, is_lab = false) {
@@ -960,7 +1157,7 @@
                         htmlFee += '' +
                             '    </select>' +
                             '    <div class="row-flex col-sm-2 col-2">' +
-                            '        <input type="number" name="[]" id="lab_qty_' + nXElem + '" class="lab_qty form-control col-sm-8 col-8" min="1" value="1" data-id="' + nXElem + '" onchange="calculation_lab(this, true);">' +
+                            '        <input type="number" name="lab_qty[]" id="lab_qty_' + nXElem + '" class="lab_qty form-control col-sm-8 col-8" min="1" value="1" data-id="' + nXElem + '" onchange="calculation_lab(this, true);">' +
                             '        <label class="col-form-label col-sm-4 col-4 text-left"> Pcs</label>' +
                             '    </div>' +
                             '    <div class="row-flex col-sm-3 col-3">' +
@@ -1030,7 +1227,7 @@
                         htmlFee += '' +
                             '    </select>' +
                             '    <div class="row-flex col-sm-2 col-2">' +
-                            '        <input type="number" name="[]" id="radiology_qty_' + nXElem + '" class="radiology_qty form-control col-sm-8 col-8" min="1" value="1" data-id="' + nXElem + '" onchange="calculation_radiology(this, true);">' +
+                            '        <input type="number" name="radiology_qty[]" id="radiology_qty_' + nXElem + '" class="radiology_qty form-control col-sm-8 col-8" min="1" value="1" data-id="' + nXElem + '" onchange="calculation_radiology(this, true);">' +
                             '        <label class="col-form-label col-sm-4 col-4 text-left"> Pcs</label>' +
                             '    </div>' +
                             '    <div class="row-flex col-sm-3 col-3">' +
@@ -1100,7 +1297,7 @@
                         htmlFee += '' +
                             '    </select>' +
                             '    <div class="row-flex col-sm-2 col-2">' +
-                            '        <input type="number" name="[]" id="medic_qty_' + nXElem + '" class="medic_qty form-control col-sm-8 col-8" min="1" value="1" data-id="' + nXElem + '" onchange="calculation_medic(this, true);">' +
+                            '        <input type="number" name="medic_qty[]" id="medic_qty_' + nXElem + '" class="medic_qty form-control col-sm-8 col-8" min="1" value="1" data-id="' + nXElem + '" onchange="calculation_medic(this, true);">' +
                             '        <label class="col-form-label col-sm-4 col-4 text-left"> Pcs</label>' +
                             '    </div>' +
                             '    <div class="row-flex col-sm-3 col-3">' +
@@ -1170,7 +1367,7 @@
                         htmlFee += '' +
                             '    </select>' +
                             '    <div class="row-flex col-sm-2 col-2">' +
-                            '        <input type="number" name="[]" id="rehab_qty_' + nXElem + '" class="rehab_qty form-control col-sm-8 col-8" min="1" value="1" data-id="' + nXElem + '" onchange="calculation_rehab(this, true);">' +
+                            '        <input type="number" name="rehab_qty[]" id="rehab_qty_' + nXElem + '" class="rehab_qty form-control col-sm-8 col-8" min="1" value="1" data-id="' + nXElem + '" onchange="calculation_rehab(this, true);">' +
                             '        <label class="col-form-label col-sm-4 col-4 text-left"> Pcs</label>' +
                             '    </div>' +
                             '    <div class="row-flex col-sm-3 col-3">' +

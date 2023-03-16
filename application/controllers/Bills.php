@@ -37,7 +37,7 @@ class Bills extends web_base
         }
     }
 
-    public function save_patient()
+    public function save_bills()
     {
         try {
             $params = (!is_null($this->input->post()) && !empty($this->input->post())) ? $this->input->post() : null;

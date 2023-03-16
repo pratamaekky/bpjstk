@@ -47,8 +47,11 @@ class Save_bills
             "last_rajal" => $this->_params["last_rajal"],
             "diagnose" => $this->_params["diagnose"],
             "dx_sekunder" => $this->_params["dx_sekunder"],
-            "stmb" => json_encode($this->_params["stmb"]),
             "action" => $this->_params["action"],
+            "verification" => $this->_params["verification"],
+            "cob" => $this->_params["cob_subtotal"][0],
+            "stmb" => json_encode($this->_params["stmb"]),
+            "total" => 0
         ];
 
         $idBills = $this->CI->mbills->save($dataBills);
@@ -68,13 +71,35 @@ class Save_bills
                             "yankes" => $yankes,
                             "type" => "room",
                             "value" => "",
-                            "value_id" => $ro[0],
-                            "fare" => $ro[1],
-                            "qty" => $room_days[$key],
-                            "total" => $room_subtotal[$key]
+                            "value_id" => intval($ro[0]),
+                            "fare" => intval($ro[1]),
+                            "qty" => intval($room_days[$key]),
+                            "total" => intval($room_subtotal[$key])
                         ];
 
                         $bill_detail[] = $bill_room;
+                        $this->CI->mbills->saveBillsDetail($bill_room);
+                    }
+                }
+            }
+
+            if (isset($this->_params["room_nurse"]) && !empty($this->_params["room_nurse"]) && isset($this->_params["room_nurse_subtotal"]) && !empty($this->_params["room_nurse_subtotal"])) {
+                foreach ($this->_params["room_nurse"] as $key => $roomNurse) {
+                    if (!empty($roomNurse)) {
+                        $roomNurse_subtotal = $this->_params["room_subtotal"];
+
+                        $bill_room_nurse = [
+                            "id_bills" => $idBills,
+                            "yankes" => $yankes,
+                            "type" => "room_nurse",
+                            "value" => $roomNurse,
+                            "value_id" => 0,
+                            "fare" => intval($roomNurse_subtotal[$key]),
+                            "qty" => 1,
+                            "total" => intval($roomNurse_subtotal[$key])
+                        ];
+
+                        $bill_detail[] = $bill_room_nurse;
                         $this->CI->mbills->saveBillsDetail($bill_room);
                     }
                 }
@@ -88,10 +113,10 @@ class Save_bills
                             "yankes" => $yankes,
                             "type" => "admin",
                             "value" => "",
-                            "value_id" => explode("-", $admin)[0],
-                            "fare" => explode("-", $admin)[1],
-                            "qty" => 0,
-                            "total" => explode("-", $admin)[1]
+                            "value_id" => intval(explode("-", $admin)[0]),
+                            "fare" => intval(explode("-", $admin)[1]),
+                            "qty" => 1,
+                            "total" => intval(explode("-", $admin)[1])
                         ];
 
                         $bill_detail[] = $bill_admin;
@@ -100,7 +125,7 @@ class Save_bills
                 }
             }
 
-            if (isset($this->_params["medicine_value"]) && !empty($this->_params["medicine_value"]) && isset($this->_params["medicine_fare"]) && !empty($this->_params["medicine_fare"])) {
+            if (isset($this->_params["medicine_value"]) && !empty($this->_params["medicine_value"]) && isset($this->_params["medicine_subtotal"]) && !empty($this->_params["medicine_subtotal"])) {
                 foreach ($this->_params["medicine_value"] as $key => $medicine) {
                     if (!empty($medicine)) {
                         $bill_medicine = [
@@ -109,9 +134,9 @@ class Save_bills
                             "type" => "medicine",
                             "value" => $medicine,
                             "value_id" => 0,
-                            "fare" => $this->_params["medicine_fare"][$key],
-                            "qty" => 0,
-                            "total" => $this->_params["medicine_fare"][$key]
+                            "fare" => intval($this->_params["medicine_subtotal"][$key]),
+                            "qty" => 1,
+                            "total" => intval($this->_params["medicine_subtotal"][$key])
                         ];
 
                         $bill_detail[] = $bill_medicine;
@@ -128,14 +153,78 @@ class Save_bills
                             "yankes" => $yankes,
                             "type" => "docter",
                             "value" => "",
-                            "value_id" => explode("-", $docter)[0],
-                            "fare" => explode("-", $docter)[1],
+                            "value_id" => intval(explode("-", $docter)[0]),
+                            "fare" => intval(explode("-", $docter)[1]),
                             "qty" => 0,
-                            "total" => explode("-", $docter)[1]
+                            "total" => intval(explode("-", $docter)[1])
                         ];
 
                         $bill_detail[] = $bill_docter;
-                        $this->CI->mbills->saveBillsDetail($bill_docter);
+                        $idBillsDocter = $this->CI->mbills->saveBillsDetail($bill_docter);
+
+                        $xDo = 0;
+                        if ($idBillsDocter > 0) {
+                            if (isset($this->_params["docter_do_value"]) && !empty($this->_params["docter_do_value"]) && isset($this->_params["docter_do_subtotal"]) && !empty($this->_params["docter_do_subtotal"])) {
+                                $arrDocterDoValue = array_values($this->_params["docter_do_value"]);
+                                $arrDocterDoST = array_values($this->_params["docter_do_subtotal"]);
+                                foreach ($arrDocterDoValue[$key] as $keyDocterDo => $docterDo) {
+                                    $bill_docter_do = [
+                                        "id_bills" => $idBills,
+                                        "yankes" => $yankes,
+                                        "type" => "docter_do",
+                                        "value" => $docterDo,
+                                        "value_id" => intval($idBillsDocter),
+                                        "fare" => intval($arrDocterDoST[$key][$keyDocterDo]),
+                                        "qty" => 1,
+                                        "total" => intval($arrDocterDoST[$key][$keyDocterDo])
+                                    ];
+
+                                    $bill_detail[] = $bill_docter_do;
+                                    $this->CI->mbills->saveBillsDetail($bill_docter_do);
+                                }
+                            }
+                        }
+
+                    }
+                }
+            }
+
+            if (isset($this->_params["surgery"]) && !empty($this->_params["surgery"])) {
+                foreach ($this->_params["surgery"] as $key => $surgery) {
+                    if (!empty($surgery)) {
+                        $bill_surgery = [
+                            "id_bills" => $idBills,
+                            "yankes" => $yankes,
+                            "type" => "surgery",
+                            "value" => "",
+                            "value_id" => intval(explode("-", $surgery)[0]),
+                            "fare" => intval(explode("-", $surgery)[1]),
+                            "qty" => 0,
+                            "total" => intval(explode("-", $surgery)[1])
+                        ];
+
+                        $bill_detail[] = $bill_surgery;
+                        $this->CI->mbills->saveBillsDetail($bill_surgery);
+                    }
+                }
+            }
+
+            if (isset($this->_params["surgery_nurse"]) && !empty($this->_params["surgery_nurse"]) && isset($this->_params["surgery_nurse_subtotal"]) && !empty($this->_params["surgery_nurse_subtotal"])) {
+                foreach ($this->_params["surgery_nurse"] as $key => $surgery_nurse) {
+                    if (!empty($surgery_nurse)) {
+                        $bill_surgery_nurse = [
+                            "id_bills" => $idBills,
+                            "yankes" => $yankes,
+                            "type" => "surgery_nurse",
+                            "value" => $surgery_nurse,
+                            "value_id" => 0,
+                            "fare" => intval($this->_params["surgery_nurse_subtotal"][$key]),
+                            "qty" => 1,
+                            "total" => intval($this->_params["surgery_nurse_subtotal"][$key])
+                        ];
+
+                        $bill_detail[] = $bill_surgery_nurse;
+                        $this->CI->mbills->saveBillsDetail($bill_medicine);
                     }
                 }
             }
@@ -148,10 +237,10 @@ class Save_bills
                             "yankes" => $yankes,
                             "type" => "lab",
                             "value" => "",
-                            "value_id" => explode("-", $lab)[0],
-                            "fare" => explode("-", $lab)[1],
-                            "qty" => 0,
-                            "total" => explode("-", $lab)[1]
+                            "value_id" => intval(explode("-", $lab)[0]),
+                            "fare" => intval(explode("-", $lab)[1]),
+                            "qty" => intval($this->_params["lab_qty"][$key]),
+                            "total" => intval($this->_params["lab_subtotal"][$key])
                         ];
 
                         $bill_detail[] = $bill_lab;
@@ -168,10 +257,10 @@ class Save_bills
                             "yankes" => $yankes,
                             "type" => "radiology",
                             "value" => "",
-                            "value_id" => explode("-", $radiology)[0],
-                            "fare" => explode("-", $radiology)[1],
-                            "qty" => 0,
-                            "total" => explode("-", $radiology)[1]
+                            "value_id" => intval(explode("-", $radiology)[0]),
+                            "fare" => intval(explode("-", $radiology)[1]),
+                            "qty" => intval($this->_params["radiology_qty"][$key]),
+                            "total" => intval($this->_params["radiology_subtotal"][$key])
                         ];
 
                         $bill_detail[] = $bill_radiology;
@@ -188,10 +277,10 @@ class Save_bills
                             "yankes" => $yankes,
                             "type" => "medic",
                             "value" => "",
-                            "value_id" => explode("-", $medic)[0],
-                            "fare" => explode("-", $medic)[1],
-                            "qty" => 0,
-                            "total" => explode("-", $medic)[1]
+                            "value_id" => intval(explode("-", $medic)[0]),
+                            "fare" => intval(explode("-", $medic)[1]),
+                            "qty" => intval($this->_params["medic_qty"][$key]),
+                            "total" => intval($this->_params["medic_subtotal"][$key])
                         ];
 
                         $bill_detail[] = $bill_medic;
@@ -208,10 +297,10 @@ class Save_bills
                             "yankes" => $yankes,
                             "type" => "rehab",
                             "value" => "",
-                            "value_id" => explode("-", $rehab)[0],
-                            "fare" => explode("-", $rehab)[1],
-                            "qty" => 0,
-                            "total" => explode("-", $rehab)[1]
+                            "value_id" => intval(explode("-", $rehab)[0]),
+                            "fare" => intval(explode("-", $rehab)[1]),
+                            "qty" => intval($this->_params["rehab_qty"][$key]),
+                            "total" => intval($this->_params["rehab_subtotal"][$key])
                         ];
 
                         $bill_detail[] = $bill_rehab;
@@ -221,15 +310,17 @@ class Save_bills
             }
         }
 
-        $totalBills = 0;
+        $subTotalBills = 0;
         if (!empty($bill_detail)) {
             foreach ($bill_detail as $detail) {
-                $totalBills += intval($detail["total"]);
+                $subTotalBills += intval($detail["total"]);
             }
         }
+        $cob = intval($this->_params["cob_subtotal"][0]);
+        $totalBills = $subTotalBills - $cob;
 
-        if ($totalBills > 0)
-            $this->CI->mbills->updateTotalBills(["id" => $idBills, "total" => $totalBills]);
+        if ($subTotalBills > 0 && $totalBills > 0)
+            $this->CI->mbills->updateTotalBills(["id" => $idBills, "subtotal" => $subTotalBills, "total" => $totalBills]);
 
         if ($idBills > 0) {
             $responsecode = 200;
