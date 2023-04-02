@@ -51,6 +51,51 @@ class Mbills extends CI_Model
         return null;
     }
 
+    public function getRowById($id)
+    {
+        $this->db->select("*");
+        $this->db->from("tbl_bills");
+        $this->db->where("id", $id);
+
+        $query = $this->db->get();
+
+        if (!is_null($query) && $query->num_rows() > 0)
+            return $query->row_array();
+
+        return null;
+    }
+
+    public function detail($id)
+    {
+        $this->db->select("*");
+        $this->db->from("tbl_bills_detail");
+        $this->db->where("id_bills", $id);
+        $this->db->order_by("id", "ASC");
+
+        $query = $this->db->get();
+
+        if (!is_null($query) && $query->num_rows() > 0)
+            return $query->result_array();
+
+        return null;
+    }
+
+    public function detailDocter($id, $docterId)
+    {
+        $this->db->select("*");
+        $this->db->from("tbl_bills_detail");
+        $this->db->where("id_bills", $id);
+        $this->db->where("value_id", $docterId);
+        $this->db->where("type", "docter_do");
+
+        $query = $this->db->get();
+
+        if (!is_null($query) && $query->num_rows() > 0)
+            return $query->result_array();
+
+        return null;
+    }
+
     public function save($data)
     {
         $this->db->insert("tbl_bills", $data);

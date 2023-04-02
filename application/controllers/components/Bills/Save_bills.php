@@ -86,7 +86,7 @@ class Save_bills
             if (isset($this->_params["room_nurse"]) && !empty($this->_params["room_nurse"]) && isset($this->_params["room_nurse_subtotal"]) && !empty($this->_params["room_nurse_subtotal"])) {
                 foreach ($this->_params["room_nurse"] as $key => $roomNurse) {
                     if (!empty($roomNurse)) {
-                        $roomNurse_subtotal = $this->_params["room_subtotal"];
+                        $roomNurse_subtotal = $this->_params["room_nurse_subtotal"];
 
                         $bill_room_nurse = [
                             "id_bills" => $idBills,
@@ -100,7 +100,7 @@ class Save_bills
                         ];
 
                         $bill_detail[] = $bill_room_nurse;
-                        $this->CI->mbills->saveBillsDetail($bill_room);
+                        $this->CI->mbills->saveBillsDetail($bill_room_nurse);
                     }
                 }
             }
@@ -224,7 +224,7 @@ class Save_bills
                         ];
 
                         $bill_detail[] = $bill_surgery_nurse;
-                        $this->CI->mbills->saveBillsDetail($bill_medicine);
+                        $this->CI->mbills->saveBillsDetail($bill_surgery_nurse);
                     }
                 }
             }

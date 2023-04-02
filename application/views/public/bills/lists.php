@@ -700,7 +700,7 @@
         </form>
     </div>
     
-    <div class="modal fade modal-overflow" id="modal-bills">
+    <div class="modal fade modal-overflow" id="modal-bills-view">
     </div>
     
     <?PHP include(APPPATH . "views/layout/html_footer_script.php"); ?>
@@ -1662,12 +1662,14 @@
         function detail_bills(id) {
             $.ajax({
                 url: '<?php echo base_url("bills/detail"); ?>',
-                type: "post",
-                dataType: "json",
+                type: "POST",
+                dataType: "JSON",
                 data: {
                     id: id
                 },
                 success: function(response) {
+                    $("#modal-bills-view").html(response);
+                    $("#modal-bills-view").modal("toggle");
                 }
             });
         }

@@ -109,6 +109,20 @@ class Muser extends CI_Model
         return null;
     }
 
+    public function getPatientById($id)
+    {
+        $this->db->select("*");
+        $this->db->from("tbl_patient");
+        $this->db->where("id", $id);
+
+        $query = $this->db->get();
+
+        if (!is_null($query) && $query->num_rows() > 0)
+            return $query->row_array();
+
+        return null;
+    }
+
     public function getPatientByKPJ($kpj)
     {
         $this->db->select("*");

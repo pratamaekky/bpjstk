@@ -166,6 +166,20 @@ class General extends CI_Model
         return null;
     }
 
+    public function getRoomNameById($id)
+    {
+        $this->db->select("value");
+        $this->db->from("tbl_room");
+        $this->db->where("id", $id);
+
+        $query = $this->db->get();
+
+        if (!is_null($query) && $query->num_rows() > 0)
+            return $query->row()->value;
+
+        return "";
+    }
+
     public function saveRoom($data)
     {
         $this->db->insert("tbl_room", $data);
@@ -209,6 +223,20 @@ class General extends CI_Model
         }
 
         return null;
+    }
+
+    public function getRadiologyNameById($id)
+    {
+        $this->db->select("value");
+        $this->db->from("tbl_radiology");
+        $this->db->where("id", $id);
+
+        $query = $this->db->get();
+
+        if (!is_null($query) && $query->num_rows() > 0)
+            return $query->row()->value;
+
+        return "";
     }
 
     public function saveRadiology($data)
@@ -256,6 +284,20 @@ class General extends CI_Model
         return null;
     }
 
+    public function getRehabilitationNameById($id)
+    {
+        $this->db->select("value");
+        $this->db->from("tbl_rehabilitation");
+        $this->db->where("id", $id);
+
+        $query = $this->db->get();
+
+        if (!is_null($query) && $query->num_rows() > 0)
+            return $query->row()->value;
+
+        return "";
+    }
+
     public function saveRehabilitation($data)
     {
         $this->db->insert("tbl_rehabilitation", $data);
@@ -301,6 +343,20 @@ class General extends CI_Model
         }
 
         return null;
+    }
+
+    public function getMedicNameById($id)
+    {
+        $this->db->select("value");
+        $this->db->from("tbl_medic");
+        $this->db->where("id", $id);
+
+        $query = $this->db->get();
+
+        if (!is_null($query) && $query->num_rows() > 0)
+            return $query->row()->value;
+
+        return "";
     }
 
     public function saveMedic($data)
@@ -351,6 +407,20 @@ class General extends CI_Model
         return null;
     }
 
+    public function getDoctorNameById($id)
+    {
+        $this->db->select("name");
+        $this->db->from("tbl_doctor");
+        $this->db->where("id", $id);
+
+        $query = $this->db->get();
+
+        if (!is_null($query) && $query->num_rows() > 0)
+            return $query->row()->name;
+
+        return "";
+    }
+
     public function saveDoctor($data)
     {
         $this->db->insert("tbl_doctor", $data);
@@ -397,6 +467,20 @@ class General extends CI_Model
         }
 
         return null;
+    }
+
+    public function getSurgeryNameById($id)
+    {
+        $this->db->select("name");
+        $this->db->from("tbl_surgery");
+        $this->db->where("id", $id);
+
+        $query = $this->db->get();
+
+        if (!is_null($query) && $query->num_rows() > 0)
+            return $query->row()->name;
+
+        return "";
     }
 
     public function saveSurgery($data)
@@ -446,6 +530,20 @@ class General extends CI_Model
         return null;
     }
 
+    public function getLaboratoryNameById($id)
+    {
+        $this->db->select("name");
+        $this->db->from("tbl_laboratory");
+        $this->db->where("id", $id);
+
+        $query = $this->db->get();
+
+        if (!is_null($query) && $query->num_rows() > 0)
+            return $query->row()->name;
+
+        return "";
+    }
+
     public function saveLaboratory($data)
     {
         $this->db->insert("tbl_laboratory", $data);
@@ -491,6 +589,20 @@ class General extends CI_Model
         }
 
         return null;
+    }
+
+    public function getFeeNameById($id)
+    {
+        $this->db->select("name");
+        $this->db->from("tbl_fee");
+        $this->db->where("id", $id);
+
+        $query = $this->db->get();
+
+        if (!is_null($query) && $query->num_rows() > 0)
+            return $query->row()->name;
+
+        return "";
     }
 
     public function saveFee($data)

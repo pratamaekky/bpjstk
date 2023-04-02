@@ -34,7 +34,7 @@ class Data_bills
 
         $totalBills = $this->CI->mbills->totalData();
         if ($totalBills > 0) {
-            $bills = $this->CI->mbills->getData($query, $start, $limit, $sortColumn, $order);
+            $result = $this->CI->mbills->getData($query, $start, $limit, $sortColumn, $order);
 
             $responsecode = 200;
         }
@@ -45,7 +45,7 @@ class Data_bills
                 "draw" => $draw,
                 "iTotalRecords" => intval($limit),
                 "iTotalDisplayRecords" => intval($totalBills),
-                "aaData" => $bills
+                "aaData" => $result
             ]
         ];
     }

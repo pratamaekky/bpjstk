@@ -3,6 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 date_default_timezone_set("Asia/Jakarta");
 include_once(APPPATH . "controllers/api/components/API_Controller.php");
 include_once(APPPATH . "controllers/api/components/Bills/Data.php");
+include_once(APPPATH . "controllers/api/components/Bills/Detail.php");
 
 class ABills extends API_Controller
 {
@@ -37,6 +38,17 @@ class ABills extends API_Controller
         } catch (Exception $e) {
             return $this->sendResponseError($e);
         }
+    }
 
+    public function detail($params)
+    {
+        try {
+            $detail = new Detail($params);
+            $detail->action($this->responseObj, $this->res_code, $this->res_message);
+
+            return $this->sendResponse($this->res_code, $this->res_message);
+        } catch (Exception $e) {
+            return $this->sendResponseError($e);
+        }
     }
 }
