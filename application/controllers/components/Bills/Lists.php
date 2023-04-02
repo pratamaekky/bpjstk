@@ -48,7 +48,8 @@ class Lists
                             "subtotal" => "Rp " . number_format($bills->subtotal, 0, ",", "."),
                             "cob" => "Rp " . number_format($bills->cob, 0, ",", "."),
                             "total" => "Rp " . number_format($bills->total, 0, ",", "."),
-                            "action" => "<a class='nav-link' href='#' onclick='detail_bills(" . $bills->id . ")' aria-expanded='true'><i class='fas fa-search'></i></a>"
+                            "action" => "<a class='btn btn-sm btn-primary mr-2' href='javascript:void(0)' onclick='detail_bills(" . $bills->id . ")' aria-expanded='true'><i class='fas fa-search'></i></a>
+                                         <a class='btn btn-sm btn-danger' href='javascript:void(0)' onclick='delete_bills(" . $bills->id . ")' aria-expanded='true'><i class='fas fa-trash-alt'></i></a>"
                         ];
 
                         $items[] = $row;

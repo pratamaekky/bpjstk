@@ -1673,6 +1673,19 @@
                 }
             });
         }
+
+        function delete_bills(id) {
+            $.ajax({
+                url: '<?php echo base_url("bills/detail"); ?>',
+                type: "POST",
+                dataType: "JSON",
+                data: {
+                    id: id
+                },
+                success: function(response) {
+                }
+            });
+        }
     </script>
 </body>
 
