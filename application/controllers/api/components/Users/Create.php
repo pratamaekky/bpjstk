@@ -22,7 +22,7 @@ class Create
             throw new Exception("Data tidak lengkap. Silahkan cek kembali data anda!", 422);
         }
 
-        $password = "!Plkkrates123_";
+        $password = "!Plkkrates123";
         $generatePassword = $this->CI->myutils->generatePassword($password);
         if (!$generatePassword) {
             throw new Exception("Password harus terdiri dari mininal 8 karakter, terdiri dari gabungan huruf kapital, huruf kecil, angka,dan simbol!", 422);
