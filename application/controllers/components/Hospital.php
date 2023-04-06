@@ -72,7 +72,8 @@ class Hospital
                         "type" => $hospital->hospital_type,
                         "class" => $hospital->class,
                         "owner" => $hospital->hospital_owner,
-                        "action" => "<a class='nav-link' href='#' aria-expanded='true'><i class='far fa-edit'></i></a>"
+                        "action" => "<a class='btn btn-sm btn-primary mr-2' href='javascript:void(0);' onclick='editHospital($hospital->id);' aria-expanded='true'><i class='fas fa-pencil-alt'></i></a>
+                                    <a class='btn btn-sm btn-danger' href='javascript:void(0)' onclick='deleteHospital(" . $hospital->id . ")' aria-expanded='true'><i class='fas fa-trash'></i></a>"
                     ];
 
                     $items[] = $row;
@@ -95,6 +96,63 @@ class Hospital
         echo json_encode($result);
     }
 
+    private function _detail()
+    {
+        $this->rsId = isset($this->_params["id"]) ? $this->_params["id"] : 0;
+        $responseHospital = $this->Masters->data("hospital", "detail", ["rsId" => $this->rsId]);
+        $responseHospital = json_decode($responseHospital);
+        $hospital = ($responseHospital->result == 200) ? $responseHospital->data->item : $responseHospital->data;
+
+        $responseProvince = $this->Masters->data("province");
+        $responseProvince = json_decode($responseProvince);
+
+        $responseHospitalType = $this->Masters->data("general", "hospital_type");
+        $responseHospitalType = json_decode($responseHospitalType);
+
+        $responseHospitalOwner = $this->Masters->data("general", "hospital_owner");
+        $responseHospitalOwner = json_decode($responseHospitalOwner);
+
+        $params["idProvince"] = $hospital->province_id;
+        $responseCity = $this->Masters->data("city", null, $params);
+        $responseCity = json_decode($responseCity);
+
+        $params["idCity"] = $hospital->city_id;
+        $responseDistrict = $this->Masters->data("district", null, $params);
+        $responseDistrict = json_decode($responseDistrict);
+
+        $params["idProvince"] = $hospital->province_id;
+        $params["idCity"] = $hospital->city_id;
+        $params["idDistrict"] = $hospital->district_id;
+        $responsePostalcode = $this->Masters->data("postalcode", null, $params);
+        $responsePostalcode = json_decode($responsePostalcode);
+
+        $result["hospital"] = $hospital;
+        $result["hospitalType"] = ($responseHospitalType->result == 200) ? $responseHospitalType->data->item : $responseHospitalType->data;
+        $result["hospitalOwner"] = ($responseHospitalOwner->result == 200) ? $responseHospitalOwner->data->item : $responseHospitalOwner->data;
+        $result["province"] = ($responseProvince->result == 200) ? $responseProvince->data->item : $responseProvince->data;
+        $result["city"] = ($responseCity->result == 200) ? $responseCity->data->item : $responseCity->data;
+        $result["district"] = ($responseDistrict->result == 200) ? $responseDistrict->data->item : $responseDistrict->data;
+        $result["postal"] = ($responsePostalcode->result == 200) ? $responsePostalcode->data->item : $responsePostalcode->data;
+        
+        echo json_encode($result);
+    }
+
+    private function _update()
+    {
+        unset($this->_params["todo"]);
+        unset($this->_params["btnTodo"]);
+        $saveHospital = $this->Masters->update("hospital", $this->_params);
+
+        echo $saveHospital;
+    }
+
+    private function _delete()
+    {
+        $saveHospital = $this->Masters->delete("hospital", $this->_params);
+
+        echo $saveHospital;
+    }
+
     public function action()
     {
         switch ($this->_command) {
@@ -106,6 +164,15 @@ class Hospital
                 break;
             case 'data':
                 $this->_data();
+                break;
+            case 'detail':
+                $this->_detail();
+                break;
+            case 'update':
+                $this->_update();
+                break;
+            case 'delete':
+                $this->_delete();
                 break;
             default:
                 # code...

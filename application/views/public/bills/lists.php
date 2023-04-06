@@ -875,6 +875,9 @@
                 locale: {
                     format: 'DD-MM-YYYY h:mm'
                 }
+            }).on('cancel.daterangepicker', function(ev, picker) {
+                //do something, like clearing an input
+                $('#jkk_date').val('');
             });
         });
 
@@ -884,14 +887,21 @@
                 locale: {
                     format: 'DD-MM-YYYY'
                 }
+            }).on('cancel.daterangepicker', function(ev, picker) {
+                //do something, like clearing an input
+                $('#treatment_date').val('');
             });
         });
 
         $("#ranap_date").on("focus", function() {
             $('#ranap_date').daterangepicker({
+                defaultDate: null,
                 locale: {
                     format: 'DD-MM-YYYY'
                 }
+            }).on('cancel.daterangepicker', function(ev, picker) {
+                //do something, like clearing an input
+                $('#ranap_date').val('');
             });
         });
 
@@ -901,6 +911,9 @@
                 locale: {
                     format: 'DD-MM-YYYY'
                 }
+            }).on('cancel.daterangepicker', function(ev, picker) {
+                //do something, like clearing an input
+                $('#last_rajal').val('');
             });
         });
 
@@ -1002,6 +1015,8 @@
                         $(".row-room-div").append(htmlRoom)
                         $("#room_" + nXElem).select2({
                             theme: 'bootstrap4'
+                        }).one('select2:open', function(e) {
+                            $('input.select2-search__field').prop('placeholder', 'Cari disini...');
                         });
                     }
                 }
@@ -1089,6 +1104,8 @@
                         $(".row-admin-div").append(htmlFee);
                         $("#admin_" + nXElem).select2({
                             theme: 'bootstrap4'
+                        }).one('select2:open', function(e) {
+                            $('input.select2-search__field').prop('placeholder', 'Cari disini...');
                         });
                     }
                 }
@@ -1178,6 +1195,8 @@
                         $(".row-docter-div").append(htmlFee)
                         $("#docter_" + nXElem).select2({
                             theme: 'bootstrap4'
+                        }).one('select2:open', function(e) {
+                            $('input.select2-search__field').prop('placeholder', 'Cari disini...');
                         });
                     }
                 }
@@ -1256,6 +1275,8 @@
                         $(".row-surgery-div").append(htmlFee)
                         $("#surgery_" + nXElem).select2({
                             theme: 'bootstrap4'
+                        }).one('select2:open', function(e) {
+                            $('input.select2-search__field').prop('placeholder', 'Cari disini...');
                         });
                     }
                 }
@@ -1350,6 +1371,8 @@
                         $(".row-lab-div").append(htmlFee)
                         $("#lab_" + nXElem).select2({
                             theme: 'bootstrap4'
+                        }).one('select2:open', function(e) {
+                            $('input.select2-search__field').prop('placeholder', 'Cari disini...');
                         });
                     }
                 }
@@ -1427,6 +1450,8 @@
                         $(".row-radiology-div").append(htmlFee)
                         $("#radiology_" + nXElem).select2({
                             theme: 'bootstrap4'
+                        }).one('select2:open', function(e) {
+                            $('input.select2-search__field').prop('placeholder', 'Cari disini...');
                         });
                     }
                 }
@@ -1504,6 +1529,8 @@
                         $(".row-medic-div").append(htmlFee)
                         $("#medic_" + nXElem).select2({
                             theme: 'bootstrap4'
+                        }).one('select2:open', function(e) {
+                            $('input.select2-search__field').prop('placeholder', 'Cari disini...');
                         });
                     }
                 }
@@ -1581,6 +1608,8 @@
                         $(".row-rehab-div").append(htmlFee)
                         $("#rehab_" + nXElem).select2({
                             theme: 'bootstrap4'
+                        }).one('select2:open', function(e) {
+                            $('input.select2-search__field').prop('placeholder', 'Cari disini...');
                         });
                     }
                 }
@@ -1599,6 +1628,8 @@
         $(function() {
             $('.select2').select2({
                 theme: 'bootstrap4'
+            }).one('select2:open', function(e) {
+                $('input.select2-search__field').prop('placeholder', 'Cari disini...');
             });
             $.validator.setDefaults({
                 ignore: ":hidden, [contenteditable='true']:not([name])",

@@ -53,7 +53,7 @@
                                                 <th class="dt-head-center">Laboratorium</th>
                                                 <th class="dt-head-center">Dokter</th>
                                                 <th class="dt-head-center">Dokter OP</th>
-                                                <th class="dt-head-center">Rehabitasi</th>
+                                                <th class="dt-head-center">Rehab Medik</th>
                                                 <th class="dt-head-center">Biaya</th>
                                                 <th class="dt-head-center">Users</th>
                                             </tr>

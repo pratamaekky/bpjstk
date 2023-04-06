@@ -13,8 +13,10 @@ class web_base extends CI_Controller
         
         $contr = strtolower($this->uri->segment(1));
         $module = strtolower($this->uri->segment(2));
+        $command = strtolower($this->uri->segment(3));
         $this->controller = $contr;
         $this->module = $module;
+        $this->command = $command;
         $last = $this->uri->total_segments();
         $this->last_segment = $this->uri->segment($last);
 

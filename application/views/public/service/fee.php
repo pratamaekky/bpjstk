@@ -4,6 +4,9 @@
 <head>
     <?php include(APPPATH . "views/layout/html_header_script.php"); ?>
     <link href="<?php echo base_url("assets/plugins/datatables/jquery.dataTables.min.css"); ?>" rel="stylesheet">
+    <!-- Select2 -->
+    <link href="<?php echo base_url("assets/plugins/select2/css/select2.min.css"); ?>" rel="stylesheet">
+    <link href="<?php echo base_url("assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css"); ?>" rel="stylesheet">
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -86,7 +89,7 @@
                                 <div class="form-group col-12">
                                     <label for="other_fee_id">Jenis Tindakan</label>
                                     <div class="input-group">
-                                        <select name="other_fee_id" id="other_fee_id" class="form-control" required="required">
+                                        <select name="other_fee_id" id="other_fee_id" class="form-control select2" required="required">
                                             <option value="">-- Pilih Jenis Tindakan --</option>
                                             <?php 
                                             if (!is_null($otherFee)) {
@@ -130,6 +133,8 @@
     <?PHP include(APPPATH . "views/layout/html_footer_script.php"); ?>
     <script src="<?php echo base_url("assets/plugins/datatables/jquery.dataTables.min.js"); ?>"></script>
     <script src="<?php echo base_url("assets/plugins/jquery-validation/jquery.validate.min.js"); ?>"></script>
+    <!-- Select2 -->
+    <script src="<?php echo base_url("assets/plugins/select2/js/select2.full.min.js"); ?>"></script>
     <script>
         $(document).ready(function(){
             $('#tableFeeLists').DataTable({
@@ -163,6 +168,11 @@
         });
 
         $(function() {
+            $('.select2').select2({
+                theme: 'bootstrap4'
+            }).one('select2:open', function(e) {
+                $('input.select2-search__field').prop('placeholder', 'Cari disini...');
+            });
             $.validator.setDefaults({
                 ignore: ":hidden, [contenteditable='true']:not([name])",
                 submitHandler: function(form) {

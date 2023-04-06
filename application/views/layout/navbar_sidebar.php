@@ -43,43 +43,49 @@
                 <?php } ?>
                 <?php if ($this->plkk_session->user_role == 1) { ?>
                     <li class="nav-item">
-                        <a href="<?php echo base_url("master/service/room/lists/" . $this->plkk_session->rs_id); ?>" class="nav-link">
+                        <a href="<?php echo base_url("master/service/room/lists/" . $this->plkk_session->rs_id); ?>" class="nav-link <?php echo ($this->module == "service" && $this->command == "room") ? "active" : ""; ?>">
                             <i class="nav-icon fas fa-bed"></i>
                             <p>Kamar</i></p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="<?php echo base_url("master/service/radiology/lists/" . $this->plkk_session->rs_id); ?>" class="nav-link">
+                        <a href="<?php echo base_url("master/service/radiology/lists/" . $this->plkk_session->rs_id); ?>" class="nav-link <?php echo ($this->module == "service" && $this->command == "radiology") ? "active" : ""; ?>">
                             <i class="nav-icon fas fa-radiation-alt"></i>
                             <p>Radiologi</i></p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="<?php echo base_url("master/service/medic/lists/" . $this->plkk_session->rs_id); ?>" class="nav-link">
+                        <a href="<?php echo base_url("master/service/medic/lists/" . $this->plkk_session->rs_id); ?>" class="nav-link <?php echo ($this->module == "service" && $this->command == "medic") ? "active" : ""; ?>">
                             <i class="nav-icon fas fa-notes-medical"></i>
                             <p>Tindakan Medik</i></p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="<?php echo base_url("master/service/laboratory/lists/" . $this->plkk_session->rs_id); ?>" class="nav-link">
+                        <a href="<?php echo base_url("master/service/laboratory/lists/" . $this->plkk_session->rs_id); ?>" class="nav-link <?php echo ($this->module == "service" && $this->command == "laboratory") ? "active" : ""; ?>">
                             <i class="nav-icon fas fa-vials"></i>
                             <p>Laboratorium</i></p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="<?php echo base_url("master/service/doctor/lists/" . $this->plkk_session->rs_id); ?>" class="nav-link">
+                        <a href="<?php echo base_url("master/service/doctor/lists/" . $this->plkk_session->rs_id); ?>" class="nav-link <?php echo ($this->module == "service" && $this->command == "doctor") ? "active" : ""; ?>">
                             <i class="nav-icon fas fa-user-md"></i>
                             <p>Dokter</i></p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="<?php echo base_url("master/service/rehabilitation/lists/" . $this->plkk_session->rs_id); ?>" class="nav-link">
-                            <i class="nav-icon fas fa-hand-holding-medical"></i>
-                            <p>Rehabilitasi</i></p>
+                        <a href="<?php echo base_url("master/service/surgery/lists/" . $this->plkk_session->rs_id); ?>" class="nav-link <?php echo ($this->module == "service" && $this->command == "surgery") ? "active" : ""; ?>">
+                            <i class="nav-icon fas fa-stethoscope"></i>
+                            <p>Dokter Specialis</i></p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="<?php echo base_url("master/service/fee/lists/" . $this->plkk_session->rs_id); ?>" class="nav-link">
+                        <a href="<?php echo base_url("master/service/rehabilitation/lists/" . $this->plkk_session->rs_id); ?>" class="nav-link <?php echo ($this->module == "service" && $this->command == "rehabilitation") ? "active" : ""; ?>">
+                            <i class="nav-icon fas fa-hand-holding-medical"></i>
+                            <p>Rehab Medik / Fisioterapy</i></p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="<?php echo base_url("master/service/fee/lists/" . $this->plkk_session->rs_id); ?>" class="nav-link <?php echo ($this->module == "service" && $this->command == "fee") ? "active" : ""; ?>">
                             <i class="nav-icon fas fa-file-invoice-dollar"></i>
                             <p>Biaya Lainnya</i></p>
                         </a>

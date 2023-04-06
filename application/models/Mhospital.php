@@ -21,6 +21,23 @@ class Mhospital extends CI_Model
         }
     }
 
+    public function update($data)
+    {
+        $this->db->where("id", $data["id"]);
+        $this->db->update("tbl_hospital", $data);
+
+        return $this->db->affected_rows();
+    }
+
+    public function delete($data)
+    {
+        $this->db->delete('tbl_hospital', array(
+            'id' => $data["id"]
+        ));
+
+        return $this->db->affected_rows();
+    }
+
     public function totalData()
     {
         $this->db->select("count(id) as total");

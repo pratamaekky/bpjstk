@@ -56,7 +56,7 @@
                                                 <th class="dt-head-center">Jenis</th>
                                                 <th class="dt-head-center">Kelas</th>
                                                 <th class="dt-head-center">Kepemilikan</th>
-                                                <th class="dt-head-center">Aksi</th>
+                                                <th class="dt-head-center" style="width: 60px;">Aksi</th>
                                             </tr>
                                         </thead>
                                     </table>
@@ -86,6 +86,7 @@
                     <div class="modal-body row">
                         <label class="modal-seg col-12">Informasi Rumah Sakit</label>
                         <div class="col-12 col-sm-6">
+                            <input type="hidden" name="id" id="id" class="form-control" value="" />
                             <div class="row">
                                 <div class="form-group col-12">
                                     <label for="name">Nama Rumah Sakit</label>
@@ -228,6 +229,8 @@
     <?PHP include(APPPATH . "views/layout/html_footer_script.php"); ?>
     <script src="<?php echo base_url("assets/plugins/datatables/jquery.dataTables.min.js"); ?>"></script>
     <script src="<?php echo base_url("assets/plugins/jquery-validation/jquery.validate.min.js"); ?>"></script>
+    <!-- BootBox -->
+    <script src="<?php echo base_url("assets/js/bootstarp-bootbox.min.js"); ?>"></script>
     <script>
         $(document).ready(function(){
             $('#tableHospitalLists').DataTable({
@@ -366,10 +369,18 @@
             $.validator.setDefaults({
                 ignore: ":hidden, [contenteditable='true']:not([name])",
                 submitHandler: function(form) {
-                    $('.overlay-loading').show();
+                    // $('.overlay-loading').show();
+
+                    var todo = $("#todo").val();
+                    var url;
+                    if (todo == "update") {
+                        url = "<?php echo base_url('master/hospital/update'); ?>";
+                    } else {
+                        url = "<?php echo base_url('master/hospital/save'); ?>"
+                    }
 
                     $.ajax({
-                        url: "<?php echo base_url('master/hospital/save'); ?>",
+                        url: url,
                         type: "POST",
                         data: new FormData(form),
                         async: true,
@@ -421,6 +432,155 @@
                 }
             });
         });
+
+        function editHospital(id) {
+            var hospitalOwnerHtml = "", hospitalTypeHtml = "", provinceHtml = "", cityHtml = "", districtHtml = "", postalHtml = "";
+            var selectedHO = "", selectedHT = "", selectedProv = "", selectedCity = "", selectedDistrict = "", selectedPostal = "";
+            $.ajax({
+                url: "<?php echo base_url('master/hospital/detail'); ?>",
+                type: "POST",
+                data: {
+                    id: id
+                },
+                dataType: "JSON",
+                success: function(response) {
+                    hospital = response.hospital;
+                    hospitalType = response.hospitalType;
+                    hospitalOwner = response.hospitalOwner;
+                    province = response.province;
+                    city = response.city;
+                    district = response.district;
+                    postal = response.postal;
+                    $("#id").val(hospital.id);
+                    $("#name").val(hospital.name);
+                    $("#telp").val(hospital.telp);
+                    $("#class").val(hospital.class);
+                    $("#status_blu").val(hospital.status_blu);
+                    $("#directur").val(hospital.directur);
+                    $("#land_area").val(hospital.land_area);
+                    $("#building_area").val(hospital.building_area);
+                    $("#address").val(hospital.address);
+                    $("#village_id").val(hospital.village_id);
+
+                    hospitalTypeHtml += '  <option value="">-- Pilih Jenis Rumah Sakit --</option>';
+                    $.each(hospitalType, function(keyHt, ht) {
+                        selectedHT = "";
+                        if (hospital.hospital_type == ht.value) {
+                            selectedHT = 'selected="selected"';
+                        }
+
+                        hospitalTypeHtml += '<option value="' + ht.id + '" ' + selectedHT + '>' + ht.value + '</option>';
+                    });
+
+                    hospitalOwnerHtml += '  <option value="">-- Pilih Kepemilikan Rumah Sakit --</option>';
+                    $.each(hospitalOwner, function(keyHo, ho) {
+                        selectedHO = "";
+                        if (hospital.hospital_owner == ho.value) {
+                            selectedHO = 'selected="selected"';
+                        }
+
+                        hospitalOwnerHtml += '<option value="' + ho.id + '" ' + selectedHO + '>' + ho.value + '</option>';
+                    });
+
+                    provinceHtml += '  <option value="">-- Pilih Provinsi --</option>';
+                    $.each(province, function(keyProv, prov) {
+                        selectedProv = "";
+                        if (hospital.province_id == prov.id) {
+                            selectedProv = 'selected="selected"';
+                        }
+
+                        provinceHtml += '<option value="' + prov.id + '" ' + selectedProv + '>' + prov.name + '</option>';
+                    });
+
+                    cityHtml += '  <option value="">-- Pilih Kota / Kabupaten --</option>';
+                    $.each(city, function(keyCity, ci) {
+                        selectedCity = "";
+                        if (hospital.city_id == ci.id) {
+                            selectedCity = 'selected="selected"';
+                        }
+
+                        cityHtml += '<option value="' + ci.id + '" ' + selectedCity + '>' + ci.name + '</option>';
+                    });
+
+                    districtHtml += '  <option value="">-- Pilih Kecamatan --</option>';
+                    $.each(district, function(keyDistrict, dist) {
+                        selectedDistrict = "";
+                        if (hospital.district_id == dist.id) {
+                            selectedDistrict = 'selected="selected"';
+                        }
+
+                        districtHtml += '<option value="' + dist.id + '" ' + selectedDistrict + '>' + dist.name + '</option>';
+                    });
+
+                    postalHtml += '  <option value="">-- Pilih Kodepos --</option>';
+                    $.each(postal, function(keyPostal, postal) {
+                        selectedPostal = "";
+                        if (hospital.village_id == postal.id) {
+                            selectedPostal = 'selected="selected"';
+                        }
+
+                        postalHtml += '<option value="' + postal.postal_code + '" data-village-id="' + postal.id_village + '" ' + selectedPostal + '>' + postal.village + ' (' + postal.postal_code + ')</option>';
+                    });
+
+                    $("#type").html(hospitalTypeHtml);
+                    $("#owner").html(hospitalOwnerHtml);
+                    $("#province_id").html(provinceHtml);
+                    $("#city_id").html(cityHtml);
+                    $("#city_id").removeAttr("disabled")
+                    $("#district_id").html(districtHtml);
+                    $("#district_id").removeAttr("disabled")
+                    $("#postalcode").html(postalHtml);
+                    $("#postalcode").removeAttr("disabled")
+                    $("#btnForm").html("Update");
+                    $("#todo").val("update");
+
+                    $("#modal-hospital").modal("toggle");
+                },
+                error: function(error) {
+                    $('.overlay-loading').hide();
+                    show_notif("error", "Gagal Update Data! Ulangi beberapa saat lagi")
+                }
+            });
+
+        }
+
+        function deleteHospital(id) {
+            bootbox.confirm({
+                title: "Hapus Rumah Sakit",
+                message: "Apakah kamu yakin untuk menghapus rumah sakit ini? Aksi ini tidak bisa di kembalikan",
+                buttons: {
+                    cancel: {
+                        label: '<i class="fa fa-times"></i> Batal'
+                    },
+                    confirm: {
+                        label: '<i class="fa fa-check"></i> Setuju'
+                    }
+                },
+                callback: function(result) {
+                    if (result) {
+                        // $('.overlay-loading').show();
+                        $.ajax({
+                            url: '<?php echo base_url("master/hospital/delete"); ?>',
+                            type: "post",
+                            dataType: "json",
+                            data: {
+                                id: id
+                            },
+                            success: function(response) {
+                                // $('.overlay-loading').hide();
+                                if (response.result == 200) {
+                                    // $("#tableHospitalLists").DataTable().destroy();
+                                    $('#tableHospitalLists').DataTable().ajax.reload()
+                                    show_notif('success', response.data.name);
+                                }
+                            }
+                        });
+                    } else {
+                        show_notif('info', 'Proyek batal dihapus');
+                    }
+                }
+            });
+        }
 </script>
 </body>
 
