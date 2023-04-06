@@ -97,7 +97,7 @@
                                     <div class="row">
                                         <label for="rs_id" class="col-form-label col-sm-3 col-3">Rumah Sakit</label>
                                         <div class="input-group col-sm-9 col-9">
-                                            <select name="rs_id" id="rs_id" class="form-control" required="required">
+                                            <select name="rs_id" id="rs_id" class="form-control select2" required="required">
                                                 <option value="">-- Pilih Rumah Sakit --</option>
                                                 <?php
                                                     if (!empty($hospitals)) {

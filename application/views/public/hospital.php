@@ -4,6 +4,9 @@
 <head>
     <?php include(APPPATH . "views/layout/html_header_script.php"); ?>
     <link href="<?php echo base_url("assets/plugins/datatables/jquery.dataTables.min.css"); ?>" rel="stylesheet">
+    <!-- Select2 -->
+    <link href="<?php echo base_url("assets/plugins/select2/css/select2.min.css"); ?>" rel="stylesheet">
+    <link href="<?php echo base_url("assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css"); ?>" rel="stylesheet">
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -97,7 +100,7 @@
                                 <div class="form-group col-12">
                                     <label for="type">Jenis Rumah Sakit</label>
                                     <div class="input-group">
-                                        <select name="type" id="type" class="form-control" required="required">
+                                        <select name="type" id="type" class="form-control select2" required="required">
                                             <option value="">-- Pilih Jenis Rumah Sakit --</option>
                                             <?php 
                                             if (!is_null($getHospitalType)) {
@@ -124,7 +127,7 @@
                                 <div class="form-group col-12">
                                     <label for="owner">Kepemilikan</label>
                                     <div class="input-group">
-                                        <select name="owner" id="owner" class="form-control" required="required">
+                                        <select name="owner" id="owner" class="form-control select2" required="required">
                                             <option value="">-- Pilih Kepemilikan Rumah Sakit --</option>
                                             <?php 
                                             if (!is_null($getHospitalOwner)) {
@@ -167,7 +170,7 @@
                                 <div class="form-group col-12">
                                     <label for="province_id">Provinsi</label>
                                     <div class="input-group">
-                                        <select name="province_id" id="province_id" class="form-control" required="required">
+                                        <select name="province_id" id="province_id" class="form-control select2" required="required">
                                             <option value="">-- Pilih Provinsi --</option>
                                             <?php
                                             if (!is_null($getProvince)) {
@@ -182,7 +185,7 @@
                                 <div class="form-group col-12">
                                     <label for="city_id">Kota / Kabupaten</label>
                                     <div class="input-group">
-                                        <select name="city_id" id="city_id" class="form-control" required="required" disabled>
+                                        <select name="city_id" id="city_id" class="form-control select2" required="required" disabled>
                                             <option value="">-- Pilih Kota / Kabupaten --</option>
                                         </select>
                                     </div>
@@ -190,7 +193,7 @@
                                 <div class="form-group col-12">
                                     <label for="district_id">Kecamatan</label>
                                     <div class="input-group">
-                                        <select name="district_id" id="district_id" class="form-control" required="required" disabled>
+                                        <select name="district_id" id="district_id" class="form-control select2" required="required" disabled>
                                             <option value="">-- Pilih Kecamatan --</option>
                                         </select>
                                     </div>
@@ -199,7 +202,7 @@
                                     <label for="postalcode">Kodepos</label>
                                     <div class="input-group">
                                         <input type="hidden" name="village_id" id="village_id" value="" />
-                                        <select name="postalcode" id="postalcode" class="form-control" required="required" disabled>
+                                        <select name="postalcode" id="postalcode" class="form-control select2" required="required" disabled>
                                             <option value="">-- Pilih Kodepos --</option>
                                         </select>
                                     </div>
@@ -231,6 +234,8 @@
     <script src="<?php echo base_url("assets/plugins/jquery-validation/jquery.validate.min.js"); ?>"></script>
     <!-- BootBox -->
     <script src="<?php echo base_url("assets/js/bootstarp-bootbox.min.js"); ?>"></script>
+    <!-- Select2 -->
+    <script src="<?php echo base_url("assets/plugins/select2/js/select2.full.min.js"); ?>"></script>
     <script>
         $(document).ready(function(){
             $('#tableHospitalLists').DataTable({
@@ -366,6 +371,11 @@
         })
 
         $(function() {
+            $('.select2').select2({
+                theme: 'bootstrap4'
+            }).one('select2:open', function(e) {
+                $('input.select2-search__field').prop('placeholder', 'Cari disini...');
+            });
             $.validator.setDefaults({
                 ignore: ":hidden, [contenteditable='true']:not([name])",
                 submitHandler: function(form) {
