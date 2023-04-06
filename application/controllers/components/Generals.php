@@ -45,7 +45,9 @@ class Generals
                 foreach ($res as $key => $val) {
                     $row = [
                         "no" => ($key  + 1),
-                        "value" => $val->value
+                        "value" => $val->value,
+                        "action" => "<a class='btn btn-sm btn-primary mr-2' href='javascript:void(0);' onclick='editGeneral($val->id);' aria-expanded='true'><i class='fas fa-pencil-alt'></i></a>
+                                    <a class='btn btn-sm btn-danger' href='javascript:void(0)' onclick='deleteGeneral(" . $val->id . ")' aria-expanded='true'><i class='fas fa-trash'></i></a>"
                     ];
 
                     $items[] = $row;
@@ -67,6 +69,25 @@ class Generals
         echo json_encode($result);
     }
 
+    private function _detail()
+    {
+        $responseGeneral = $this->Masters->detail("general", $this->_params);
+        $responseGeneral = json_decode($responseGeneral);
+
+        $result = ($responseGeneral->result == 200) ? $responseGeneral->data->item : $responseGeneral->data;
+        
+        echo json_encode($result);
+    }
+
+    private function _update()
+    {
+        unset($this->_params["todo"]);
+        unset($this->_params["btnTodo"]);
+        $updateGeneral = $this->Masters->update("general", $this->_params);
+
+        echo $updateGeneral;
+    }
+
     private function _save()
     {
         unset($this->_params["todo"]);
@@ -74,6 +95,13 @@ class Generals
         $saveHospital = $this->Masters->save("general", $this->_params);
 
         echo $saveHospital;
+    }
+
+    private function _delete()
+    {
+        $deleteGeneral = $this->Masters->delete("general", $this->_params);
+
+        echo $deleteGeneral;
     }
 
     public function action()
@@ -87,6 +115,15 @@ class Generals
                 break;
             case 'save':
                 $this->_save();
+                break;
+            case 'detail':
+                $this->_detail();
+                break;
+            case 'update':
+                $this->_update();
+                break;
+            case 'delete':
+                $this->_delete();
                 break;
             default:
                 # code...

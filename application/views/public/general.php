@@ -48,8 +48,9 @@
                                     <table id="tableGeneralLists" class="table table-hover">
                                         <thead>
                                             <tr>
-                                                <th class="dt-head-center">No</th>
+                                                <th class="dt-head-center" style="width: 20px;">No</th>
                                                 <th class="dt-head-center">Value</th>
+                                                <th class="dt-head-center" style="width: 60px;">Action</th>
                                             </tr>
                                         </thead>
                                     </table>
@@ -69,6 +70,7 @@
     <div class="modal fade modal-overflow" id="modal-master">
         <form name="masterForm" id="masterForm" enctype="multipart/form-data" novalidate="novalidate">
             <input type="hidden" name="field" id="field" value="<?php echo $type; ?>" />
+            <input type="hidden" name="id" id="id" value="" />
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -106,6 +108,8 @@
     <?PHP include(APPPATH . "views/layout/html_footer_script.php"); ?>
     <script src="<?php echo base_url("assets/plugins/datatables/jquery.dataTables.min.js"); ?>"></script>
     <script src="<?php echo base_url("assets/plugins/jquery-validation/jquery.validate.min.js"); ?>"></script>
+    <!-- BootBox -->
+    <script src="<?php echo base_url("assets/js/bootstarp-bootbox.min.js"); ?>"></script>
     <script>
         $(document).ready(function(){
             $('#tableGeneralLists').DataTable({
@@ -131,8 +135,9 @@
                     'data': {'action':'#tableGeneralLists'}
                 },
                 'columns': [
-                    { data: 'no', className: 'dt-body-center', width: '20px' },
+                    { data: 'no', className: 'dt-body-center'},
                     { data: 'value' },
+                    { data: 'action' }
                 ],
                 "columnDefs":[
                     {
@@ -149,8 +154,16 @@
                 submitHandler: function(form) {
                     $('.overlay-loading').show();
 
+                    var todo = $("#todo").val();
+                    var url;
+                    if (todo == "update") {
+                        url = "<?php echo base_url('master/generals/update/' . $type); ?>";
+                    } else {
+                        url = "<?php echo base_url('master/generals/save/' . $type); ?>";
+                    }
+
                     $.ajax({
-                        url: "<?php echo base_url('master/generals/save/' . $type); ?>",
+                        url: url,
                         type: "POST",
                         data: new FormData(form),
                         async: true,
@@ -187,21 +200,69 @@
                     $(element).removeClass('is-invalid');
                 }
             });
+        });
 
-            $('#masterForm').validate({
-                errorElement: 'span',
-                errorPlacement: function(error, element) {
-                    error.addClass('invalid-feedback');
-                    element.closest('.form-group').append(error);
+        function editGeneral(id) {
+            $.ajax({
+                url: "<?php echo base_url('master/generals/detail/' . $type); ?>",
+                type: "POST",
+                data: {
+                    id: id
                 },
-                highlight: function(element, errorClass, validClass) {
-                    $(element).addClass('is-invalid');
+                dataType: "JSON",
+                success: function(response) {
+                    $("#id").val(response.id);
+                    $("#value").val(response.value);
+
+                    $("#btnForm").html("Update");
+                    $("#todo").val("update");
+                    $("#modal-master").modal("toggle");
                 },
-                unhighlight: function(element, errorClass, validClass) {
-                    $(element).removeClass('is-invalid');
+                error: function(error) {
+                    $('.overlay-loading').hide();
+                    show_notif("error", "Gagal Update Data! Ulangi beberapa saat lagi")
                 }
             });
-        });
+        }
+
+        function deleteGeneral(id) {
+            bootbox.confirm({
+                title: "Hapus Master Data",
+                message: "Apakah kamu yakin untuk menghapus master data ini? Aksi ini tidak bisa di kembalikan",
+                buttons: {
+                    cancel: {
+                        label: '<i class="fa fa-times"></i> Batal'
+                    },
+                    confirm: {
+                        label: '<i class="fa fa-check"></i> Setuju'
+                    }
+                },
+                callback: function(result) {
+                    if (result) {
+                        // $('.overlay-loading').show();
+                        $.ajax({
+                            url: '<?php echo base_url("master/generals/delete"); ?>',
+                            type: "post",
+                            dataType: "json",
+                            data: {
+                                id: id
+                            },
+                            success: function(response) {
+                                // $('.overlay-loading').hide();
+                                if (response.result == 200) {
+                                    // $("#tableHospitalLists").DataTable().destroy();
+                                    $('#tableGeneralLists').DataTable().ajax.reload()
+                                    show_notif('success', response.data.name);
+                                }
+                            }
+                        });
+                    } else {
+                        show_notif('info', 'Master data batal dihapus');
+                    }
+                }
+            });
+        }
+
     </script>
 </body>
 

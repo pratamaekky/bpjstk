@@ -202,7 +202,7 @@ class Data
         $query = (isset($this->_params["search"]["value"]) && !empty($this->_params["search"]["value"])) ? $this->_params["search"]["value"] : null;
         $column = isset($this->_params["order"][0]["column"]) ? $this->_params["order"][0]["column"] : null;
         $order = isset($this->_params["order"][0]["dir"]) ? $this->_params["order"][0]["dir"] : "asc";
-        $sortColumn = "id";
+        $sortColumn = "value";
         $totalGeneral = $this->CI->general->totalGeneral($this->_flag);
 
         if ($totalGeneral > 0) {

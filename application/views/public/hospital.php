@@ -318,7 +318,6 @@
                 },
                 dataType: "JSON",
                 success: function(response) {
-                    console.log(response);
                     var districtOption = '<option value="">-- Pilih Kecamatan --</option>';
                     $.each(response, function(k, v) {
                         districtOption += '<option value="' + v.id + '">' + v.name + '</option>'
@@ -586,7 +585,7 @@
                             }
                         });
                     } else {
-                        show_notif('info', 'Proyek batal dihapus');
+                        show_notif('info', 'Rumah sakit batal dihapus');
                     }
                 }
             });

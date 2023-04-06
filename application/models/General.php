@@ -83,7 +83,6 @@ class General extends CI_Model
         return 0;
     }
 
-
     public function getGeneral($field)
     {
         $this->db->select("*");
@@ -120,6 +119,21 @@ class General extends CI_Model
         return null;
     }
 
+    public function getGeneralById($id)
+    {
+        $this->db->select("*");
+        $this->db->from("tbl_general");
+        $this->db->where("id", $id);
+        $this->db->limit(1);
+
+        $query = $this->db->get();
+
+        if (!is_null($query) && $query->num_rows() >0)
+            return $query->row();
+
+        return null;
+    }
+
     public function saveGeneral($data)
     {
         $this->db->insert("tbl_general", $data);
@@ -130,6 +144,22 @@ class General extends CI_Model
         }
     }
 
+    public function update($data)
+    {
+        $this->db->where("id", $data["id"]);
+        $this->db->update("tbl_general", $data);
+
+        return $this->db->affected_rows();
+    }
+
+    public function delete($data)
+    {
+        $this->db->delete('tbl_general', array(
+            'id' => $data["id"]
+        ));
+
+        return $this->db->affected_rows();
+    }
 
     public function totalRoom()
     {

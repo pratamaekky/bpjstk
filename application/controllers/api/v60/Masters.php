@@ -3,6 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 date_default_timezone_set("Asia/Jakarta");
 include_once(APPPATH . "controllers/api/components/API_Controller.php");
 include_once(APPPATH . "controllers/api/components/Masters/Data.php");
+include_once(APPPATH . "controllers/api/components/Masters/Detail.php");
 include_once(APPPATH . "controllers/api/components/Masters/Save.php");
 include_once(APPPATH . "controllers/api/components/Masters/Update.php");
 include_once(APPPATH . "controllers/api/components/Masters/Delete.php");
@@ -35,6 +36,18 @@ class Masters extends API_Controller
         try {
             $data = new Data($command, $flag, $params);
             $data->action($this->responseObj, $this->res_code, $this->res_message);
+
+            return $this->sendResponse($this->res_code, $this->res_message);
+        } catch (Exception $e) {
+            return $this->sendResponseError($e);
+        }
+    }
+
+    public function detail($command, $params = null)
+    {
+        try {
+            $detail = new Detail($command, $params);
+            $detail->action($this->responseObj, $this->res_code, $this->res_message);
 
             return $this->sendResponse($this->res_code, $this->res_message);
         } catch (Exception $e) {

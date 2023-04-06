@@ -35,7 +35,6 @@ class Detail_bills
         if ($responseBills["result"] == 200) {
             $bill = $responseBills["data"]["item"];
             $detail = $bill["detail"];
-            // var_dump($detail);
 
             $modal_detail = str_replace("[INFO_HOSPITAL_NAME]", $bill["hospital"]["name"], $modal_detail);
 
@@ -355,7 +354,6 @@ class Detail_bills
         }
         
         echo json_encode($modal_detail);
-        // var_dump($this->_params);
     }
 
 }

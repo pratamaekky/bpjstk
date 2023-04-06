@@ -38,11 +38,29 @@ class Update
 
     }
 
+    private function _update_general(&$responseObj, &$responsecode, &$responseMessage)
+    {
+        $updateHospital = $this->CI->general->update($this->_params);
+
+        if ($updateHospital > 0) {
+            $responsecode = 200;
+        }
+
+        $responseObj = [
+            "name" => "Update General",
+            "item" => []
+        ];
+
+    }
+
     public function action(&$responseObj, &$responsecode, &$responseMessage)
     {
         switch ($this->_command) {
             case "hospital":
                 $this->_update_hospital($responseObj, $responsecode, $responseMessage);
+                break;
+            case "general":
+                $this->_update_general($responseObj, $responsecode, $responseMessage);
                 break;
         }
     }

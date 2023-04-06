@@ -63,7 +63,7 @@ class Master extends web_base
         }
     }
 
-    public function generals($command, $flag)
+    public function generals($command, $flag = "")
     {
         try {
             $params = (!is_null($this->input->post()) && !empty($this->input->post())) ? $this->input->post() : null;

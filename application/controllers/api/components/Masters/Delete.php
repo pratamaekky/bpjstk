@@ -35,6 +35,20 @@ class Delete
             "name" => "Delete Hospitals Success",
             "item" => []
         ];
+    }
+
+    private function _delete_general(&$responseObj, &$responsecode, &$responseMessage)
+    {
+        $deleteGeneral = $this->CI->general->delete($this->_params);
+
+        if ($deleteGeneral > 0) {
+            $responsecode = 200;
+        }
+
+        $responseObj = [
+            "name" => "Delete Master Data Success",
+            "item" => []
+        ];
 
     }
 
@@ -43,6 +57,9 @@ class Delete
         switch ($this->_command) {
             case "hospital":
                 $this->_delete_hospital($responseObj, $responsecode, $responseMessage);
+                break;
+            case "general":
+                $this->_delete_general($responseObj, $responsecode, $responseMessage);
                 break;
         }
     }
