@@ -49,9 +49,10 @@
                                     <table id="tableRoomLists" class="table table-hover">
                                         <thead>
                                             <tr>
-                                                <th class="dt-head-center">No</th>
+                                                <th class="dt-head-center" style="width: 20px;">No</th>
                                                 <th class="dt-head-center">Jenis Kamar</th>
                                                 <th class="dt-head-center">Tarif</th>
+                                                <th class="dt-head-center" style="width: 60px;">Action</th>
                                             </tr>
                                         </thead>
                                     </table>
@@ -71,6 +72,7 @@
     <div class="modal fade modal-overflow" id="modal-room">
         <form name="roomForm" id="roomForm" enctype="multipart/form-data" novalidate="novalidate">
             <input type="hidden" name="id_rs" id="id_rs" value="<?php echo (!is_null($hospital) ? $hospital->id : 0) ?>" />
+            <input type="hidden" name="id" id="id" value="" />
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -114,6 +116,8 @@
     <?PHP include(APPPATH . "views/layout/html_footer_script.php"); ?>
     <script src="<?php echo base_url("assets/plugins/datatables/jquery.dataTables.min.js"); ?>"></script>
     <script src="<?php echo base_url("assets/plugins/jquery-validation/jquery.validate.min.js"); ?>"></script>
+    <!-- BootBox -->
+    <script src="<?php echo base_url("assets/js/bootstarp-bootbox.min.js"); ?>"></script>
     <script>
         $(document).ready(function(){
             $('#tableRoomLists').DataTable({
@@ -138,9 +142,10 @@
                     'data': {"rsid": <?php echo $rsId; ?>, 'action':'#tableRoomLists'}
                 },
                 'columns': [
-                    { data: 'no', className: 'dt-body-center', width: '20px' },
+                    { data: 'no', className: 'dt-body-center' },
                     { data: 'value' },
                     { data: 'fare' },
+                    { data: 'action' }
                 ]
             });
         });
@@ -151,8 +156,16 @@
                 submitHandler: function(form) {
                     $('.overlay-loading').show();
 
+                    var todo = $("#todo").val();
+                    var url;
+                    if (todo == "update") {
+                        url = "<?php echo base_url('master/service/room/update'); ?>";
+                    } else {
+                        url = "<?php echo base_url('master/service/room/save'); ?>";
+                    }
+
                     $.ajax({
-                        url: "<?php echo base_url('master/service/room/save'); ?>",
+                        url: url,
                         type: "POST",
                         data: new FormData(form),
                         async: true,
@@ -189,21 +202,71 @@
                     $(element).removeClass('is-invalid');
                 }
             });
+        });
 
-            $('#roomForm').validate({
-                errorElement: 'span',
-                errorPlacement: function(error, element) {
-                    error.addClass('invalid-feedback');
-                    element.closest('.form-group').append(error);
+        function editRoom(id) {
+            $('.overlay-loading').show();
+            $.ajax({
+                url: "<?php echo base_url('master/service/room/detail/'); ?>",
+                type: "POST",
+                data: {
+                    id: id
                 },
-                highlight: function(element, errorClass, validClass) {
-                    $(element).addClass('is-invalid');
+                dataType: "JSON",
+                success: function(response) {
+                    $('.overlay-loading').hide();
+                    $("#id").val(response.id);
+                    $("#value").val(response.value);
+                    $("#fare").val(response.fare);
+
+                    $("#btnForm").html("Update");
+                    $("#todo").val("update");
+                    $("#modal-room").modal("toggle");
                 },
-                unhighlight: function(element, errorClass, validClass) {
-                    $(element).removeClass('is-invalid');
+                error: function(error) {
+                    $('.overlay-loading').hide();
+                    show_notif("error", "Gagal Update Data! Ulangi beberapa saat lagi")
                 }
             });
-        });
+        }
+
+        function deleteRoom(id) {
+            bootbox.confirm({
+                title: "Hapus Kamar",
+                message: "Apakah kamu yakin untuk menghapus kamar ini? Aksi ini tidak bisa di kembalikan",
+                buttons: {
+                    cancel: {
+                        label: '<i class="fa fa-times"></i> Batal'
+                    },
+                    confirm: {
+                        label: '<i class="fa fa-check"></i> Setuju'
+                    }
+                },
+                callback: function(result) {
+                    if (result) {
+                        $('.overlay-loading').show();
+                        $.ajax({
+                            url: '<?php echo base_url("master/service/room/delete"); ?>',
+                            type: "post",
+                            dataType: "json",
+                            data: {
+                                id: id
+                            },
+                            success: function(response) {
+                                $('.overlay-loading').hide();
+                                if (response.result == 200) {
+                                    $('#tableRoomLists').DataTable().ajax.reload()
+                                    show_notif('success', response.data.name);
+                                }
+                            }
+                        });
+                    } else {
+                        show_notif('info', 'Kamar batal dihapus');
+                    }
+                }
+            });
+        }
+
 </script>
 </body>
 

@@ -52,6 +52,21 @@ class Delete
 
     }
 
+    private function _delete_service(&$responseObj, &$responsecode, &$responseMessage)
+    {
+        $deleteService = $this->CI->general->deleteByType($this->_params, $this->_command);
+
+        if ($deleteService > 0) {
+            $responsecode = 200;
+        }
+
+        $responseObj = [
+            "name" => "Delete " . ucwords($this->_command) . " Success",
+            "item" => []
+        ];
+
+    }
+
     public function action(&$responseObj, &$responsecode, &$responseMessage)
     {
         switch ($this->_command) {
@@ -60,6 +75,16 @@ class Delete
                 break;
             case "general":
                 $this->_delete_general($responseObj, $responsecode, $responseMessage);
+                break;
+            case "room":
+            case "radiology":
+            case "rehabilitation":
+            case "medic":
+            case "doctor":
+            case "surgery":
+            case "laboratory":
+            case "fee":
+                $this->_delete_service($responseObj, $responsecode, $responseMessage);
                 break;
         }
     }

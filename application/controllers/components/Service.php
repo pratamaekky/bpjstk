@@ -121,7 +121,9 @@ class Service extends web_base
                         $row = [
                             "no" => ($key  + 1),
                             "value" => $room->value,
-                            "fare" => "Rp " . number_format($room->fare, 0, ",",".")
+                            "fare" => "Rp " . number_format($room->fare, 0, ",","."),
+                            "action" => "<a class='btn btn-sm btn-primary mr-2' href='javascript:void(0);' onclick='editRoom($room->id);' aria-expanded='true'><i class='fas fa-pencil-alt'></i></a>
+                                        <a class='btn btn-sm btn-danger' href='javascript:void(0)' onclick='deleteRoom(" . $room->id . ")' aria-expanded='true'><i class='fas fa-trash'></i></a>"
                         ];
 
                         $items[] = $row;
@@ -141,6 +143,27 @@ class Service extends web_base
             ];
 
             echo json_encode($result);
+        } else if (!is_null($this->_flag) && $this->_flag == "detail") {
+            $responseRoom = $this->Masters->detail("room", $this->_params);
+            $responseRoom = json_decode($responseRoom);
+
+            $result = ($responseRoom->result == 200) ? $responseRoom->data->item : $responseRoom->data;
+            
+            echo json_encode($result);
+        } else if (!is_null($this->_flag) && $this->_flag == "update") {
+            unset($this->_params["id_rs"]);
+            unset($this->_params["todo"]);
+            unset($this->_params["btnTodo"]);
+            $update = $this->Masters->update("room", $this->_params);
+
+            echo $update;
+        } else if (!is_null($this->_flag) && $this->_flag == "delete") {
+            unset($this->_params["id_rs"]);
+            unset($this->_params["todo"]);
+            unset($this->_params["btnTodo"]);
+            $delete = $this->Masters->delete("room", $this->_params);
+
+            echo $delete;
         } else if (!is_null($this->_flag) && $this->_flag == "save") {
             unset($this->_params["todo"]);
             unset($this->_params["btnTodo"]);
@@ -178,7 +201,9 @@ class Service extends web_base
                         $row = [
                             "no" => ($key  + 1),
                             "value" => $room->value,
-                            "fare" => "Rp " . number_format($room->fare, 0, ",",".")
+                            "fare" => "Rp " . number_format($room->fare, 0, ",","."),
+                            "action" => "<a class='btn btn-sm btn-primary mr-2' href='javascript:void(0);' onclick='editService($room->id);' aria-expanded='true'><i class='fas fa-pencil-alt'></i></a>
+                                        <a class='btn btn-sm btn-danger' href='javascript:void(0)' onclick='deleteService(" . $room->id . ")' aria-expanded='true'><i class='fas fa-trash'></i></a>"
                         ];
 
                         $items[] = $row;
@@ -198,6 +223,27 @@ class Service extends web_base
             ];
 
             echo json_encode($result);
+        } else if (!is_null($this->_flag) && $this->_flag == "detail") {
+            $responseUpdate = $this->Masters->detail("radiology", $this->_params);
+            $responseUpdate = json_decode($responseUpdate);
+
+            $result = ($responseUpdate->result == 200) ? $responseUpdate->data->item : $responseUpdate->data;
+            
+            echo json_encode($result);
+        } else if (!is_null($this->_flag) && $this->_flag == "update") {
+            unset($this->_params["id_rs"]);
+            unset($this->_params["todo"]);
+            unset($this->_params["btnTodo"]);
+            $update = $this->Masters->update("radiology", $this->_params);
+
+            echo $update;
+        } else if (!is_null($this->_flag) && $this->_flag == "delete") {
+            unset($this->_params["id_rs"]);
+            unset($this->_params["todo"]);
+            unset($this->_params["btnTodo"]);
+            $delete = $this->Masters->delete("radiology", $this->_params);
+
+            echo $delete;
         } else if (!is_null($this->_flag) && $this->_flag == "save") {
             unset($this->_params["todo"]);
             unset($this->_params["btnTodo"]);
@@ -235,7 +281,9 @@ class Service extends web_base
                         $row = [
                             "no" => ($key  + 1),
                             "value" => $rehab->value,
-                            "fare" => "Rp " . number_format($rehab->fare, 0, ",",".")
+                            "fare" => "Rp " . number_format($rehab->fare, 0, ",","."),
+                            "action" => "<a class='btn btn-sm btn-primary mr-2' href='javascript:void(0);' onclick='editService($rehab->id);' aria-expanded='true'><i class='fas fa-pencil-alt'></i></a>
+                                        <a class='btn btn-sm btn-danger' href='javascript:void(0)' onclick='deleteService(" . $rehab->id . ")' aria-expanded='true'><i class='fas fa-trash'></i></a>"
                         ];
 
                         $items[] = $row;
@@ -255,6 +303,27 @@ class Service extends web_base
             ];
 
             echo json_encode($result);
+        } else if (!is_null($this->_flag) && $this->_flag == "detail") {
+            $responseUpdate = $this->Masters->detail("rehabilitation", $this->_params);
+            $responseUpdate = json_decode($responseUpdate);
+
+            $result = ($responseUpdate->result == 200) ? $responseUpdate->data->item : $responseUpdate->data;
+            
+            echo json_encode($result);
+        } else if (!is_null($this->_flag) && $this->_flag == "update") {
+            unset($this->_params["id_rs"]);
+            unset($this->_params["todo"]);
+            unset($this->_params["btnTodo"]);
+            $update = $this->Masters->update("rehabilitation", $this->_params);
+
+            echo $update;
+        } else if (!is_null($this->_flag) && $this->_flag == "delete") {
+            unset($this->_params["id_rs"]);
+            unset($this->_params["todo"]);
+            unset($this->_params["btnTodo"]);
+            $delete = $this->Masters->delete("rehabilitation", $this->_params);
+
+            echo $delete;
         } else if (!is_null($this->_flag) && $this->_flag == "save") {
             unset($this->_params["todo"]);
             unset($this->_params["btnTodo"]);
@@ -292,7 +361,9 @@ class Service extends web_base
                         $row = [
                             "no" => ($key  + 1),
                             "value" => $medic->value,
-                            "fare" => "Rp " . number_format($medic->fare, 0, ",",".")
+                            "fare" => "Rp " . number_format($medic->fare, 0, ",","."),
+                            "action" => "<a class='btn btn-sm btn-primary mr-2' href='javascript:void(0);' onclick='editService($medic->id);' aria-expanded='true'><i class='fas fa-pencil-alt'></i></a>
+                                        <a class='btn btn-sm btn-danger' href='javascript:void(0)' onclick='deleteService(" . $medic->id . ")' aria-expanded='true'><i class='fas fa-trash'></i></a>"
                         ];
 
                         $items[] = $row;
@@ -312,6 +383,27 @@ class Service extends web_base
             ];
 
             echo json_encode($result);
+        } else if (!is_null($this->_flag) && $this->_flag == "detail") {
+            $responseUpdate = $this->Masters->detail("medic", $this->_params);
+            $responseUpdate = json_decode($responseUpdate);
+
+            $result = ($responseUpdate->result == 200) ? $responseUpdate->data->item : $responseUpdate->data;
+            
+            echo json_encode($result);
+        } else if (!is_null($this->_flag) && $this->_flag == "update") {
+            unset($this->_params["id_rs"]);
+            unset($this->_params["todo"]);
+            unset($this->_params["btnTodo"]);
+            $update = $this->Masters->update("medic", $this->_params);
+
+            echo $update;
+        } else if (!is_null($this->_flag) && $this->_flag == "delete") {
+            unset($this->_params["id_rs"]);
+            unset($this->_params["todo"]);
+            unset($this->_params["btnTodo"]);
+            $delete = $this->Masters->delete("medic", $this->_params);
+
+            echo $delete;
         } else if (!is_null($this->_flag) && $this->_flag == "save") {
             unset($this->_params["todo"]);
             unset($this->_params["btnTodo"]);
@@ -481,7 +573,9 @@ class Service extends web_base
                             "no" => ($key  + 1),
                             "name" => $lab->name,
                             "lab_category" => $lab->lab_category,
-                            "fare" => "Rp " . number_format($lab->fare, 0, ",",".")
+                            "fare" => "Rp " . number_format($lab->fare, 0, ",","."),
+                            "action" => "<a class='btn btn-sm btn-primary mr-2' href='javascript:void(0);' onclick='editService($lab->id);' aria-expanded='true'><i class='fas fa-pencil-alt'></i></a>
+                                        <a class='btn btn-sm btn-danger' href='javascript:void(0)' onclick='deleteService(" . $lab->id . ")' aria-expanded='true'><i class='fas fa-trash'></i></a>"
                         ];
 
                         $items[] = $row;
@@ -501,6 +595,27 @@ class Service extends web_base
             ];
 
             echo json_encode($result);
+        } else if (!is_null($this->_flag) && $this->_flag == "detail") {
+            $responseUpdate = $this->Masters->detail("laboratory", $this->_params);
+            $responseUpdate = json_decode($responseUpdate);
+
+            $result = ($responseUpdate->result == 200) ? $responseUpdate->data->item : $responseUpdate->data;
+            
+            echo json_encode($result);
+        } else if (!is_null($this->_flag) && $this->_flag == "update") {
+            unset($this->_params["id_rs"]);
+            unset($this->_params["todo"]);
+            unset($this->_params["btnTodo"]);
+            $update = $this->Masters->update("laboratory", $this->_params);
+
+            echo $update;
+        } else if (!is_null($this->_flag) && $this->_flag == "delete") {
+            unset($this->_params["id_rs"]);
+            unset($this->_params["todo"]);
+            unset($this->_params["btnTodo"]);
+            $delete = $this->Masters->delete("laboratory", $this->_params);
+
+            echo $delete;
         } else if (!is_null($this->_flag) && $this->_flag == "save") {
             unset($this->_params["todo"]);
             unset($this->_params["btnTodo"]);

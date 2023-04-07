@@ -203,6 +203,7 @@
         });
 
         function editGeneral(id) {
+            $('.overlay-loading').show();
             $.ajax({
                 url: "<?php echo base_url('master/generals/detail/' . $type); ?>",
                 type: "POST",
@@ -211,6 +212,7 @@
                 },
                 dataType: "JSON",
                 success: function(response) {
+                    $('.overlay-loading').hide();
                     $("#id").val(response.id);
                     $("#value").val(response.value);
 
@@ -239,7 +241,7 @@
                 },
                 callback: function(result) {
                     if (result) {
-                        // $('.overlay-loading').show();
+                        $('.overlay-loading').show();
                         $.ajax({
                             url: '<?php echo base_url("master/generals/delete"); ?>',
                             type: "post",
@@ -262,7 +264,6 @@
                 }
             });
         }
-
     </script>
 </body>
 

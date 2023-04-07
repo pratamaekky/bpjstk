@@ -644,4 +644,111 @@ class General extends CI_Model
             return false;
         }
     }
+
+    public function getServiceById($id, $command)
+    {
+        $this->db->select("*");
+        switch ($command) {
+            case 'room':
+                $this->db->from("tbl_room");
+                break;
+            case 'radiology':
+                $this->db->from("tbl_radiology");
+                break;
+            case 'rehabilitation':
+                $this->db->from("tbl_rehabilitation");
+                break;
+            case 'medic':
+                $this->db->from("tbl_medic");
+                break;
+            case 'doctor':
+                $this->db->from("tbl_doctor");
+                break;
+            case 'surgery':
+                $this->db->from("tbl_surgery");
+                break;
+            case 'laboratory':
+                $this->db->from("tbl_laboratory");
+                break;
+            case 'fee':
+                $this->db->from("tbl_fee");
+                break;
+        }
+        $this->db->where("id", $id);
+        $this->db->limit(1);
+
+        $query = $this->db->get();
+
+        if (!is_null($query) && $query->num_rows() > 0)
+            return $query->row();
+
+        return "";
+    }
+
+    public function updateByType($data, $command)
+    {
+        $this->db->where("id", $data["id"]);
+
+        switch ($command) {
+            case 'room':
+                $this->db->update("tbl_room", $data);
+                break;
+            case 'radiology':
+                $this->db->update("tbl_radiology", $data);
+                break;
+            case 'rehabilitation':
+                $this->db->update("tbl_rehabilitation", $data);
+                break;
+            case 'medic':
+                $this->db->update("tbl_medic", $data);
+                break;
+            case 'doctor':
+                $this->db->update("tbl_doctor", $data);
+                break;
+            case 'surgery':
+                $this->db->update("tbl_surgery", $data);
+                break;
+            case 'laboratory':
+                $this->db->update("tbl_laboratory", $data);
+                break;
+            case 'fee':
+                $this->db->update("tbl_fee", $data);
+                break;
+        }
+
+        return $this->db->affected_rows();
+    }
+
+    public function deleteByType($data, $command)
+    {
+        switch ($command) {
+            case 'room':
+                $this->db->delete('tbl_room', ['id' => $data["id"]]);
+                break;
+            case 'radiology':
+                $this->db->delete('tbl_radiology', ['id' => $data["id"]]);
+                break;
+            case 'rehabilitation':
+                $this->db->delete('tbl_rehabilitation', ['id' => $data["id"]]);
+                break;
+            case 'medic':
+                $this->db->delete('tbl_medic', ['id' => $data["id"]]);
+                break;
+            case 'doctor':
+                $this->db->delete('tbl_doctor', ['id' => $data["id"]]);
+                break;
+            case 'surgery':
+                $this->db->delete('tbl_surgery', ['id' => $data["id"]]);
+                break;
+            case 'laboratory':
+                $this->db->delete('tbl_laboratory', ['id' => $data["id"]]);
+                break;
+            case 'fee':
+                $this->db->delete('tbl_fee', ['id' => $data["id"]]);
+                break;
+        }
+
+        return $this->db->affected_rows();
+
+    }
 }

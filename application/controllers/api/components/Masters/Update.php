@@ -53,6 +53,21 @@ class Update
 
     }
 
+    private function _update_service(&$responseObj, &$responsecode, &$responseMessage)
+    {
+        $updateService = $this->CI->general->updateByType($this->_params, $this->_command);
+
+        if ($updateService > 0) {
+            $responsecode = 200;
+        }
+
+        $responseObj = [
+            "name" => "Update " . ucwords($this->_command),
+            "item" => []
+        ];
+
+    }
+
     public function action(&$responseObj, &$responsecode, &$responseMessage)
     {
         switch ($this->_command) {
@@ -61,6 +76,16 @@ class Update
                 break;
             case "general":
                 $this->_update_general($responseObj, $responsecode, $responseMessage);
+                break;
+            case "room":
+            case "radiology":
+            case "rehabilitation":
+            case "medic":
+            case "doctor":
+            case "surgery":
+            case "laboratory":
+            case "fee":
+                $this->_update_service($responseObj, $responsecode, $responseMessage);
                 break;
         }
     }
