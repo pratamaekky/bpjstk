@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Detail
+class BDetail
 {
     protected $CI;
     protected $appSrc;

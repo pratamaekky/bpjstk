@@ -50,7 +50,7 @@ class Users extends API_Controller
             $login = new Login();
             $login->action($this->responseObj, $data, $this->res_code, $this->res_message);
 
-            return $this->sendResponse($this->res_code, $this->res_message);
+            return $this->sendResponse($this->res_code, $this->res_message, $this->responseObj);
         } catch (Exception $e) {
             return $this->sendResponseError($e);
         }

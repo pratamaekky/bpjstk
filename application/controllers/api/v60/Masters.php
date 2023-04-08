@@ -37,7 +37,7 @@ class Masters extends API_Controller
             $data = new Data($command, $flag, $params);
             $data->action($this->responseObj, $this->res_code, $this->res_message);
 
-            return $this->sendResponse($this->res_code, $this->res_message);
+            return $this->sendResponse($this->res_code, $this->res_message, $this->responseObj);
         } catch (Exception $e) {
             return $this->sendResponseError($e);
         }
@@ -49,7 +49,7 @@ class Masters extends API_Controller
             $detail = new Detail($command, $params);
             $detail->action($this->responseObj, $this->res_code, $this->res_message);
 
-            return $this->sendResponse($this->res_code, $this->res_message);
+            return $this->sendResponse($this->res_code, $this->res_message, $this->responseObj);
         } catch (Exception $e) {
             return $this->sendResponseError($e);
         }
@@ -61,7 +61,7 @@ class Masters extends API_Controller
             $save = new Save($command, $params);
             $save->action($this->responseObj, $this->res_code, $this->res_message);
 
-            return $this->sendResponse($this->res_code, $this->res_message);
+            return $this->sendResponse($this->res_code, $this->res_message, $this->responseObj);
         } catch (Exception $e) {
             return $this->sendResponseError($e);
         }
@@ -73,7 +73,7 @@ class Masters extends API_Controller
             $update = new Update($command, $params);
             $update->action($this->responseObj, $this->res_code, $this->res_message);
 
-            return $this->sendResponse($this->res_code, $this->res_message);
+            return $this->sendResponse($this->res_code, $this->res_message, $this->responseObj);
         } catch (Exception $e) {
             return $this->sendResponseError($e);
         }
@@ -85,7 +85,7 @@ class Masters extends API_Controller
             $delete = new Delete($command, $params);
             $delete->action($this->responseObj, $this->res_code, $this->res_message);
 
-            return $this->sendResponse($this->res_code, $this->res_message);
+            return $this->sendResponse($this->res_code, $this->res_message, $this->responseObj);
         } catch (Exception $e) {
             return $this->sendResponseError($e);
         }
