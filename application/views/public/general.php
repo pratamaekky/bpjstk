@@ -70,7 +70,7 @@
     <div class="modal fade modal-overflow" id="modal-master">
         <form name="masterForm" id="masterForm" enctype="multipart/form-data" novalidate="novalidate">
             <input type="hidden" name="field" id="field" value="<?php echo $type; ?>" />
-            <input type="hidden" name="id" id="id" value="" />
+            <input type="hidden" name="id" id="id" value="0" />
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -202,6 +202,13 @@
             });
         });
 
+        $("#modal-master").on("hidden.bs.modal", function(e) {
+            $("#masterForm").trigger("reset");
+            $("#btnForm").html("Simpan");
+            $("#todo").val("");
+            $('.select2').val('').trigger('change');
+        });
+
         function editGeneral(id) {
             $('.overlay-loading').show();
             $.ajax({
@@ -250,7 +257,7 @@
                                 id: id
                             },
                             success: function(response) {
-                                // $('.overlay-loading').hide();
+                                $('.overlay-loading').hide();
                                 if (response.result == 200) {
                                     // $("#tableHospitalLists").DataTable().destroy();
                                     $('#tableGeneralLists').DataTable().ajax.reload()

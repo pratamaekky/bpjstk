@@ -76,7 +76,7 @@
     <div class="modal fade modal-overflow" id="modal-laboratory">
         <form name="laboratoryForm" id="laboratoryForm" enctype="multipart/form-data" novalidate="novalidate">
             <input type="hidden" name="id_rs" id="id_rs" value="<?php echo (!is_null($hospital) ? $hospital->id : 0) ?>" />
-            <input type="hidden" name="id" id="id" value="" />
+            <input type="hidden" name="id" id="id" value="0" />
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -232,7 +232,15 @@
             });
         });
 
+        $("#modal-laboratory").on("hidden.bs.modal", function(e) {
+            $("#laboratoryForm").trigger("reset");
+            $("#btnForm").html("Simpan");
+            $("#todo").val("");
+            $('.select2').val('').trigger('change');
+        });
+
         function editService(id) {
+            var categoryHtml = "";
             $('.overlay-loading').show();
             $.ajax({
                 url: "<?php echo base_url('master/service/laboratory/detail/'); ?>",
@@ -242,11 +250,23 @@
                 },
                 dataType: "JSON",
                 success: function(response) {
+                    var category = response.category;
                     $('.overlay-loading').hide();
                     $("#id").val(response.id);
                     $("#name").val(response.name);
                     $("#fare").val(response.fare);
 
+                    categoryHtml += '<option value="">-- Pilih Kategori --</option>';
+                    $.each(category, function(key, cat) {
+                        selected = "";
+                        if (response.id_lab_category == cat.id) {
+                            selected = 'selected="selected"';
+                        }
+
+                        categoryHtml += '<option value="' + cat.id + '" ' + selected + '>' + cat.value + '</option>';
+                    });
+
+                    $("#id_lab_category").html(categoryHtml);
                     $("#btnForm").html("Update");
                     $("#todo").val("update");
                     $("#modal-laboratory").modal("toggle");
@@ -293,7 +313,7 @@
                     }
                 }
             });
-        }        
+        }
 
     </script>
 </body>

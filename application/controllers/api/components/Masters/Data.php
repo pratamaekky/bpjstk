@@ -231,23 +231,17 @@ class Data
         $query = (isset($this->_params["search"]["value"]) && !empty($this->_params["search"]["value"])) ? $this->_params["search"]["value"] : null;
         $column = isset($this->_params["order"][0]["column"]) ? $this->_params["order"][0]["column"] : null;
         $order = isset($this->_params["order"][0]["dir"]) ? $this->_params["order"][0]["dir"] : "asc";
-        $sortColumn = "id";
+        $sortColumn = "value";
         if (!is_null($column)) {
             switch ($column) {
                 case 1:
-                    $sortColumn = "name";
+                    $sortColumn = "value";
                     break;
-                case 4:
-                    $sortColumn = "hospital_type";
-                    break;
-                case 5:
-                    $sortColumn = "class";
-                    break;
-                case 6:
-                    $sortColumn = "hospital_owner";
+                case 2:
+                    $sortColumn = "fare";
                     break;
                 default:
-                    $sortColumn = "id";
+                    $sortColumn = "value";
                     break;
             }
         }
@@ -280,7 +274,7 @@ class Data
         $query = (isset($this->_params["search"]["value"]) && !empty($this->_params["search"]["value"])) ? $this->_params["search"]["value"] : null;
         $column = isset($this->_params["order"][0]["column"]) ? $this->_params["order"][0]["column"] : null;
         $order = isset($this->_params["order"][0]["dir"]) ? $this->_params["order"][0]["dir"] : "asc";
-        $sortColumn = "id";
+        $sortColumn = "value";
 
         $totalRadiology = $this->CI->general->totalRadiology();
 
@@ -372,7 +366,7 @@ class Data
         $query = (isset($this->_params["search"]["value"]) && !empty($this->_params["search"]["value"])) ? $this->_params["search"]["value"] : null;
         $column = isset($this->_params["order"][0]["column"]) ? $this->_params["order"][0]["column"] : null;
         $order = isset($this->_params["order"][0]["dir"]) ? $this->_params["order"][0]["dir"] : "asc";
-        $sortColumn = "id";
+        $sortColumn = "name";
         if (!is_null($column)) {
             switch ($column) {
                 case 1:
@@ -388,7 +382,7 @@ class Data
                     $sortColumn = "hospital_owner";
                     break;
                 default:
-                    $sortColumn = "id";
+                    $sortColumn = "name";
                     break;
             }
         }
@@ -422,7 +416,7 @@ class Data
         $query = (isset($this->_params["search"]["value"]) && !empty($this->_params["search"]["value"])) ? $this->_params["search"]["value"] : null;
         $column = isset($this->_params["order"][0]["column"]) ? $this->_params["order"][0]["column"] : null;
         $order = isset($this->_params["order"][0]["dir"]) ? $this->_params["order"][0]["dir"] : "asc";
-        $sortColumn = "id";
+        $sortColumn = "name";
         $totalSurgery = $this->CI->general->totalSurgery($idRs);
 
         if ($totalSurgery > 0) {
@@ -452,7 +446,7 @@ class Data
         $query = (isset($this->_params["search"]["value"]) && !empty($this->_params["search"]["value"])) ? $this->_params["search"]["value"] : null;
         $column = isset($this->_params["order"][0]["column"]) ? $this->_params["order"][0]["column"] : null;
         $order = isset($this->_params["order"][0]["dir"]) ? $this->_params["order"][0]["dir"] : "asc";
-        $sortColumn = "id";
+        $sortColumn = "name";
         if (!is_null($column)) {
             switch ($column) {
                 case 1:
@@ -468,7 +462,7 @@ class Data
                     $sortColumn = "hospital_owner";
                     break;
                 default:
-                    $sortColumn = "id";
+                    $sortColumn = "name";
                     break;
             }
         }

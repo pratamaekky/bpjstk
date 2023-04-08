@@ -23,7 +23,7 @@
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0">Data Tindakan Rehabilitasi Rumah Sakit</h1>
+                            <h1 class="m-0">Data Tindakan Rehab Medik Rumah Sakit</h1>
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="#">Home</a></li>
                                 <li class="breadcrumb-item"><a href="<?php echo base_url("master/service"); ?>">Data Pelayanan</a></li>
@@ -50,7 +50,7 @@
                                         <thead>
                                             <tr>
                                                 <th class="dt-head-center" style="width: 20px;">No</th>
-                                                <th class="dt-head-center">Tindakan Rehabilitasi</th>
+                                                <th class="dt-head-center">Tindakan Rehab Medik</th>
                                                 <th class="dt-head-center">Tarif</th>
                                                 <th class="dt-head-center" style="width: 60px;">Action</th>
                                             </tr>
@@ -72,11 +72,11 @@
     <div class="modal fade modal-overflow" id="modal-rehabilitation">
         <form name="rehabilitationForm" id="rehabilitationForm" enctype="multipart/form-data" novalidate="novalidate">
             <input type="hidden" name="id_rs" id="id_rs" value="<?php echo (!is_null($hospital) ? $hospital->id : 0) ?>" />
-            <input type="hidden" name="id" id="id" value="" />
+            <input type="hidden" name="id" id="id" value="0" />
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title" id="title-modal-form">Tambah Tindakan Rehabilitasi Rumah Sakit</h4>
+                        <h4 class="modal-title" id="title-modal-form">Tambah Tindakan Rehab Medik Rumah Sakit</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -85,7 +85,7 @@
                         <div class="col-12 col-sm-12">
                             <div class="row">
                                 <div class="form-group col-12">
-                                    <label for="value">Nama Tindakan Rehabilitasi</label>
+                                    <label for="value">Nama Tindakan Rehab Medik</label>
                                     <div class="input-group">
                                         <input type="text" name="value" id="value" class="form-control" placeholder="Contoh: Kamar Inap Kelas II" autocomplete="off" required="required" />
                                     </div>
@@ -204,6 +204,13 @@
             });
         });
 
+        $("#modal-rehabilitation").on("hidden.bs.modal", function(e) {
+            $("#rehabilitationForm").trigger("reset");
+            $("#btnForm").html("Simpan");
+            $("#todo").val("");
+            $('.select2').val('').trigger('change');
+        });
+
         function editService(id) {
             $('.overlay-loading').show();
             $.ajax({
@@ -232,8 +239,8 @@
 
         function deleteService(id) {
             bootbox.confirm({
-                title: "Hapus Rehabilitasi",
-                message: "Apakah kamu yakin untuk menghapus rehabilitasi ini? Aksi ini tidak bisa di kembalikan",
+                title: "Hapus Rehab Medik",
+                message: "Apakah kamu yakin untuk menghapus Rehab Medik ini? Aksi ini tidak bisa di kembalikan",
                 buttons: {
                     cancel: {
                         label: '<i class="fa fa-times"></i> Batal'
@@ -261,7 +268,7 @@
                             }
                         });
                     } else {
-                        show_notif('info', 'Rehabilitasi batal dihapus');
+                        show_notif('info', 'Rehab Medik batal dihapus');
                     }
                 }
             });

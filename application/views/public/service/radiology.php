@@ -72,7 +72,7 @@
     <div class="modal fade modal-overflow" id="modal-radiology">
         <form name="radiologyForm" id="radiologyForm" enctype="multipart/form-data" novalidate="novalidate">
             <input type="hidden" name="id_rs" id="id_rs" value="<?php echo (!is_null($hospital) ? $hospital->id : 0) ?>" />
-            <input type="hidden" name="id" id="id" value="" />
+            <input type="hidden" name="id" id="id" value="0" />
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -146,6 +146,12 @@
                     { data: 'value' },
                     { data: 'fare' },
                     { data: 'action' }
+                ],
+                "columnDefs":[
+                    {
+                        "targets":[0, 2, 3],
+                        "orderable":false,
+                    },
                 ]
             });
         });
@@ -202,6 +208,12 @@
                     $(element).removeClass('is-invalid');
                 }
             });
+        });
+
+        $("#modal-radiology").on("hidden.bs.modal", function(e) {
+            $("#radiologyForm").trigger("reset");
+            $("#btnForm").html("Simpan");
+            $("#todo").val("");
         });
 
         function editService(id) {

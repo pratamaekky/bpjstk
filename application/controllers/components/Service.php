@@ -165,6 +165,7 @@ class Service extends web_base
 
             echo $delete;
         } else if (!is_null($this->_flag) && $this->_flag == "save") {
+            unset($this->_params["id"]);
             unset($this->_params["todo"]);
             unset($this->_params["btnTodo"]);
             $saveHospital = $this->Masters->save("room", $this->_params);
@@ -245,6 +246,7 @@ class Service extends web_base
 
             echo $delete;
         } else if (!is_null($this->_flag) && $this->_flag == "save") {
+            unset($this->_params["id"]);
             unset($this->_params["todo"]);
             unset($this->_params["btnTodo"]);
             $saveHospital = $this->Masters->save("radiology", $this->_params);
@@ -325,6 +327,7 @@ class Service extends web_base
 
             echo $delete;
         } else if (!is_null($this->_flag) && $this->_flag == "save") {
+            unset($this->_params["id"]);
             unset($this->_params["todo"]);
             unset($this->_params["btnTodo"]);
             $saveHospital = $this->Masters->save("rehabilitation", $this->_params);
@@ -405,6 +408,7 @@ class Service extends web_base
 
             echo $delete;
         } else if (!is_null($this->_flag) && $this->_flag == "save") {
+            unset($this->_params["id"]);
             unset($this->_params["todo"]);
             unset($this->_params["btnTodo"]);
             $saveHospital = $this->Masters->save("medic", $this->_params);
@@ -447,7 +451,9 @@ class Service extends web_base
                             "no" => ($key  + 1),
                             "name" => $doctor->name,
                             "doctor_specialist" => $doctor->doctor_specialist,
-                            "fare" => "Rp " . number_format($doctor->fare, 0, ",",".")
+                            "fare" => "Rp " . number_format($doctor->fare, 0, ",","."),
+                            "action" => "<a class='btn btn-sm btn-primary mr-2' href='javascript:void(0);' onclick='editService($doctor->id);' aria-expanded='true'><i class='fas fa-pencil-alt'></i></a>
+                                        <a class='btn btn-sm btn-danger' href='javascript:void(0)' onclick='deleteService(" . $doctor->id . ")' aria-expanded='true'><i class='fas fa-trash'></i></a>"
                         ];
 
                         $items[] = $row;
@@ -467,7 +473,33 @@ class Service extends web_base
             ];
 
             echo json_encode($result);
+        } else if (!is_null($this->_flag) && $this->_flag == "detail") {
+            $responseUpdate = $this->Masters->detail("doctor", $this->_params);
+            $responseUpdate = json_decode($responseUpdate);
+            $responseCategory = $this->Masters->data("general", "doctor_specialist");
+            $responseCategory = json_decode($responseCategory);
+
+            $category = ($responseCategory->result == 200) ? $responseCategory->data->item : $responseCategory->data;
+            $result = ($responseUpdate->result == 200) ? $responseUpdate->data->item : $responseUpdate->data;
+            $result->category = $category;
+            
+            echo json_encode($result);
+        } else if (!is_null($this->_flag) && $this->_flag == "update") {
+            unset($this->_params["id_rs"]);
+            unset($this->_params["todo"]);
+            unset($this->_params["btnTodo"]);
+            $update = $this->Masters->update("doctor", $this->_params);
+
+            echo $update;
+        } else if (!is_null($this->_flag) && $this->_flag == "delete") {
+            unset($this->_params["id_rs"]);
+            unset($this->_params["todo"]);
+            unset($this->_params["btnTodo"]);
+            $delete = $this->Masters->delete("doctor", $this->_params);
+
+            echo $delete;
         } else if (!is_null($this->_flag) && $this->_flag == "save") {
+            unset($this->_params["id"]);
             unset($this->_params["todo"]);
             unset($this->_params["btnTodo"]);
             $saveDoctor = $this->Masters->save("doctor", $this->_params);
@@ -502,15 +534,17 @@ class Service extends web_base
             $responseSurgery = json_decode($responseSurgery);
 
             if ($responseSurgery->result == 200) {
-                $resDoctor = $responseSurgery->data->item->aaData;
+                $resSurgery = $responseSurgery->data->item->aaData;
 
-                if (!empty($resDoctor)) {
-                    foreach ($resDoctor as $key => $doctor) {
+                if (!empty($resSurgery)) {
+                    foreach ($resSurgery as $key => $surgery) {
                         $row = [
                             "no" => ($key  + 1),
-                            "name" => $doctor->name,
-                            "surgery" => $doctor->ot_category,
-                            "fare" => "Rp " . number_format($doctor->fare, 0, ",",".")
+                            "name" => $surgery->name,
+                            "surgery" => $surgery->ot_category,
+                            "fare" => "Rp " . number_format($surgery->fare, 0, ",","."),
+                            "action" => "<a class='btn btn-sm btn-primary mr-2' href='javascript:void(0);' onclick='editService($surgery->id);' aria-expanded='true'><i class='fas fa-pencil-alt'></i></a>
+                                        <a class='btn btn-sm btn-danger' href='javascript:void(0)' onclick='deleteService(" . $surgery->id . ")' aria-expanded='true'><i class='fas fa-trash'></i></a>"
                         ];
 
                         $items[] = $row;
@@ -530,7 +564,33 @@ class Service extends web_base
             ];
 
             echo json_encode($result);
+        } else if (!is_null($this->_flag) && $this->_flag == "detail") {
+            $responseUpdate = $this->Masters->detail("surgery", $this->_params);
+            $responseUpdate = json_decode($responseUpdate);
+            $responseCategory = $this->Masters->data("general", "ot_category");
+            $responseCategory = json_decode($responseCategory);
+
+            $category = ($responseCategory->result == 200) ? $responseCategory->data->item : $responseCategory->data;
+            $result = ($responseUpdate->result == 200) ? $responseUpdate->data->item : $responseUpdate->data;
+            $result->category = $category;
+            
+            echo json_encode($result);
+        } else if (!is_null($this->_flag) && $this->_flag == "update") {
+            unset($this->_params["id_rs"]);
+            unset($this->_params["todo"]);
+            unset($this->_params["btnTodo"]);
+            $update = $this->Masters->update("surgery", $this->_params);
+
+            echo $update;
+        } else if (!is_null($this->_flag) && $this->_flag == "delete") {
+            unset($this->_params["id_rs"]);
+            unset($this->_params["todo"]);
+            unset($this->_params["btnTodo"]);
+            $delete = $this->Masters->delete("surgery", $this->_params);
+
+            echo $delete;
         } else if (!is_null($this->_flag) && $this->_flag == "save") {
+            unset($this->_params["id"]);
             unset($this->_params["todo"]);
             unset($this->_params["btnTodo"]);
             $saveSurgery = $this->Masters->save("surgery", $this->_params);
@@ -598,8 +658,12 @@ class Service extends web_base
         } else if (!is_null($this->_flag) && $this->_flag == "detail") {
             $responseUpdate = $this->Masters->detail("laboratory", $this->_params);
             $responseUpdate = json_decode($responseUpdate);
+            $responseCategory = $this->Masters->data("general", "lab_category");
+            $responseCategory = json_decode($responseCategory);
 
+            $category = ($responseCategory->result == 200) ? $responseCategory->data->item : $responseCategory->data;
             $result = ($responseUpdate->result == 200) ? $responseUpdate->data->item : $responseUpdate->data;
+            $result->category = $category;
             
             echo json_encode($result);
         } else if (!is_null($this->_flag) && $this->_flag == "update") {
@@ -617,6 +681,7 @@ class Service extends web_base
 
             echo $delete;
         } else if (!is_null($this->_flag) && $this->_flag == "save") {
+            unset($this->_params["id"]);
             unset($this->_params["todo"]);
             unset($this->_params["btnTodo"]);
             $saveLaboratory = $this->Masters->save("laboratory", $this->_params);
@@ -654,12 +719,14 @@ class Service extends web_base
                 $resFee = $responseFee->data->item->aaData;
 
                 if (!empty($resFee)) {
-                    foreach ($resFee as $key => $lab) {
+                    foreach ($resFee as $key => $fee) {
                         $row = [
                             "no" => ($key  + 1),
-                            "name" => $lab->name,
-                            "other_fee" => $lab->other_fee,
-                            "fare" => "Rp " . number_format($lab->fare, 0, ",",".")
+                            "name" => $fee->name,
+                            "other_fee" => $fee->other_fee,
+                            "fare" => "Rp " . number_format($fee->fare, 0, ",","."),
+                            "action" => "<a class='btn btn-sm btn-primary mr-2' href='javascript:void(0);' onclick='editService($fee->id);' aria-expanded='true'><i class='fas fa-pencil-alt'></i></a>
+                                        <a class='btn btn-sm btn-danger' href='javascript:void(0)' onclick='deleteService(" . $fee->id . ")' aria-expanded='true'><i class='fas fa-trash'></i></a>"
                         ];
 
                         $items[] = $row;
@@ -679,7 +746,33 @@ class Service extends web_base
             ];
 
             echo json_encode($result);
+        } else if (!is_null($this->_flag) && $this->_flag == "detail") {
+            $responseUpdate = $this->Masters->detail("fee", $this->_params);
+            $responseUpdate = json_decode($responseUpdate);
+            $responseCategory = $this->Masters->data("general", "other_fee");
+            $responseCategory = json_decode($responseCategory);
+
+            $category = ($responseCategory->result == 200) ? $responseCategory->data->item : $responseCategory->data;
+            $result = ($responseUpdate->result == 200) ? $responseUpdate->data->item : $responseUpdate->data;
+            $result->category = $category;
+            
+            echo json_encode($result);
+        } else if (!is_null($this->_flag) && $this->_flag == "update") {
+            unset($this->_params["id_rs"]);
+            unset($this->_params["todo"]);
+            unset($this->_params["btnTodo"]);
+            $update = $this->Masters->update("fee", $this->_params);
+
+            echo $update;
+        } else if (!is_null($this->_flag) && $this->_flag == "delete") {
+            unset($this->_params["id_rs"]);
+            unset($this->_params["todo"]);
+            unset($this->_params["btnTodo"]);
+            $delete = $this->Masters->delete("fee", $this->_params);
+
+            echo $delete;
         } else if (!is_null($this->_flag) && $this->_flag == "save") {
+            unset($this->_params["id"]);
             unset($this->_params["todo"]);
             unset($this->_params["btnTodo"]);
             $saveFee = $this->Masters->save("fee", $this->_params);
@@ -738,6 +831,7 @@ class Service extends web_base
 
             echo json_encode($result);
         } else if (!is_null($this->_flag) && $this->_flag == "save") {
+            unset($this->_params["id"]);
             unset($this->_params["todo"]);
             unset($this->_params["btnTodo"]);
             $saveHospital = $this->Masters->save("users", $this->_params);

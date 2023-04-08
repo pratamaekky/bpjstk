@@ -90,6 +90,7 @@ class Generals
 
     private function _save()
     {
+        unset($this->_params["id"]);
         unset($this->_params["todo"]);
         unset($this->_params["btnTodo"]);
         $saveHospital = $this->Masters->save("general", $this->_params);

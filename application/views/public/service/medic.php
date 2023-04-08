@@ -204,6 +204,12 @@
             });
         });
 
+        $("#modal-medic").on("hidden.bs.modal", function(e) {
+            $("#medicForm").trigger("reset");
+            $("#btnForm").html("Simpan");
+            $("#todo").val("");
+        });
+
         function editService(id) {
             $('.overlay-loading').show();
             $.ajax({

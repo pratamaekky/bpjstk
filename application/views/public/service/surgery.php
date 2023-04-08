@@ -52,10 +52,11 @@
                                     <table id="tableSurgeryLists" class="table table-hover">
                                         <thead>
                                             <tr>
-                                                <th class="dt-head-center">No</th>
+                                                <th class="dt-head-center" style="width: 20px;">No</th>
                                                 <th class="dt-head-center">Nama Dokter</th>
                                                 <th class="dt-head-center">Operasi</th>
                                                 <th class="dt-head-center">Tarif</th>
+                                                <th class="dt-head-center" style="width: 60px;">Action</th>
                                             </tr>
                                         </thead>
                                     </table>
@@ -75,6 +76,7 @@
     <div class="modal fade modal-overflow" id="modal-surgery">
         <form name="surgeryForm" id="surgeryForm" enctype="multipart/form-data" novalidate="novalidate">
             <input type="hidden" name="id_rs" id="id_rs" value="<?php echo (!is_null($hospital) ? $hospital->id : 0) ?>" />
+            <input type="hidden" name="id" id="id" value="0" />
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -135,6 +137,8 @@
     <script src="<?php echo base_url("assets/plugins/jquery-validation/jquery.validate.min.js"); ?>"></script>
     <!-- Select2 -->
     <script src="<?php echo base_url("assets/plugins/select2/js/select2.full.min.js"); ?>"></script>
+    <!-- BootBox -->
+    <script src="<?php echo base_url("assets/js/bootstarp-bootbox.min.js"); ?>"></script>
     <script>
         $(document).ready(function(){
             $('#tableSurgeryLists').DataTable({
@@ -163,6 +167,7 @@
                     { data: 'name' },
                     { data: 'surgery' },
                     { data: 'fare' },
+                    { data: 'action' },
                 ]
             });
         });
@@ -178,8 +183,16 @@
                 submitHandler: function(form) {
                     $('.overlay-loading').show();
 
+                    var todo = $("#todo").val();
+                    var url;
+                    if (todo == "update") {
+                        url = "<?php echo base_url('master/service/surgery/update'); ?>";
+                    } else {
+                        url = "<?php echo base_url('master/service/surgery/save'); ?>";
+                    }
+
                     $.ajax({
-                        url: "<?php echo base_url('master/service/surgery/save'); ?>",
+                        url: url,
                         type: "POST",
                         data: new FormData(form),
                         async: true,
@@ -216,21 +229,90 @@
                     $(element).removeClass('is-invalid');
                 }
             });
+        });
 
-            $('#surgeryForm').validate({
-                errorElement: 'span',
-                errorPlacement: function(error, element) {
-                    error.addClass('invalid-feedback');
-                    element.closest('.form-group').append(error);
+        $("#modal-surgery").on("hidden.bs.modal", function(e) {
+            $("#surgeryForm").trigger("reset");
+            $("#btnForm").html("Simpan");
+            $("#todo").val("");
+            $('.select2').val('').trigger('change');
+        });
+
+        function editService(id) {
+            var categoryHtml = "";
+            $('.overlay-loading').show();
+            $.ajax({
+                url: "<?php echo base_url('master/service/surgery/detail/'); ?>",
+                type: "POST",
+                data: {
+                    id: id
                 },
-                highlight: function(element, errorClass, validClass) {
-                    $(element).addClass('is-invalid');
+                dataType: "JSON",
+                success: function(response) {
+                    var category = response.category;
+                    $('.overlay-loading').hide();
+                    $("#id").val(response.id);
+                    $("#name").val(response.name);
+                    $("#fare").val(response.fare);
+
+                    categoryHtml += '<option value="">-- Pilih Kategori --</option>';
+                    $.each(category, function(key, cat) {
+                        selected = "";
+                        if (response.id_ot_category == cat.id) {
+                            selected = 'selected="selected"';
+                        }
+
+                        categoryHtml += '<option value="' + cat.id + '" ' + selected + '>' + cat.value + '</option>';
+                    });
+
+                    $("#id_ot_category").html(categoryHtml);
+                    $("#btnForm").html("Update");
+                    $("#todo").val("update");
+                    $("#modal-surgery").modal("toggle");
                 },
-                unhighlight: function(element, errorClass, validClass) {
-                    $(element).removeClass('is-invalid');
+                error: function(error) {
+                    $('.overlay-loading').hide();
+                    show_notif("error", "Gagal Update Data! Ulangi beberapa saat lagi")
                 }
             });
-        });
+        }
+
+        function deleteService(id) {
+            bootbox.confirm({
+                title: "Hapus Dokter Operasi",
+                message: "Apakah kamu yakin untuk menghapus dokter operasi ini? Aksi ini tidak bisa di kembalikan",
+                buttons: {
+                    cancel: {
+                        label: '<i class="fa fa-times"></i> Batal'
+                    },
+                    confirm: {
+                        label: '<i class="fa fa-check"></i> Setuju'
+                    }
+                },
+                callback: function(result) {
+                    if (result) {
+                        $('.overlay-loading').show();
+                        $.ajax({
+                            url: '<?php echo base_url("master/service/surgery/delete"); ?>',
+                            type: "post",
+                            dataType: "json",
+                            data: {
+                                id: id
+                            },
+                            success: function(response) {
+                                $('.overlay-loading').hide();
+                                if (response.result == 200) {
+                                    $('#tableSurgeryLists').DataTable().ajax.reload()
+                                    show_notif('success', response.data.name);
+                                }
+                            }
+                        });
+                    } else {
+                        show_notif('info', 'Dokter Operasi batal dihapus');
+                    }
+                }
+            });
+        }        
 </script>
 </body>
 

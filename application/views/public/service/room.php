@@ -204,6 +204,13 @@
             });
         });
 
+        $("#modal-room").on("hidden.bs.modal", function(e) {
+            $("#roomForm").trigger("reset");
+            $("#btnForm").html("Simpan");
+            $("#todo").val("");
+            $('.select2').val('').trigger('change');
+        });
+
         function editRoom(id) {
             $('.overlay-loading').show();
             $.ajax({

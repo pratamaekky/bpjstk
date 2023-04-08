@@ -422,7 +422,7 @@ class General extends CI_Model
         $this->db->where("a.id_rs", $rsId);
 
         if (!is_null($query))
-            $this->db->like("a.value", $query);
+            $this->db->like("a.name", $query);
 
         $this->db->order_by($order, $sort);
 
@@ -484,7 +484,7 @@ class General extends CI_Model
         $this->db->where("a.id_rs", $rsId);
 
         if (!is_null($query))
-            $this->db->like("a.value", $query);
+            $this->db->like("a.name", $query);
 
         $this->db->order_by($order, $sort);
 
@@ -545,7 +545,7 @@ class General extends CI_Model
         $this->db->where("a.id_rs", $rsId);
 
         if (!is_null($query))
-            $this->db->like("a.value", $query);
+            $this->db->like("a.name", $query);
 
         $this->db->order_by($order, $sort);
 
