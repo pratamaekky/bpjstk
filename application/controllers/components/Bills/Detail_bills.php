@@ -91,11 +91,15 @@ class Detail_bills
                     $yankesRoom .= '    <label class="form-control col-sm-1 col-1">' . $room["qty"] . '</label>';
                     $yankesRoom .= '    <label class="col-form-label col-sm-1 col-1 text-center">Hari</label>';
                     $yankesRoom .= '    <label class="row-flex col-form-label col-sm-1 col-1 text-right pl-0 pr-0">';
-                    $yankesRoom .= '        <label class="col-sm-6 col-5 text-center no-padding">X</label>';
-                    $yankesRoom .= '        <label class="col-sm-6 col-6 pl-0">IDR</label>';
+                    $yankesRoom .= '        <label class="col-sm-5 col-5 text-center no-padding">X</label>';
+                    $yankesRoom .= '        <label class="col-sm-7 col-7 pl-0">IDR</label>';
                     $yankesRoom .= '    </label>';
                     $yankesRoom .= '    <label class="form-control col-sm-2 col-2 text-right">' . number_format($room["fare"], 0, ",", ".") . '</label>';
-                    $yankesRoom .= '    <label class="col-form-label col-sm-1 col-1 text-right">= IDR</label><label class="form-control col-sm-2 col-2 text-right">' . number_format($room["total"], 0, ",", ".") . '</label>';
+                    $yankesRoom .= '    <label class="col-form-label col-sm-1 col-1 text-right">= IDR</label>';
+                    $yankesRoom .= '    <label class="row-flex col-sm-2 col-2 no-padding">';
+                    $yankesRoom .= '        <label class="form-control col-sm-11 col-11 text-right">' . number_format($room["total"], 0, ",", ".") . '</label>';
+                    $yankesRoom .= '        <label class="col-sm-1 col-1">&nbsp;</label>';
+                    $yankesRoom .= '    </label>';
                     $yankesRoom .= '</div>';
 
                     $roomSubTotal += $room["total"];
@@ -104,7 +108,10 @@ class Detail_bills
                 $yankesRoom .= '<div class="row-flex col-sm-12 col-12 pl-0 pr-0">';
                 $yankesRoom .= '    <label class="col-form-label col-sm-9 col-9 pl-0">Sub Total</label>';
                 $yankesRoom .= '    <label class="col-form-label col-sm-1 col-1 text-right">IDR</label>';
-                $yankesRoom .= '    <label class="form-control col-sm-2 col-2 text-right">' . number_format($roomSubTotal, 0, ",", ".") . '</label>';
+                $yankesRoom .= '    <label class="row-flex col-sm-2 col-2 no-padding">';
+                $yankesRoom .= '        <label class="form-control col-sm-11 col-11 text-right">' . number_format($roomSubTotal, 0, ",", ".") . '</label>';
+                $yankesRoom .= '        <label class="col-sm-1 col-1">&nbsp;</label>';
+                $yankesRoom .= '    </label>';
                 $yankesRoom .= '</div>';
             }
             $modal_detail = str_replace("[INFO_YANKES_ROOM]", $yankesRoom, $modal_detail);
@@ -115,7 +122,11 @@ class Detail_bills
                 foreach ($detail["room_nurse"] as $room_nurse) {
                     $yankesRoomNurse .= '<div class="row-flex col-sm-12 col-12 pl-0">';
                     $yankesRoomNurse .= '    <label class="form-control col-sm-9 col-9 mr-2">' . $room_nurse["value"] . '</label>';
-                    $yankesRoomNurse .= '    <label class="col-form-label col-sm-1 col-1 text-right">= IDR</label><label class="form-control col-sm-2 col-2 text-right">' . number_format($room_nurse["total"], 0, ",", ".") . '</label>';
+                    $yankesRoomNurse .= '    <label class="col-form-label col-sm-1 col-1 text-right">= IDR</label>';
+                    $yankesRoomNurse .= '    <label class="row-flex col-sm-2 col-2 no-padding">';
+                    $yankesRoomNurse .= '        <label class="form-control col-sm-11 col-11 text-right">' . number_format($room_nurse["total"], 0, ",", ".") . '</label>';
+                    $yankesRoomNurse .= '        <label class="col-sm-1 col-1">&nbsp;</label>';
+                    $yankesRoomNurse .= '    </label>';
                     $yankesRoomNurse .= '</div>';
 
                     $room_nurseSubTotal += $room_nurse["total"];
@@ -124,7 +135,10 @@ class Detail_bills
                 $yankesRoomNurse .= '<div class="row-flex col-sm-12 col-12 pl-0 pr-0">';
                 $yankesRoomNurse .= '    <label class="col-form-label col-sm-9 col-9 pl-0">Sub Total</label>';
                 $yankesRoomNurse .= '    <label class="col-form-label col-sm-1 col-1 text-right">IDR</label>';
-                $yankesRoomNurse .= '    <label class="form-control col-sm-2 col-2 text-right">' . number_format($room_nurseSubTotal, 0, ",", ".") . '</label>';
+                $yankesRoomNurse .= '    <label class="row-flex col-sm-2 col-2 no-padding">';
+                $yankesRoomNurse .= '        <label class="form-control col-sm-11 col-11 text-right">' . number_format($room_nurseSubTotal, 0, ",", ".") . '</label>';
+                $yankesRoomNurse .= '        <label class="col-sm-1 col-1">&nbsp;</label>';
+                $yankesRoomNurse .= '    </label>';
                 $yankesRoomNurse .= '</div>';
             }
             $modal_detail = str_replace("[INFO_YANKES_ROOM_NURSE]", $yankesRoomNurse, $modal_detail);
@@ -135,7 +149,11 @@ class Detail_bills
                 foreach ($detail["admin"] as $admin) {
                     $yankesAdmin .= '<div class="row-flex col-sm-12 col-12 pl-0">';
                     $yankesAdmin .= '    <label class="form-control col-sm-9 col-9 mr-2">' . $admin["value"] . '</label>';
-                    $yankesAdmin .= '    <label class="col-form-label col-sm-1 col-1 text-right">= IDR</label><label class="form-control col-sm-2 col-2 text-right">' . number_format($admin["total"], 0, ",", ".") . '</label>';
+                    $yankesAdmin .= '    <label class="col-form-label col-sm-1 col-1 text-right">= IDR</label>';
+                    $yankesAdmin .= '    <label class="row-flex col-sm-2 col-2 no-padding">';
+                    $yankesAdmin .= '        <label class="form-control col-sm-11 col-11 text-right">' . number_format($admin["total"], 0, ",", ".") . '</label>';
+                    $yankesAdmin .= '        <label class="col-sm-1 col-1">&nbsp;</label>';
+                    $yankesAdmin .= '    </label>';
                     $yankesAdmin .= '</div>';
 
                     $adminSubTotal += $admin["total"];
@@ -144,7 +162,10 @@ class Detail_bills
                 $yankesAdmin .= '<div class="row-flex col-sm-12 col-12 pl-0 pr-0">';
                 $yankesAdmin .= '    <label class="col-form-label col-sm-9 col-9 pl-0">Sub Total</label>';
                 $yankesAdmin .= '    <label class="col-form-label col-sm-1 col-1 text-right">IDR</label>';
-                $yankesAdmin .= '    <label class="form-control col-sm-2 col-2 text-right">' . number_format($adminSubTotal, 0, ",", ".") . '</label>';
+                $yankesAdmin .= '    <label class="row-flex col-sm-2 col-2 no-padding">';
+                $yankesAdmin .= '        <label class="form-control col-sm-11 col-11 text-right">' . number_format($adminSubTotal, 0, ",", ".") . '</label>';
+                $yankesAdmin .= '        <label class="col-sm-1 col-1">&nbsp;</label>';
+                $yankesAdmin .= '    </label>';
                 $yankesAdmin .= '</div>';
             }
             $modal_detail = str_replace("[INFO_YANKES_ADMIN]", $yankesAdmin, $modal_detail);
@@ -155,7 +176,11 @@ class Detail_bills
                 foreach ($detail["medicine"] as $medicine) {
                     $yankesMedicine .= '<div class="row-flex col-sm-12 col-12 pl-0">';
                     $yankesMedicine .= '    <label class="form-control col-sm-9 col-9 mr-2">' . $medicine["value"] . '</label>';
-                    $yankesMedicine .= '    <label class="col-form-label col-sm-1 col-1 text-right">IDR</label><label class="form-control col-sm-2 col-2 text-right">' . number_format($medicine["total"], 0, ",", ".") . '</label>';
+                    $yankesMedicine .= '    <label class="col-form-label col-sm-1 col-1 text-right">= IDR</label>';
+                    $yankesMedicine .= '    <label class="row-flex col-sm-2 col-2 no-padding">';
+                    $yankesMedicine .= '        <label class="form-control col-sm-11 col-11 text-right">' . number_format($medicine["total"], 0, ",", ".") . '</label>';
+                    $yankesMedicine .= '        <label class="col-sm-1 col-1">&nbsp;</label>';
+                    $yankesMedicine .= '    </label>';
                     $yankesMedicine .= '</div>';
 
                     $medicineSubTotal += $medicine["total"];
@@ -164,7 +189,10 @@ class Detail_bills
                 $yankesMedicine .= '<div class="row-flex col-sm-12 col-12 pl-0 pr-0">';
                 $yankesMedicine .= '    <label class="col-form-label col-sm-9 col-9 pl-0">Sub Total</label>';
                 $yankesMedicine .= '    <label class="col-form-label col-sm-1 col-1 text-right">IDR</label>';
-                $yankesMedicine .= '    <label class="form-control col-sm-2 col-2 text-right">' . number_format($medicineSubTotal, 0, ",", ".") . '</label>';
+                $yankesMedicine .= '    <label class="row-flex col-sm-2 col-2 no-padding">';
+                $yankesMedicine .= '        <label class="form-control col-sm-11 col-11 text-right">' . number_format($medicineSubTotal, 0, ",", ".") . '</label>';
+                $yankesMedicine .= '        <label class="col-sm-1 col-1">&nbsp;</label>';
+                $yankesMedicine .= '    </label>';
                 $yankesMedicine .= '</div>';
             }
             $modal_detail = str_replace("[INFO_YANKES_MEDICINE]", $yankesMedicine, $modal_detail);
@@ -175,14 +203,24 @@ class Detail_bills
                 foreach ($detail["docter"] as $docter) {
                     $yankesDocter .= '<div class="row-flex col-sm-12 col-12 pl-0">';
                     $yankesDocter .= '    <label class="form-control col-sm-9 col-9 mr-2">' . $docter["value"] . '</label>';
-                    $yankesDocter .= '    <label class="col-form-label col-sm-1 col-1 text-right">IDR</label><label class="form-control col-sm-2 col-2 text-right">' . number_format($docter["total"], 0, ",", ".") . '</label>';
+                    $yankesDocter .= '    <label class="col-form-label col-sm-1 col-1 text-right">= IDR</label>';
+                    $yankesDocter .= '    <label class="row-flex col-sm-2 col-2 no-padding">';
+                    $yankesDocter .= '        <label class="form-control col-sm-11 col-11 text-right">' . number_format($docter["total"], 0, ",", ".") . '</label>';
+                    $yankesDocter .= '        <label class="col-sm-1 col-1">&nbsp;</label>';
+                    $yankesDocter .= '    </label>';
                     $yankesDocter .= '</div>';
 
                     if (isset($docter["children"]) && !empty($docter["children"])) {
                         foreach ($docter["children"] as $children) {
-                            $yankesDocter .= '<div class="row-flex col-sm-12 col-12 pl-3">';
-                            $yankesDocter .= '    <label class="form-control col-sm-9 col-9 mr-2">' . $children["value"] . '</label>';
-                            $yankesDocter .= '    <label class="col-form-label col-sm-1 col-1 text-right">IDR</label><label class="form-control col-sm-2 col-2 text-right">' . number_format($children["total"], 0, ",", ".") . '</label>';
+                            $yankesDocter .= '<div class="row-flex col-sm-12 col-12 pl-0">';
+                            $yankesDocter .= '    <label class="row-flex col-sm-9 col-9 mr-2 pr-3">';
+                            $yankesDocter .= '        <label class="form-control col-sm-12 col-12 ml-3">' . $children["value"] . '</label>';
+                            $yankesDocter .= '    </label>';
+                            $yankesDocter .= '    <label class="col-form-label col-sm-1 col-1 text-right">= IDR</label>';
+                            $yankesDocter .= '    <label class="row-flex col-sm-2 col-2 no-padding">';
+                            $yankesDocter .= '        <label class="form-control col-sm-11 col-11 text-right">' . number_format($children["total"], 0, ",", ".") . '</label>';
+                            $yankesDocter .= '        <label class="col-sm-1 col-1">&nbsp;</label>';
+                            $yankesDocter .= '    </label>';
                             $yankesDocter .= '</div>';
 
                             $docterSubTotal += $children["total"];
@@ -196,7 +234,10 @@ class Detail_bills
                 $yankesDocter .= '<div class="row-flex col-sm-12 col-12 pl-0 pr-0">';
                 $yankesDocter .= '    <label class="col-form-label col-sm-9 col-9 pl-0">Sub Total</label>';
                 $yankesDocter .= '    <label class="col-form-label col-sm-1 col-1 text-right">IDR</label>';
-                $yankesDocter .= '    <label class="form-control col-sm-2 col-2 text-right">' . number_format($docterSubTotal, 0, ",", ".") . '</label>';
+                $yankesDocter .= '    <label class="row-flex col-sm-2 col-2 no-padding">';
+                $yankesDocter .= '        <label class="form-control col-sm-11 col-11 text-right">' . number_format($docterSubTotal, 0, ",", ".") . '</label>';
+                $yankesDocter .= '        <label class="col-sm-1 col-1">&nbsp;</label>';
+                $yankesDocter .= '    </label>';
                 $yankesDocter .= '</div>';
             }
             $modal_detail = str_replace("[INFO_YANKES_DOCTER]", $yankesDocter, $modal_detail);
@@ -207,7 +248,11 @@ class Detail_bills
                 foreach ($detail["surgery"] as $surgery) {
                     $yankesSurgery .= '<div class="row-flex col-sm-12 col-12 pl-0">';
                     $yankesSurgery .= '    <label class="form-control col-sm-9 col-9 mr-2">' . $surgery["value"] . '</label>';
-                    $yankesSurgery .= '    <label class="col-form-label col-sm-1 col-1 text-right">IDR</label><label class="form-control col-sm-2 col-2 text-right">' . number_format($surgery["total"], 0, ",", ".") . '</label>';
+                    $yankesSurgery .= '    <label class="col-form-label col-sm-1 col-1 text-right">= IDR</label>';
+                    $yankesSurgery .= '    <label class="row-flex col-sm-2 col-2 no-padding">';
+                    $yankesSurgery .= '        <label class="form-control col-sm-11 col-11 text-right">' . number_format($surgery["total"], 0, ",", ".") . '</label>';
+                    $yankesSurgery .= '        <label class="col-sm-1 col-1">&nbsp;</label>';
+                    $yankesSurgery .= '    </label>';
                     $yankesSurgery .= '</div>';
 
                     $surgerySubTotal += $surgery["total"];
@@ -216,7 +261,10 @@ class Detail_bills
                 $yankesSurgery .= '<div class="row-flex col-sm-12 col-12 pl-0 pr-0">';
                 $yankesSurgery .= '    <label class="col-form-label col-sm-9 col-9 pl-0">Sub Total</label>';
                 $yankesSurgery .= '    <label class="col-form-label col-sm-1 col-1 text-right">IDR</label>';
-                $yankesSurgery .= '    <label class="form-control col-sm-2 col-2 text-right">' . number_format($surgerySubTotal, 0, ",", ".") . '</label>';
+                $yankesSurgery .= '    <label class="row-flex col-sm-2 col-2 no-padding">';
+                $yankesSurgery .= '        <label class="form-control col-sm-11 col-11 text-right">' . number_format($surgerySubTotal, 0, ",", ".") . '</label>';
+                $yankesSurgery .= '        <label class="col-sm-1 col-1">&nbsp;</label>';
+                $yankesSurgery .= '    </label>';
                 $yankesSurgery .= '</div>';
             }
             $modal_detail = str_replace("[INFO_YANKES_SURGERY]", $yankesSurgery, $modal_detail);
@@ -227,7 +275,11 @@ class Detail_bills
                 foreach ($detail["surgery_nurse"] as $surgery_nurse) {
                     $yankesSurgeryNurse .= '<div class="row-flex col-sm-12 col-12 pl-0">';
                     $yankesSurgeryNurse .= '    <label class="form-control col-sm-9 col-9 mr-2">' . $surgery_nurse["value"] . '</label>';
-                    $yankesSurgeryNurse .= '    <label class="col-form-label col-sm-1 col-1 text-right">= IDR</label><label class="form-control col-sm-2 col-2 text-right">' . number_format($surgery_nurse["total"], 0, ",", ".") . '</label>';
+                    $yankesSurgeryNurse .= '    <label class="col-form-label col-sm-1 col-1 text-right">= IDR</label>';
+                    $yankesSurgeryNurse .= '    <label class="row-flex col-sm-2 col-2 no-padding">';
+                    $yankesSurgeryNurse .= '        <label class="form-control col-sm-11 col-11 text-right">' . number_format($surgery_nurse["total"], 0, ",", ".") . '</label>';
+                    $yankesSurgeryNurse .= '        <label class="col-sm-1 col-1">&nbsp;</label>';
+                    $yankesSurgeryNurse .= '    </label>';
                     $yankesSurgeryNurse .= '</div>';
 
                     $surgery_nurseSubTotal += $surgery_nurse["total"];
@@ -236,7 +288,10 @@ class Detail_bills
                 $yankesSurgeryNurse .= '<div class="row-flex col-sm-12 col-12 pl-0 pr-0">';
                 $yankesSurgeryNurse .= '    <label class="col-form-label col-sm-9 col-9 pl-0">Sub Total</label>';
                 $yankesSurgeryNurse .= '    <label class="col-form-label col-sm-1 col-1 text-right">IDR</label>';
-                $yankesSurgeryNurse .= '    <label class="form-control col-sm-2 col-2 text-right">' . number_format($surgery_nurseSubTotal, 0, ",", ".") . '</label>';
+                $yankesSurgeryNurse .= '    <label class="row-flex col-sm-2 col-2 no-padding">';
+                $yankesSurgeryNurse .= '        <label class="form-control col-sm-11 col-11 text-right">' . number_format($surgery_nurseSubTotal, 0, ",", ".") . '</label>';
+                $yankesSurgeryNurse .= '        <label class="col-sm-1 col-1">&nbsp;</label>';
+                $yankesSurgeryNurse .= '    </label>';
                 $yankesSurgeryNurse .= '</div>';
             }
             $modal_detail = str_replace("[INFO_YANKES_SURGERY_NURSE]", $yankesSurgeryNurse, $modal_detail);
@@ -250,11 +305,15 @@ class Detail_bills
                     $yankesLab .= '    <label class="form-control col-sm-1 col-1">' . $lab["qty"] . '</label>';
                     $yankesLab .= '    <label class="col-form-label col-sm-1 col-1 text-center">Hari</label>';
                     $yankesLab .= '    <label class="row-flex col-form-label col-sm-1 col-1 text-right pl-0 pr-0">';
-                    $yankesLab .= '        <label class="col-sm-6 col-5 text-center no-padding">X</label>';
-                    $yankesLab .= '        <label class="col-sm-6 col-6 pl-0">IDR</label>';
+                    $yankesLab .= '        <label class="col-sm-5 col-5 text-center no-padding">X</label>';
+                    $yankesLab .= '        <label class="col-sm-7 col-7 pl-0">IDR</label>';
                     $yankesLab .= '    </label>';
                     $yankesLab .= '    <label class="form-control col-sm-2 col-2 text-right">' . number_format($lab["fare"], 0, ",", ".") . '</label>';
-                    $yankesLab .= '    <label class="col-form-label col-sm-1 col-1 text-right">= IDR</label><label class="form-control col-sm-2 col-2 text-right">' . number_format($lab["total"], 0, ",", ".") . '</label>';
+                    $yankesLab .= '    <label class="col-form-label col-sm-1 col-1 text-right">= IDR</label>';
+                    $yankesLab .= '    <label class="row-flex col-sm-2 col-2 no-padding">';
+                    $yankesLab .= '        <label class="form-control col-sm-11 col-11 text-right">' . number_format($lab["total"], 0, ",", ".") . '</label>';
+                    $yankesLab .= '        <label class="col-sm-1 col-1">&nbsp;</label>';
+                    $yankesLab .= '    </label>';
                     $yankesLab .= '</div>';
 
                     $labSubTotal += $lab["total"];
@@ -263,7 +322,10 @@ class Detail_bills
                 $yankesLab .= '<div class="row-flex col-sm-12 col-12 pl-0 pr-0">';
                 $yankesLab .= '    <label class="col-form-label col-sm-9 col-9 pl-0">Sub Total</label>';
                 $yankesLab .= '    <label class="col-form-label col-sm-1 col-1 text-right">IDR</label>';
-                $yankesLab .= '    <label class="form-control col-sm-2 col-2 text-right">' . number_format($labSubTotal, 0, ",", ".") . '</label>';
+                $yankesLab .= '    <label class="row-flex col-sm-2 col-2 no-padding">';
+                $yankesLab .= '        <label class="form-control col-sm-11 col-11 text-right">' . number_format($labSubTotal, 0, ",", ".") . '</label>';
+                $yankesLab .= '        <label class="col-sm-1 col-1">&nbsp;</label>';
+                $yankesLab .= '    </label>';
                 $yankesLab .= '</div>';
             }
             $modal_detail = str_replace("[INFO_YANKES_LAB]", $yankesLab, $modal_detail);
@@ -277,11 +339,15 @@ class Detail_bills
                     $yankesRadiology .= '    <label class="form-control col-sm-1 col-1">' . $radiology["qty"] . '</label>';
                     $yankesRadiology .= '    <label class="col-form-label col-sm-1 col-1 text-center">Hari</label>';
                     $yankesRadiology .= '    <label class="row-flex col-form-label col-sm-1 col-1 text-right pl-0 pr-0">';
-                    $yankesRadiology .= '        <label class="col-sm-6 col-5 text-center no-padding">X</label>';
-                    $yankesRadiology .= '        <label class="col-sm-6 col-6 pl-0">IDR</label>';
+                    $yankesRadiology .= '        <label class="col-sm-5 col-5 text-center no-padding">X</label>';
+                    $yankesRadiology .= '        <label class="col-sm-7 col-7 pl-0">IDR</label>';
                     $yankesRadiology .= '    </label>';
                     $yankesRadiology .= '    <label class="form-control col-sm-2 col-2 text-right">' . number_format($radiology["fare"], 0, ",", ".") . '</label>';
-                    $yankesRadiology .= '    <label class="col-form-label col-sm-1 col-1 text-right">= IDR</label><label class="form-control col-sm-2 col-2 text-right">' . number_format($radiology["total"], 0, ",", ".") . '</label>';
+                    $yankesRadiology .= '    <label class="col-form-label col-sm-1 col-1 text-right">= IDR</label>';
+                    $yankesRadiology .= '    <label class="row-flex col-sm-2 col-2 no-padding">';
+                    $yankesRadiology .= '        <label class="form-control col-sm-11 col-11 text-right">' . number_format($radiology["total"], 0, ",", ".") . '</label>';
+                    $yankesRadiology .= '        <label class="col-sm-1 col-1">&nbsp;</label>';
+                    $yankesRadiology .= '    </label>';
                     $yankesRadiology .= '</div>';
 
                     $radiologySubTotal += $radiology["total"];
@@ -290,7 +356,10 @@ class Detail_bills
                 $yankesRadiology .= '<div class="row-flex col-sm-12 col-12 pl-0 pr-0">';
                 $yankesRadiology .= '    <label class="col-form-label col-sm-9 col-9 pl-0">Sub Total</label>';
                 $yankesRadiology .= '    <label class="col-form-label col-sm-1 col-1 text-right">IDR</label>';
-                $yankesRadiology .= '    <label class="form-control col-sm-2 col-2 text-right">' . number_format($radiologySubTotal, 0, ",", ".") . '</label>';
+                $yankesRadiology .= '    <label class="row-flex col-sm-2 col-2 no-padding">';
+                $yankesRadiology .= '        <label class="form-control col-sm-11 col-11 text-right">' . number_format($radiologySubTotal, 0, ",", ".") . '</label>';
+                $yankesRadiology .= '        <label class="col-sm-1 col-1">&nbsp;</label>';
+                $yankesRadiology .= '    </label>';
                 $yankesRadiology .= '</div>';
             }
             $modal_detail = str_replace("[INFO_YANKES_RADIOLOGY]", $yankesRadiology, $modal_detail);
@@ -304,11 +373,15 @@ class Detail_bills
                     $yankesMedic .= '    <label class="form-control col-sm-1 col-1">' . $medic["qty"] . '</label>';
                     $yankesMedic .= '    <label class="col-form-label col-sm-1 col-1 text-center">Hari</label>';
                     $yankesMedic .= '    <label class="row-flex col-form-label col-sm-1 col-1 text-right pl-0 pr-0">';
-                    $yankesMedic .= '        <label class="col-sm-6 col-5 text-center no-padding">X</label>';
-                    $yankesMedic .= '        <label class="col-sm-6 col-6 pl-0">IDR</label>';
+                    $yankesMedic .= '        <label class="col-sm-5 col-5 text-center no-padding">X</label>';
+                    $yankesMedic .= '        <label class="col-sm-7 col-7 pl-0">IDR</label>';
                     $yankesMedic .= '    </label>';
                     $yankesMedic .= '    <label class="form-control col-sm-2 col-2 text-right">' . number_format($medic["fare"], 0, ",", ".") . '</label>';
-                    $yankesMedic .= '    <label class="col-form-label col-sm-1 col-1 text-right">= IDR</label><label class="form-control col-sm-2 col-2 text-right">' . number_format($medic["total"], 0, ",", ".") . '</label>';
+                    $yankesMedic .= '    <label class="col-form-label col-sm-1 col-1 text-right">= IDR</label>';
+                    $yankesMedic .= '    <label class="row-flex col-sm-2 col-2 no-padding">';
+                    $yankesMedic .= '        <label class="form-control col-sm-11 col-11 text-right">' . number_format($medic["total"], 0, ",", ".") . '</label>';
+                    $yankesMedic .= '        <label class="col-sm-1 col-1">&nbsp;</label>';
+                    $yankesMedic .= '    </label>';
                     $yankesMedic .= '</div>';
 
                     $medicSubTotal += $medic["total"];
@@ -317,7 +390,10 @@ class Detail_bills
                 $yankesMedic .= '<div class="row-flex col-sm-12 col-12 pl-0 pr-0">';
                 $yankesMedic .= '    <label class="col-form-label col-sm-9 col-9 pl-0">Sub Total</label>';
                 $yankesMedic .= '    <label class="col-form-label col-sm-1 col-1 text-right">IDR</label>';
-                $yankesMedic .= '    <label class="form-control col-sm-2 col-2 text-right">' . number_format($medicSubTotal, 0, ",", ".") . '</label>';
+                $yankesMedic .= '    <label class="row-flex col-sm-2 col-2 no-padding">';
+                $yankesMedic .= '        <label class="form-control col-sm-11 col-11 text-right">' . number_format($medicSubTotal, 0, ",", ".") . '</label>';
+                $yankesMedic .= '        <label class="col-sm-1 col-1">&nbsp;</label>';
+                $yankesMedic .= '    </label>';
                 $yankesMedic .= '</div>';
             }
             $modal_detail = str_replace("[INFO_YANKES_MEDIC]", $yankesMedic, $modal_detail);
@@ -331,11 +407,15 @@ class Detail_bills
                     $yankesRehab .= '    <label class="form-control col-sm-1 col-1">' . $rehab["qty"] . '</label>';
                     $yankesRehab .= '    <label class="col-form-label col-sm-1 col-1 text-center">Hari</label>';
                     $yankesRehab .= '    <label class="row-flex col-form-label col-sm-1 col-1 text-right pl-0 pr-0">';
-                    $yankesRehab .= '        <label class="col-sm-6 col-5 text-center no-padding">X</label>';
-                    $yankesRehab .= '        <label class="col-sm-6 col-6 pl-0">IDR</label>';
+                    $yankesRehab .= '        <label class="col-sm-5 col-5 text-center no-padding">X</label>';
+                    $yankesRehab .= '        <label class="col-sm-7 col-7 pl-0">IDR</label>';
                     $yankesRehab .= '    </label>';
                     $yankesRehab .= '    <label class="form-control col-sm-2 col-2 text-right">' . number_format($rehab["fare"], 0, ",", ".") . '</label>';
-                    $yankesRehab .= '    <label class="col-form-label col-sm-1 col-1 text-right">= IDR</label><label class="form-control col-sm-2 col-2 text-right">' . number_format($rehab["total"], 0, ",", ".") . '</label>';
+                    $yankesRehab .= '    <label class="col-form-label col-sm-1 col-1 text-right">= IDR</label>';
+                    $yankesRehab .= '    <label class="row-flex col-sm-2 col-2 no-padding">';
+                    $yankesRehab .= '        <label class="form-control col-sm-11 col-11 text-right">' . number_format($rehab["total"], 0, ",", ".") . '</label>';
+                    $yankesRehab .= '        <label class="col-sm-1 col-1">&nbsp;</label>';
+                    $yankesRehab .= '    </label>';
                     $yankesRehab .= '</div>';
 
                     $rehabSubTotal += $rehab["total"];
@@ -344,7 +424,10 @@ class Detail_bills
                 $yankesRehab .= '<div class="row-flex col-sm-12 col-12 pl-0 pr-0">';
                 $yankesRehab .= '    <label class="col-form-label col-sm-9 col-9 pl-0">Sub Total</label>';
                 $yankesRehab .= '    <label class="col-form-label col-sm-1 col-1 text-right">IDR</label>';
-                $yankesRehab .= '    <label class="form-control col-sm-2 col-2 text-right">' . number_format($rehabSubTotal, 0, ",", ".") . '</label>';
+                $yankesRehab .= '    <label class="row-flex col-sm-2 col-2 no-padding">';
+                $yankesRehab .= '        <label class="form-control col-sm-11 col-11 text-right">' . number_format($rehabSubTotal, 0, ",", ".") . '</label>';
+                $yankesRehab .= '        <label class="col-sm-1 col-1">&nbsp;</label>';
+                $yankesRehab .= '    </label>';
                 $yankesRehab .= '</div>';
             }
             $modal_detail = str_replace("[INFO_YANKES_REHAB]", $yankesRehab, $modal_detail);

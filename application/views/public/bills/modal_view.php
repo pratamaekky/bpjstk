@@ -169,10 +169,10 @@
                                 <div class="col-sm-12 col-12">
                                     <div class="row row-cob-div" id="row-cob-div" data-count="1">
                                         <div class="row-flex row-cob col-sm-12 col-12 no-padding" id="row-cob-1">
-                                            <!-- <input type="text" name="cob_value[]" id="cob_value_1" placeholder="Contoh: Paracetamol" class="form-control col-sm-9 col-9" /> -->
                                             <div class="row-flex col-sm-12 col-12 no-padding">
-                                                <label class="col-form-label col-sm-1 col-1 text-left"> IDR </label>
-                                                <label class="form-control text-right">[INFO_COB]</label>
+                                                <label class="col-sm-9 col-9">&nbsp;</label>
+                                                <label class="col-form-label col-sm-1 col-1 text-right"> IDR </label>
+                                                <label class="form-control col-sm-2 col-2 text-right">[INFO_COB]</label>
                                             </div>
                                         </div>
                                     </div>
