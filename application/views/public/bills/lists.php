@@ -264,7 +264,6 @@
                                             <div class="col-sm-12 col-12">
                                                 <div class="row row-cob-div" id="row-cob-div" data-count="1">
                                                     <div class="row-flex row-cob col-sm-12 col-12 no-padding" id="row-cob-1">
-                                                        <!-- <input type="text" name="cob_value[]" id="cob_value_1" placeholder="Contoh: Paracetamol" class="form-control col-sm-9 col-9" /> -->
                                                         <div class="row-flex col-sm-12 col-12 no-padding">
                                                             <label class="col-form-label col-sm-1 col-1 text-left">IDR</label>
                                                             <input type="text" name="cob_subtotal[]" id="cob_subtotal_1" class="form-control col-sm-11 col-11" value="0" />
@@ -334,7 +333,6 @@
                                                 <div class="row row-room-nurse-div" id="row-room-nurse-div" data-count="1">
                                                     <div class="row row-room-nurse col-sm-12 col-12" id="row-room-nurse-1">
                                                         <input type="text" name="room_nurse[]" id="room_nurse_1" placeholder="Contoh: Jasa Perawat Kamar" class="form-control col-sm-9 col-9" />
-                                                        <!-- <label class="form-control col-sm-9 col-9 mr-2">' . $room_nurse["value"] . '</label>'; -->
                                                         <label class="col-form-label col-sm-1 col-1 text-right">IDR</label>
                                                         <label class="row-flex col-sm-2 col-2 no-padding">
                                                             <input type="text" name="room_nurse_subtotal[]" id="room_nurse_subtotal_1" class="room_nurse_subtotal form-control text-right col-sm-11 col-11" value="0" onblur="calculation_room_nurse()" />
