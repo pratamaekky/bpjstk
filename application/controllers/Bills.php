@@ -5,6 +5,7 @@ require_once APPPATH . 'controllers/base/web_base.php';
 require_once APPPATH . "controllers/components/Bills/Lists.php";
 require_once APPPATH . "controllers/components/Bills/Save_bills.php";
 require_once APPPATH . "controllers/components/Bills/Detail_bills.php";
+require_once APPPATH . "controllers/components/Bills/BDelete.php";
 
 class Bills extends web_base
 {
@@ -53,6 +54,16 @@ class Bills extends web_base
             $params = (!is_null($this->input->post()) && !empty($this->input->post())) ? $this->input->post() : null;
             $detail = new Detail_bills($params);
             $detail->action();
+        } catch (Exception $e) {
+        }
+    }
+
+    public function delete()
+    {
+        try {
+            $params = (!is_null($this->input->post()) && !empty($this->input->post())) ? $this->input->post() : null;
+            $delete = new BDelete($params);
+            $delete->action();
         } catch (Exception $e) {
         }
     }

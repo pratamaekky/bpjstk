@@ -123,4 +123,10 @@ class Mbills extends CI_Model
             return 0;
         }
     }
+
+    public function delete($data)
+    {
+        $this->db->delete('tbl_bills', ['id' => $data["id"]]);
+        $this->db->delete('tbl_bills_detail', ['id_bills' => $data["id"]]);
+    }
 }

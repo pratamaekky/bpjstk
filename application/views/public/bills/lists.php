@@ -696,6 +696,8 @@
     <script src="<?php echo base_url("assets/plugins/daterangepicker/daterangepicker.js"); ?>"></script>
     <!-- Select2 -->
     <script src="<?php echo base_url("assets/plugins/select2/js/select2.full.min.js"); ?>"></script>
+    <!-- BootBox -->
+    <script src="<?php echo base_url("assets/js/bootstarp-bootbox.min.js"); ?>"></script>
     <script>
         $(document).ready(function(){
             $('#tableBillsLists').DataTable({
@@ -1695,14 +1697,41 @@
         }
 
         function delete_bills(id) {
-            $.ajax({
-                url: '<?php echo base_url("bills/detail"); ?>',
-                type: "POST",
-                dataType: "JSON",
-                data: {
-                    id: id
+            bootbox.confirm({
+                title: "Hapus Tagihan",
+                message: "Apakah kamu yakin untuk menghapus tagihan ini? Aksi ini tidak bisa di kembalikan",
+                buttons: {
+                    cancel: {
+                        label: '<i class="fa fa-times"></i> Batal'
+                    },
+                    confirm: {
+                        label: '<i class="fa fa-check"></i> Setuju'
+                    }
                 },
-                success: function(response) {
+                callback: function(result) {
+                    if (result) {
+                        $('.overlay-loading').show();
+                        $.ajax({
+                            url: '<?php echo base_url("bills/delete"); ?>',
+                            type: "post",
+                            dataType: "json",
+                            data: {
+                                id: id
+                            },
+                            success: function(response) {
+                                $('.overlay-loading').hide();
+                                if (response.result == 200 || response.message == 'Success') {
+                                    $('#tableBillsLists').DataTable().ajax.reload()
+                                    show_notif('success', response.data.name);
+                                } else {
+                                    $('.overlay-loading').hide();
+                                    show_notif("error", response.message)
+                                }
+                            }
+                        });
+                    } else {
+                        show_notif('info', 'Tagihan batal dihapus');
+                    }
                 }
             });
         }
