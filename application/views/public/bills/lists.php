@@ -700,7 +700,7 @@
         $(document).ready(function(){
             $('#tableBillsLists').DataTable({
                 destroy:true,
-                'processing': false,
+                'processing': true,
                 'serverSide': true,
                 'serverMethod': 'post',
                 'pagingType': 'full_numbers',

@@ -78,11 +78,11 @@ class Hospital
 
                     $items[] = $row;
                 }
-
-                $draw = $responseHospital->data->item->draw;
-                $totalRecods = $responseHospital->data->item->iTotalRecords;
-                $totalDisplays = $responseHospital->data->item->iTotalDisplayRecords;
             }
+
+            $draw = $responseHospital->data->item->draw;
+            $totalRecods = $responseHospital->data->item->iTotalRecords;
+            $totalDisplays = $responseHospital->data->item->iTotalDisplayRecords;
         }
 
         $result = [

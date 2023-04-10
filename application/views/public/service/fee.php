@@ -153,7 +153,8 @@
                         next: '<i class="fas fa-angle-double-right"></i> Next'
                     },
                     searchPlaceholder: "Search",
-                    emptyTable: "No record found",
+                    emptyTable: "Tidak ada data yang ditemukan",
+                    zeroRecords: "Tidak ada data yang cocok",
                     search: "",
                     infoFiltered: ""
                 },

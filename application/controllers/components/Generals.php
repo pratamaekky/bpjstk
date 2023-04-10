@@ -52,11 +52,11 @@ class Generals
 
                     $items[] = $row;
                 }
-
-                $draw = $response->data->item->draw;
-                $totalRecods = $response->data->item->iTotalRecords;
-                $totalDisplays = $response->data->item->iTotalDisplayRecords;
             }
+
+            $draw = $response->data->item->draw;
+            $totalRecods = $response->data->item->iTotalRecords;
+            $totalDisplays = $response->data->item->iTotalDisplayRecords;
         }
 
         $result = [

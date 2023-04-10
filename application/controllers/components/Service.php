@@ -76,11 +76,11 @@ class Service extends web_base
 
                     $items[] = $row;
                 }
-
-                $draw = $responseHospital->data->item->draw;
-                $totalRecods = $responseHospital->data->item->iTotalRecords;
-                $totalDisplays = $responseHospital->data->item->iTotalDisplayRecords;
             }
+
+            $draw = $responseHospital->data->item->draw;
+            $totalRecods = $responseHospital->data->item->iTotalRecords;
+            $totalDisplays = $responseHospital->data->item->iTotalDisplayRecords;
         }
 
         $result = [
@@ -128,11 +128,11 @@ class Service extends web_base
 
                         $items[] = $row;
                     }
-
-                    $draw = $responseRoom->data->item->draw;
-                    $totalRecods = $responseRoom->data->item->iTotalRecords;
-                    $totalDisplays = $responseRoom->data->item->iTotalDisplayRecords;
                 }
+
+                $draw = $responseRoom->data->item->draw;
+                $totalRecods = $responseRoom->data->item->iTotalRecords;
+                $totalDisplays = $responseRoom->data->item->iTotalDisplayRecords;
             }
 
             $result = [
@@ -209,11 +209,11 @@ class Service extends web_base
 
                         $items[] = $row;
                     }
-
-                    $draw = $responseRoom->data->item->draw;
-                    $totalRecods = $responseRoom->data->item->iTotalRecords;
-                    $totalDisplays = $responseRoom->data->item->iTotalDisplayRecords;
                 }
+
+                $draw = $responseRoom->data->item->draw;
+                $totalRecods = $responseRoom->data->item->iTotalRecords;
+                $totalDisplays = $responseRoom->data->item->iTotalDisplayRecords;
             }
 
             $result = [
@@ -290,11 +290,11 @@ class Service extends web_base
 
                         $items[] = $row;
                     }
-
-                    $draw = $responseRehabilitation->data->item->draw;
-                    $totalRecods = $responseRehabilitation->data->item->iTotalRecords;
-                    $totalDisplays = $responseRehabilitation->data->item->iTotalDisplayRecords;
                 }
+
+                $draw = $responseRehabilitation->data->item->draw;
+                $totalRecods = $responseRehabilitation->data->item->iTotalRecords;
+                $totalDisplays = $responseRehabilitation->data->item->iTotalDisplayRecords;
             }
 
             $result = [
@@ -371,11 +371,11 @@ class Service extends web_base
 
                         $items[] = $row;
                     }
-
-                    $draw = $responseMedic->data->item->draw;
-                    $totalRecods = $responseMedic->data->item->iTotalRecords;
-                    $totalDisplays = $responseMedic->data->item->iTotalDisplayRecords;
                 }
+
+                $draw = $responseMedic->data->item->draw;
+                $totalRecods = $responseMedic->data->item->iTotalRecords;
+                $totalDisplays = $responseMedic->data->item->iTotalDisplayRecords;
             }
 
             $result = [
@@ -458,11 +458,11 @@ class Service extends web_base
 
                         $items[] = $row;
                     }
-
-                    $draw = $responseDoctor->data->item->draw;
-                    $totalRecods = $responseDoctor->data->item->iTotalRecords;
-                    $totalDisplays = $responseDoctor->data->item->iTotalDisplayRecords;
                 }
+
+                $draw = $responseDoctor->data->item->draw;
+                $totalRecods = $responseDoctor->data->item->iTotalRecords;
+                $totalDisplays = $responseDoctor->data->item->iTotalDisplayRecords;
             }
 
             $result = [
@@ -549,11 +549,11 @@ class Service extends web_base
 
                         $items[] = $row;
                     }
-
-                    $draw = $responseSurgery->data->item->draw;
-                    $totalRecods = $responseSurgery->data->item->iTotalRecords;
-                    $totalDisplays = $responseSurgery->data->item->iTotalDisplayRecords;
                 }
+
+                $draw = $responseSurgery->data->item->draw;
+                $totalRecods = $responseSurgery->data->item->iTotalRecords;
+                $totalDisplays = $responseSurgery->data->item->iTotalDisplayRecords;
             }
 
             $result = [
@@ -640,11 +640,11 @@ class Service extends web_base
 
                         $items[] = $row;
                     }
-
-                    $draw = $responseLaboratory->data->item->draw;
-                    $totalRecods = $responseLaboratory->data->item->iTotalRecords;
-                    $totalDisplays = $responseLaboratory->data->item->iTotalDisplayRecords;
                 }
+
+                $draw = $responseLaboratory->data->item->draw;
+                $totalRecods = $responseLaboratory->data->item->iTotalRecords;
+                $totalDisplays = $responseLaboratory->data->item->iTotalDisplayRecords;
             }
 
             $result = [
@@ -731,11 +731,11 @@ class Service extends web_base
 
                         $items[] = $row;
                     }
-
-                    $draw = $responseFee->data->item->draw;
-                    $totalRecods = $responseFee->data->item->iTotalRecords;
-                    $totalDisplays = $responseFee->data->item->iTotalDisplayRecords;
                 }
+
+                $draw = $responseFee->data->item->draw;
+                $totalRecods = $responseFee->data->item->iTotalRecords;
+                $totalDisplays = $responseFee->data->item->iTotalDisplayRecords;
             }
 
             $result = [
@@ -815,11 +815,11 @@ class Service extends web_base
 
                         $items[] = $row;
                     }
-
-                    $draw = $responseUsers->data->item->draw;
-                    $totalRecods = $responseUsers->data->item->iTotalRecords;
-                    $totalDisplays = $responseUsers->data->item->iTotalDisplayRecords;
                 }
+
+                $draw = $responseUsers->data->item->draw;
+                $totalRecods = $responseUsers->data->item->iTotalRecords;
+                $totalDisplays = $responseUsers->data->item->iTotalDisplayRecords;
             }
 
             $result = [

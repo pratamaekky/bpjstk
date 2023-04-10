@@ -94,7 +94,7 @@ class Muser extends CI_Model
         $this->db->where("rs_id", $id);
         $this->db->where("role", 1);
         if (!is_null($query))
-            $this->db->like("value", $query);
+            $this->db->like("name", $query);
 
         $this->db->order_by($order, $sort);
 
