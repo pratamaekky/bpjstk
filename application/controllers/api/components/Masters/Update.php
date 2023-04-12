@@ -62,7 +62,7 @@ class Update
         }
 
         $responseObj = [
-            "name" => "Update " . ucwords($this->_command),
+            "name" => "Update " . ucwords($this->_command) . ' Berhasil',
             "item" => []
         ];
 
@@ -83,6 +83,7 @@ class Update
             case "medic":
             case "doctor":
             case "surgery":
+            case "anestesi":
             case "laboratory":
             case "fee":
                 $this->_update_service($responseObj, $responsecode, $responseMessage);

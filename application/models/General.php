@@ -416,13 +416,12 @@ class General extends CI_Model
 
     public function getDoctor($rsId, $query, $offset, $limit, $order, $sort)
     {
-        $this->db->select("a.*, b.value as doctor_specialist");
-        $this->db->from("tbl_doctor as a");
-        $this->db->join("tbl_general as b", "b.id=a.id_specialist", "LEFT");
-        $this->db->where("a.id_rs", $rsId);
+        $this->db->select("*");
+        $this->db->from("tbl_doctor");
+        $this->db->where("id_rs", $rsId);
 
         if (!is_null($query))
-            $this->db->like("a.name", $query);
+            $this->db->like("name", $query);
 
         $this->db->order_by($order, $sort);
 
@@ -478,9 +477,9 @@ class General extends CI_Model
 
     public function getSurgery($rsId, $query, $offset, $limit, $order, $sort)
     {
-        $this->db->select("a.*, b.value as ot_category");
+        $this->db->select("a.*, b.value as specialist_docter");
         $this->db->from("tbl_surgery as a");
-        $this->db->join("tbl_general as b", "b.id=a.id_ot_category", "LEFT");
+        $this->db->join("tbl_general as b", "b.id=a.id_specialist", "LEFT");
         $this->db->where("a.id_rs", $rsId);
 
         if (!is_null($query))
@@ -516,6 +515,67 @@ class General extends CI_Model
     public function saveSurgery($data)
     {
         $this->db->insert("tbl_surgery", $data);
+        if ($this->db->affected_rows() > 0) {
+            return $this->db->insert_id();
+        } else {
+            return false;
+        }
+    }
+
+    public function totalAnestesi($rsId)
+    {
+        $this->db->select("count(id) as total");
+        $this->db->from("tbl_anestesi");
+        $this->db->where("id_rs", $rsId);
+
+        $query = $this->db->get();
+        if (!is_null($query) && $query->num_rows() > 0) {
+            $row = $query->row();
+            return $row->total;
+        }
+
+        return 0;
+    }
+
+    public function getAnestesi($rsId, $query, $offset, $limit, $order, $sort)
+    {
+        $this->db->select("*");
+        $this->db->from("tbl_anestesi");
+        $this->db->where("id_rs", $rsId);
+
+        if (!is_null($query))
+            $this->db->like("name", $query);
+
+        $this->db->order_by($order, $sort);
+
+        if ($limit > 0)
+            $this->db->limit($limit, $offset);
+        
+        $query = $this->db->get();
+        if (!is_null($query) && $query->num_rows() > 0) {
+            return $query->result();
+        }
+
+        return null;
+    }
+
+    public function getAnestesiNameById($id)
+    {
+        $this->db->select("name");
+        $this->db->from("tbl_anestesi");
+        $this->db->where("id", $id);
+
+        $query = $this->db->get();
+
+        if (!is_null($query) && $query->num_rows() > 0)
+            return $query->row()->name;
+
+        return "";
+    }
+
+    public function saveAnestesi($data)
+    {
+        $this->db->insert("tbl_anestesi", $data);
         if ($this->db->affected_rows() > 0) {
             return $this->db->insert_id();
         } else {
@@ -667,6 +727,9 @@ class General extends CI_Model
             case 'surgery':
                 $this->db->from("tbl_surgery");
                 break;
+            case 'anestesi':
+                $this->db->from("tbl_anestesi");
+                break;
             case 'laboratory':
                 $this->db->from("tbl_laboratory");
                 break;
@@ -708,6 +771,9 @@ class General extends CI_Model
             case 'surgery':
                 $this->db->update("tbl_surgery", $data);
                 break;
+            case 'anestesi':
+                $this->db->update("tbl_anestesi", $data);
+                break;
             case 'laboratory':
                 $this->db->update("tbl_laboratory", $data);
                 break;
@@ -739,6 +805,9 @@ class General extends CI_Model
                 break;
             case 'surgery':
                 $this->db->delete('tbl_surgery', ['id' => $data["id"]]);
+                break;
+            case 'anestesi':
+                $this->db->delete('tbl_anestesi', ['id' => $data["id"]]);
                 break;
             case 'laboratory':
                 $this->db->delete('tbl_laboratory', ['id' => $data["id"]]);

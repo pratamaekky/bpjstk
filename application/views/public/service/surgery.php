@@ -26,7 +26,7 @@
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0">Data Dokter Operasi Rumah Sakit</h1>
+                            <h1 class="m-0">Data Dokter Spesialis Rumah Sakit</h1>
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="#">Home</a></li>
                                 <li class="breadcrumb-item"><a href="<?php echo base_url("master/service"); ?>">Data Pelayanan</a></li>
@@ -54,7 +54,7 @@
                                             <tr>
                                                 <th class="dt-head-center" style="width: 20px;">No</th>
                                                 <th class="dt-head-center">Nama Dokter</th>
-                                                <th class="dt-head-center">Operasi</th>
+                                                <th class="dt-head-center">Spesialisasi</th>
                                                 <th class="dt-head-center">Tarif</th>
                                                 <th class="dt-head-center" style="width: 60px;">Action</th>
                                             </tr>
@@ -80,7 +80,7 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title" id="title-modal-form">Tambah Dokter Operasi Rumah Sakit</h4>
+                        <h4 class="modal-title" id="title-modal-form">Tambah Dokter Spesialis Rumah Sakit</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -89,14 +89,14 @@
                         <div class="col-12 col-sm-12">
                             <div class="row">
                                 <div class="form-group col-12">
-                                    <label for="id_ot_category">Operasi</label>
+                                    <label for="id_ot_category">Spesialisasi Dokter</label>
                                     <div class="input-group">
-                                        <select name="id_ot_category" id="id_ot_category" class="form-control select2" required="required">
-                                            <option value="">-- Pilih Operasi --</option>
+                                        <select name="id_specialist" id="id_specialist" class="form-control select2" required="required">
+                                            <option value="">-- Pilih Spesialisasi --</option>
                                             <?php 
-                                            if (!is_null($surgery)) {
-                                                foreach ($surgery as $surger) {
-                                                    echo '<option value="' . $surger->id . '">' . $surger->value . '</option>';
+                                            if (!is_null($doctorSpecialist)) {
+                                                foreach ($doctorSpecialist as $docSpec) {
+                                                    echo '<option value="' . $docSpec->id . '">' . $docSpec->value . '</option>';
                                                 }
                                             }
                                             ?>
@@ -106,13 +106,13 @@
                                 <div class="form-group col-12">
                                     <label for="name">Nama Dokter</label>
                                     <div class="input-group">
-                                        <input type="text" name="name" id="name" class="form-control" placeholder="Contoh: dr. Indra Rarindra" autocomplete="off" required="required" />
+                                        <input type="text" name="name" id="name" class="form-control" placeholder="Contoh: dr. Abdulrachman Saleh" autocomplete="off" required="required" />
                                     </div>
                                 </div>
                                 <div class="form-group col-12">
                                     <label for="fare">Tarif Dokter</label>
                                     <div class="input-group">
-                                        <input type="text" name="fare" id="fare" class="form-control" placeholder="Contoh: 2000000" autocomplete="off" required="required" />
+                                        <input type="number" name="fare" id="fare" class="form-control" placeholder="Contoh: 2000000" autocomplete="off" required="required" />
                                     </div>
                                 </div>
                             </div>
@@ -166,9 +166,15 @@
                 'columns': [
                     { data: 'no', className: 'dt-body-center', width: '20px' },
                     { data: 'name' },
-                    { data: 'surgery' },
+                    { data: 'specialist' },
                     { data: 'fare' },
                     { data: 'action' },
+                ],
+                "columnDefs":[
+                    {
+                        "targets":[0, 2, 3, 4],
+                        "orderable":false,
+                    }
                 ]
             });
         });
@@ -256,17 +262,17 @@
                     $("#name").val(response.name);
                     $("#fare").val(response.fare);
 
-                    categoryHtml += '<option value="">-- Pilih Kategori --</option>';
+                    categoryHtml += '<option value="">-- Pilih Spesialisasi --</option>';
                     $.each(category, function(key, cat) {
                         selected = "";
-                        if (response.id_ot_category == cat.id) {
+                        if (response.id_specialist == cat.id) {
                             selected = 'selected="selected"';
                         }
 
                         categoryHtml += '<option value="' + cat.id + '" ' + selected + '>' + cat.value + '</option>';
                     });
 
-                    $("#id_ot_category").html(categoryHtml);
+                    $("#id_specialist").html(categoryHtml);
                     $("#btnForm").html("Update");
                     $("#todo").val("update");
                     $("#modal-surgery").modal("toggle");

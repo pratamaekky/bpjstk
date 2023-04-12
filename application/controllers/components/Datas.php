@@ -84,6 +84,12 @@ class Datas
             $result["surgery"] = $responseSurgery->data->item->aaData;
         }
 
+        $responseAnestesi = $this->Masters->data("anestesi", null, ["rsid" => $rs_id, "length" => 1000]);
+        $responseAnestesi = json_decode($responseAnestesi);
+        if ($responseDocter->result == 200) {
+            $result["anestesi"] = $responseAnestesi->data->item->aaData;
+        }
+
         $responseLaboratory = $this->Masters->data("laboratory", null, ["rsid" => $rs_id, "length" => 1000]);
         $responseLaboratory = json_decode($responseLaboratory);
         if ($responseLaboratory->result == 200) {

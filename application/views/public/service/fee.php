@@ -112,7 +112,7 @@
                                 <div class="form-group col-12">
                                     <label for="fare">Tarif Biaya</label>
                                     <div class="input-group">
-                                        <input type="text" name="fare" id="fare" class="form-control" placeholder="Contoh: 2000000" autocomplete="off" required="required" />
+                                        <input type="number" name="fare" id="fare" class="form-control" placeholder="Contoh: 2000000" autocomplete="off" required="required" />
                                     </div>
                                 </div>
                             </div>
@@ -164,11 +164,17 @@
                     'data': {"rsid": <?php echo $rsId; ?>, 'action':'#tableFeeLists'}
                 },
                 'columns': [
-                    { data: 'no', className: 'dt-body-center', width: '20px' },
+                    { data: 'no', className: 'dt-body-center' },
                     { data: 'name' },
                     { data: 'other_fee' },
                     { data: 'fare' },
                     { data: 'action' }
+                ],
+                "columnDefs":[
+                    {
+                        "targets":[0, 2, 3, 4],
+                        "orderable":false,
+                    }
                 ]
             });
         });

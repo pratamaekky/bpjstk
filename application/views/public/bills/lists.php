@@ -266,7 +266,7 @@
                                                     <div class="row-flex row-cob col-sm-12 col-12 no-padding" id="row-cob-1">
                                                         <div class="row-flex col-sm-12 col-12 no-padding">
                                                             <label class="col-form-label col-sm-1 col-1 text-left">IDR</label>
-                                                            <input type="text" name="cob_subtotal[]" id="cob_subtotal_1" class="form-control col-sm-11 col-11" value="0" />
+                                                            <input type="number" name="cob_subtotal[]" id="cob_subtotal_1" class="form-control col-sm-11 col-11" value="0" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -304,10 +304,10 @@
                                                             <label class="col-sm-5 col-5 text-center no-padding">X</label>
                                                             <label class="col-sm-7 col-7 pl-0">IDR</label>
                                                         </div>
-                                                        <input type="text" name="room_rate[]" id="room_rate_1" class="room_rate form-control text-right col-sm-2 col-2" value="0" data-id="1" onblur="calculation_room(this, false, true);" />
+                                                        <input type="number" name="room_rate[]" id="room_rate_1" class="room_rate form-control text-right col-sm-2 col-2" value="0" data-id="1" onblur="calculation_room(this, false, true);" />
                                                         <label class="col-form-label col-sm-1 col-1 text-right">= IDR</label>
                                                         <div class="row-flex col-sm-2 col-2 no-padding">
-                                                            <input type="text" name="room_subtotal[]" id="room_subtotal_1" class="room_subtotal form-control text-right col-sm-11 col-11" value="0" readonly />
+                                                            <input type="number" name="room_subtotal[]" id="room_subtotal_1" class="room_subtotal form-control text-right col-sm-11 col-11" value="0" readonly />
                                                             <label class="col-form-label col-sm-1 col-1 add-pic text-right">&nbsp;</label>
                                                         </div>
                                                     </div>
@@ -318,7 +318,7 @@
                                                 <label class="col-form-label col-sm-9 col-9 pl-0">Sub Total</label>
                                                 <label class="col-form-label col-sm-1 col-1 text-right">IDR</label>
                                                 <label class="row-flex col-sm-2 col-2 no-padding">
-                                                    <input type="text" name="subtotal" id="subtotal_room" class="subtotal subtotal-room form-control text-right col-sm-11 col-11" value="0" readonly />
+                                                    <input type="number" name="subtotal" id="subtotal_room" class="subtotal subtotal-room form-control text-right col-sm-11 col-11" value="0" readonly />
                                                     <label class="col-sm-1 col-1">&nbsp;</label>
                                                 </label>
                                             </div>
@@ -335,7 +335,7 @@
                                                         <input type="text" name="room_nurse[]" id="room_nurse_1" placeholder="Contoh: Jasa Perawat Kamar" class="form-control col-sm-9 col-9" />
                                                         <label class="col-form-label col-sm-1 col-1 text-right">IDR</label>
                                                         <label class="row-flex col-sm-2 col-2 no-padding">
-                                                            <input type="text" name="room_nurse_subtotal[]" id="room_nurse_subtotal_1" class="room_nurse_subtotal form-control text-right col-sm-11 col-11" value="0" onblur="calculation_room_nurse()" />
+                                                            <input type="number" name="room_nurse_subtotal[]" id="room_nurse_subtotal_1" class="room_nurse_subtotal form-control text-right col-sm-11 col-11" value="0" onblur="calculation_room_nurse()" />
                                                             <label class="col-sm-1 col-1">&nbsp;</label>
                                                         </label>
                                                     </div>
@@ -346,7 +346,7 @@
                                                 <label class="col-form-label col-sm-9 col-9 pl-0">Sub Total</label>
                                                 <label class="col-form-label col-sm-1 col-1 text-right">IDR</label>
                                                 <label class="row-flex col-sm-2 col-2 no-padding">
-                                                    <input type="text" name="subtotal" id="subtotal_room_nurse" class="subtotal subtotal-room-nurse form-control text-right col-sm-11 col-11" value="0" readonly />
+                                                    <input type="number" name="subtotal" id="subtotal_room_nurse" class="subtotal subtotal-room-nurse form-control text-right col-sm-11 col-11" value="0" readonly />
                                                     <label class="col-sm-1 col-1">&nbsp;</label>
                                                 </label>
                                             </div>
@@ -365,7 +365,7 @@
                                                         </select>
                                                         <label class="col-form-label col-sm-1 col-1 text-right">IDR</label>
                                                         <label class="row-flex col-sm-2 col-2 no-padding">
-                                                            <input type="text" name="admin_subtotal[]" id="admin_subtotal_1" class="admin_subtotal form-control text-right col-sm-11 col-11" value="0" onblur="calculation_admin(this)" />
+                                                            <input type="number" name="admin_subtotal[]" id="admin_subtotal_1" class="admin_subtotal form-control text-right col-sm-11 col-11" value="0" onblur="calculation_admin(this)" />
                                                             <label class="col-sm-1 col-1">&nbsp;</label>
                                                         </label>
                                                     </div>
@@ -376,7 +376,7 @@
                                                 <label class="col-form-label col-sm-9 col-9 pl-0">Sub Total</label>
                                                 <label class="col-form-label col-sm-1 col-1 text-right">IDR</label>
                                                 <label class="row-flex col-sm-2 col-2 no-padding">
-                                                    <input type="text" name="subtotal" id="subtotal_admin" class="subtotal subtotal-admin form-control text-right col-sm-11 col-11" value="0" readonly />
+                                                    <input type="number" name="subtotal" id="subtotal_admin" class="subtotal subtotal-admin form-control text-right col-sm-11 col-11" value="0" readonly />
                                                     <label class="col-sm-1 col-1">&nbsp;</label>
                                                 </label>
                                             </div>
@@ -393,7 +393,7 @@
                                                         <input type="text" name="medicine_value[]" id="medicine_value_1" placeholder="Contoh: Jasa Paracetamol" class="form-control col-sm-9 col-9" />
                                                         <label class="col-form-label col-sm-1 col-1 text-right">IDR</label>
                                                         <label class="row-flex col-sm-2 col-2 no-padding">
-                                                            <input type="text" name="medicine_subtotal[]" id="medicine_subtotal_1" class="medicine_subtotal form-control text-right col-sm-11 col-11" value="0" onblur="calculation_medicine()" />
+                                                            <input type="number" name="medicine_subtotal[]" id="medicine_subtotal_1" class="medicine_subtotal form-control text-right col-sm-11 col-11" value="0" onblur="calculation_medicine()" />
                                                             <label class="col-sm-1 col-1">&nbsp;</label>
                                                         </label>
                                                     </div>
@@ -404,7 +404,7 @@
                                                 <label class="col-form-label col-sm-9 col-9 pl-0">Sub Total</label>
                                                 <label class="col-form-label col-sm-1 col-1 text-right">IDR</label>
                                                 <label class="row-flex col-sm-2 col-2 no-padding">
-                                                    <input type="text" name="subtotal" id="subtotal_medicine" class="subtotal subtotal-medicine form-control text-right col-sm-11 col-11" value="0" readonly />
+                                                    <input type="number" name="subtotal" id="subtotal_medicine" class="subtotal subtotal-medicine form-control text-right col-sm-11 col-11" value="0" readonly />
                                                     <label class="col-sm-1 col-1">&nbsp;</label>
                                                 </label>
                                             </div>
@@ -413,19 +413,28 @@
                                 </div>
                                 <div class="form-group col-12 separate-div-bottom" id="div_docter" style="display: none;">
                                     <div class="row">
-                                        <label for="docter" class="col-form-label col-sm-3 col-3">Dokter</label>
+                                        <label for="docter" class="col-form-label col-sm-3 col-3">Dokter Umum / IGD</label>
                                         <div class="input-group col-sm-9 col-9">
                                             <div class="col-sm-12 col-12">
                                                 <div class="row row-docter-div" id="row-docter-div" data-count="1">
                                                     <div class="row row-docter col-sm-12 col-12" id="row-docter-1">
-                                                        <select name="docter[]" id="docter_1" class="docter form-control select2 col-sm-9 col-9" data-id="1" onchange="calculation_docter(this);">
+                                                        <select name="docter[]" id="docter_1" class="docter form-control select2 col-sm-4 col-4" data-id="1" onchange="calculation_docter(this);">
                                                             <option value="">-- Pilih Dokter --</option>
                                                         </select>
-                                                        <label class="col-form-label col-sm-1 col-1 text-right">IDR</label>
-                                                        <label class="row-flex col-sm-2 col-2 no-padding">
-                                                            <input type="text" name="docter_subtotal[]" id="docter_subtotal_1" class="docter_subtotal form-control text-right col-sm-11 col-11" value="0" onblur="calculation_docter(this)" />
-                                                            <label class="col-sm-1 col-1">&nbsp;</label>
-                                                        </label>
+                                                        <div class="row-flex col-sm-2 col-2">
+                                                            <input type="number" name="docter_qty[]" id="docter_qty_1" class="docter_qty form-control col-sm-8 col-8" min="1" value="1" data-id="1" onchange="calculation_docter(this, true);" />
+                                                            <label class="col-form-label col-sm-4 col-4 text-center">Visit</label>
+                                                        </div>
+                                                        <div class="row-flex col-form-label col-sm-1 col-1 text-right pl-0 pr-0">
+                                                            <label class="col-sm-5 col-5 text-center no-padding">X</label>
+                                                            <label class="col-sm-7 col-7 pl-0">IDR</label>
+                                                        </div>
+                                                        <input type="number" name="docter_rate[]" id="docter_rate_1" class="docter_rate form-control text-right col-sm-2 col-2" value="0" data-id="1" onblur="calculation_docter(this, false, true);" />
+                                                        <label class="col-form-label col-sm-1 col-1 text-right">= IDR</label>
+                                                        <div class="row-flex col-sm-2 col-2 no-padding">
+                                                            <input type="number" name="docter_subtotal[]" id="docter_subtotal_1" class="docter_subtotal form-control text-right col-sm-11 col-11" value="0" readonly />
+                                                            <label class="col-form-label col-sm-1 col-1 add-pic text-right">&nbsp;</label>
+                                                        </div>
                                                     </div>
                                                     <div class="row-docter-do-div col-sm-12 col-12 pl-0" id="row-docter-do-div-1" data-count="0">
                                                     </div>
@@ -437,7 +446,7 @@
                                                 <label class="col-form-label col-sm-9 col-9 pl-0">Sub Total</label>
                                                 <label class="col-form-label col-sm-1 col-1 text-right">IDR</label>
                                                 <label class="row-flex col-sm-2 col-2 no-padding">
-                                                    <input type="text" name="subtotal" id="subtotal_docter" class="subtotal subtotal-docter form-control text-right col-sm-11 col-11" value="0" readonly />
+                                                    <input type="number" name="subtotal" id="subtotal_docter" class="subtotal subtotal-docter form-control text-right col-sm-11 col-11" value="0" readonly />
                                                     <label class="col-sm-1 col-1">&nbsp;</label>
                                                 </label>
                                             </div>
@@ -446,28 +455,28 @@
                                 </div>
                                 <div class="form-group col-12 separate-div-bottom" id="div_surgery" style="display: none;">
                                     <div class="row">
-                                        <label for="surgery" class="col-form-label col-sm-3 col-3">Dokter Anestesi</label>
+                                        <label for="surgery" class="col-form-label col-sm-3 col-3">Dokter Spesialis</label>
                                         <div class="input-group col-sm-9 col-9">
                                             <div class="col-sm-12 col-12">
                                                 <div class="row row-surgery-div" id="row-surgery-div" data-count="1">
                                                     <div class="row row-surgery col-sm-12 col-12" id="row-surgery-1">
                                                         <select name="surgery[]" id="surgery_1" class="surgery form-control select2 col-sm-9 col-9" data-id="1" onchange="calculation_surgery(this);">
-                                                            <option value="">-- Pilih Dokter Anestesi --</option>
+                                                            <option value="">-- Pilih Dokter Spesialis --</option>
                                                         </select>
                                                         <label class="col-form-label col-sm-1 col-1 text-right">IDR</label>
                                                         <label class="row-flex col-sm-2 col-2 no-padding">
-                                                            <input type="text" name="surgery_subtotal[]" id="surgery_subtotal_1" class="surgery_subtotal form-control text-right col-sm-11 col-11" value="0" onblur="calculation_surgery(this)" />
+                                                            <input type="number" name="surgery_subtotal[]" id="surgery_subtotal_1" class="surgery_subtotal form-control text-right col-sm-11 col-11" value="0" onblur="calculation_surgery(this)" />
                                                             <label class="col-sm-1 col-1">&nbsp;</label>
                                                         </label>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <label class="col-form-label add-pic" onclick="appendSurgeryElem();">+ Tambahkan Dokter Anestesi</label>
+                                            <label class="col-form-label add-pic" onclick="appendSurgeryElem();">+ Tambahkan Dokter Spesialis</label>
                                             <div class="sbtotal row col-sm-12 col-12">
                                                 <label class="col-form-label col-sm-9 col-9 pl-0">Sub Total</label>
                                                 <label class="col-form-label col-sm-1 col-1 text-right">IDR</label>
                                                 <label class="row-flex col-sm-2 col-2 no-padding">
-                                                    <input type="text" name="subtotal" id="subtotal_surgery" class="subtotal subtotal-surgery form-control text-right col-sm-11 col-11" value="0" readonly />
+                                                    <input type="number" name="subtotal" id="subtotal_surgery" class="subtotal subtotal-surgery form-control text-right col-sm-11 col-11" value="0" readonly />
                                                     <label class="col-sm-1 col-1">&nbsp;</label>
                                                 </label>
                                             </div>
@@ -484,7 +493,7 @@
                                                         <input type="text" name="surgery_nurse[]" id="surgery_nurse_1" placeholder="Contoh: Jasa Perawat Operasi" class="form-control col-sm-9 col-9" />
                                                         <label class="col-form-label col-sm-1 col-1 text-right">IDR</label>
                                                         <label class="row-flex col-sm-2 col-2 no-padding">
-                                                            <input type="text" name="surgery_nurse_subtotal[]" id="surgery_nurse_subtotal_1" class="surgery_nurse_subtotal form-control text-right col-sm-11 col-11" value="0" />
+                                                            <input type="number" name="surgery_nurse_subtotal[]" id="surgery_nurse_subtotal_1" class="surgery_nurse_subtotal form-control text-right col-sm-11 col-11" value="0" onblur="calculation_surgery_nurse();" />
                                                             <label class="col-sm-1 col-1">&nbsp;</label>
                                                         </label>
                                                     </div>
@@ -495,7 +504,37 @@
                                                 <label class="col-form-label col-sm-9 col-9 pl-0">Sub Total</label>
                                                 <label class="col-form-label col-sm-1 col-1 text-right">IDR</label>
                                                 <label class="row-flex col-sm-2 col-2 no-padding">
-                                                    <input type="text" name="subtotal" id="subtotal_surgery_nurse" class="subtotal subtotal-surgery-nurse form-control text-right col-sm-11 col-11" value="0" readonly />
+                                                    <input type="number" name="subtotal" id="subtotal_surgery_nurse" class="subtotal subtotal-surgery-nurse form-control text-right col-sm-11 col-11" value="0" readonly />
+                                                    <label class="col-sm-1 col-1">&nbsp;</label>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-12 separate-div-bottom" id="div_anestesi" style="display: none;">
+                                    <div class="row">
+                                        <label for="anestesi" class="col-form-label col-sm-3 col-3">Dokter Anestesi</label>
+                                        <div class="input-group col-sm-9 col-9">
+                                            <div class="col-sm-12 col-12">
+                                                <div class="row row-anestesi-div" id="row-anestesi-div" data-count="1">
+                                                    <div class="row row-anestesi col-sm-12 col-12" id="row-anestesi-1">
+                                                        <select name="anestesi[]" id="anestesi_1" class="anestesi form-control select2 col-sm-9 col-9" data-id="1" onchange="calculation_anestesi(this);">
+                                                            <option value="">-- Pilih Dokter Anestesi --</option>
+                                                        </select>
+                                                        <label class="col-form-label col-sm-1 col-1 text-right">IDR</label>
+                                                        <label class="row-flex col-sm-2 col-2 no-padding">
+                                                            <input type="number" name="anestesi_subtotal[]" id="anestesi_subtotal_1" class="anestesi_subtotal form-control text-right col-sm-11 col-11" value="0" onblur="calculation_anestesi(this)" />
+                                                            <label class="col-sm-1 col-1">&nbsp;</label>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <label class="col-form-label add-pic" onclick="appendAnestesiElem();">+ Tambahkan Dokter Anestesi</label>
+                                            <div class="sbtotal row col-sm-12 col-12">
+                                                <label class="col-form-label col-sm-9 col-9 pl-0">Sub Total</label>
+                                                <label class="col-form-label col-sm-1 col-1 text-right">IDR</label>
+                                                <label class="row-flex col-sm-2 col-2 no-padding">
+                                                    <input type="number" name="subtotal" id="subtotal_anestesi" class="subtotal subtotal-anestesi form-control text-right col-sm-11 col-11" value="0" readonly />
                                                     <label class="col-sm-1 col-1">&nbsp;</label>
                                                 </label>
                                             </div>
@@ -520,10 +559,10 @@
                                                             <label class="col-sm-5 col-5 text-center no-padding">X</label>
                                                             <label class="col-sm-7 col-7 pl-0">IDR</label>
                                                         </div>
-                                                        <input type="text" name="lab_rate[]" id="lab_rate_1" class="lab_rate form-control text-right col-sm-2 col-2" value="0" data-id="1" onblur="calculation_lab(this, false, true);" />
+                                                        <input type="number" name="lab_rate[]" id="lab_rate_1" class="lab_rate form-control text-right col-sm-2 col-2" value="0" data-id="1" onblur="calculation_lab(this, false, true);" />
                                                         <label class="col-form-label col-sm-1 col-1 text-right">= IDR</label>
                                                         <div class="row-flex col-sm-2 col-2 no-padding">
-                                                            <input type="text" name="lab_subtotal[]" id="lab_subtotal_1" class="lab_subtotal form-control text-right col-sm-11 col-11" value="0" readonly />
+                                                            <input type="number" name="lab_subtotal[]" id="lab_subtotal_1" class="lab_subtotal form-control text-right col-sm-11 col-11" value="0" readonly />
                                                             <label class="col-form-label col-sm-1 col-1 add-pic text-right">&nbsp;</label>
                                                         </div>
                                                     </div>
@@ -534,7 +573,7 @@
                                                 <label class="col-form-label col-sm-9 col-9 pl-0">Sub Total</label>
                                                 <label class="col-form-label col-sm-1 col-1 text-right">IDR</label>
                                                 <label class="row-flex col-sm-2 col-2 no-padding">
-                                                    <input type="text" name="subtotal" id="subtotal_lab" class="subtotal subtotal-lab form-control text-right col-sm-11 col-11" value="0" readonly />
+                                                    <input type="number" name="subtotal" id="subtotal_lab" class="subtotal subtotal-lab form-control text-right col-sm-11 col-11" value="0" readonly />
                                                     <label class="col-sm-1 col-1">&nbsp;</label>
                                                 </label>
                                             </div>
@@ -559,10 +598,10 @@
                                                             <label class="col-sm-5 col-5 text-center no-padding">X</label>
                                                             <label class="col-sm-7 col-7 pl-0">IDR</label>
                                                         </div>
-                                                        <input type="text" name="radiology_rate[]" id="radiology_rate_1" class="radiology_rate form-control text-right col-sm-2 col-2" value="0" data-id="1" onblur="calculation_radiology(this, false, true);" />
+                                                        <input type="number" name="radiology_rate[]" id="radiology_rate_1" class="radiology_rate form-control text-right col-sm-2 col-2" value="0" data-id="1" onblur="calculation_radiology(this, false, true);" />
                                                         <label class="col-form-label col-sm-1 col-1 text-right">= IDR</label>
                                                         <div class="row-flex col-sm-2 col-2 no-padding">
-                                                            <input type="text" name="radiology_subtotal[]" id="radiology_subtotal_1" class="radiology_subtotal form-control text-right col-sm-11 col-11" value="0" readonly />
+                                                            <input type="number" name="radiology_subtotal[]" id="radiology_subtotal_1" class="radiology_subtotal form-control text-right col-sm-11 col-11" value="0" readonly />
                                                             <label class="col-form-label col-sm-1 col-1 add-pic text-right">&nbsp;</label>
                                                         </div>
                                                     </div>
@@ -573,7 +612,7 @@
                                                 <label class="col-form-label col-sm-9 col-9 pl-0">Sub Total</label>
                                                 <label class="col-form-label col-sm-1 col-1 text-right">IDR</label>
                                                 <label class="row-flex col-sm-2 col-2 no-padding">
-                                                    <input type="text" name="subtotal" id="subtotal_radiology" class="subtotal subtotal-radiology form-control text-right col-sm-11 col-11" value="0" readonly />
+                                                    <input type="number" name="subtotal" id="subtotal_radiology" class="subtotal subtotal-radiology form-control text-right col-sm-11 col-11" value="0" readonly />
                                                     <label class="col-sm-1 col-1">&nbsp;</label>
                                                 </label>
                                             </div>
@@ -598,10 +637,10 @@
                                                             <label class="col-sm-5 col-5 text-center no-padding">X</label>
                                                             <label class="col-sm-7 col-7 pl-0">IDR</label>
                                                         </div>
-                                                        <input type="text" name="medic_rate[]" id="medic_rate_1" class="medic_rate form-control text-right col-sm-2 col-2" value="0" data-id="1" onblur="calculation_medic(this, false, true);" />
+                                                        <input type="number" name="medic_rate[]" id="medic_rate_1" class="medic_rate form-control text-right col-sm-2 col-2" value="0" data-id="1" onblur="calculation_medic(this, false, true);" />
                                                         <label class="col-form-label col-sm-1 col-1 text-right">= IDR</label>
                                                         <div class="row-flex col-sm-2 col-2 no-padding">
-                                                            <input type="text" name="medic_subtotal[]" id="medic_subtotal_1" class="medic_subtotal form-control text-right col-sm-11 col-11" value="0" readonly />
+                                                            <input type="number" name="medic_subtotal[]" id="medic_subtotal_1" class="medic_subtotal form-control text-right col-sm-11 col-11" value="0" readonly />
                                                             <label class="col-form-label col-sm-1 col-1 add-pic text-right">&nbsp;</label>
                                                         </div>
                                                     </div>
@@ -612,7 +651,7 @@
                                                 <label class="col-form-label col-sm-9 col-9 pl-0">Sub Total</label>
                                                 <label class="col-form-label col-sm-1 col-1 text-right">IDR</label>
                                                 <label class="row-flex col-sm-2 col-2 no-padding">
-                                                    <input type="text" name="subtotal" id="subtotal_medic" class="subtotal subtotal-medic form-control text-right col-sm-11 col-11" value="0" readonly />
+                                                    <input type="number" name="subtotal" id="subtotal_medic" class="subtotal subtotal-medic form-control text-right col-sm-11 col-11" value="0" readonly />
                                                     <label class="col-sm-1 col-1">&nbsp;</label>
                                                 </label>
                                             </div>
@@ -637,10 +676,10 @@
                                                             <label class="col-sm-5 col-5 text-center no-padding">X</label>
                                                             <label class="col-sm-7 col-7 pl-0">IDR</label>
                                                         </div>
-                                                        <input type="text" name="rehab_rate[]" id="rehab_rate_1" class="rehab_rate form-control text-right col-sm-2 col-2" value="0" data-id="1" onblur="calculation_rehab(this, false, true);" />
+                                                        <input type="number" name="rehab_rate[]" id="rehab_rate_1" class="rehab_rate form-control text-right col-sm-2 col-2" value="0" data-id="1" onblur="calculation_rehab(this, false, true);" />
                                                         <label class="col-form-label col-sm-1 col-1 text-right">= IDR</label>
                                                         <div class="row-flex col-sm-2 col-2 no-padding">
-                                                            <input type="text" name="rehab_subtotal[]" id="rehab_subtotal_1" class="rehab_subtotal form-control text-right col-sm-11 col-11" value="0" readonly />
+                                                            <input type="number" name="rehab_subtotal[]" id="rehab_subtotal_1" class="rehab_subtotal form-control text-right col-sm-11 col-11" value="0" readonly />
                                                             <label class="col-form-label col-sm-1 col-1 add-pic text-right">&nbsp;</label>
                                                         </div>
                                                     </div>
@@ -651,7 +690,7 @@
                                                 <label class="col-form-label col-sm-9 col-9 pl-0">Sub Total</label>
                                                 <label class="col-form-label col-sm-1 col-1 text-right">IDR</label>
                                                 <label class="row-flex col-sm-2 col-2 no-padding">
-                                                    <input type="text" name="subtotal" id="subtotal_rehab" class="subtotal subtotal-rehab form-control text-right col-sm-11 col-11" value="0" readonly />
+                                                    <input type="number" name="subtotal" id="subtotal_rehab" class="subtotal subtotal-rehab form-control text-right col-sm-11 col-11" value="0" readonly />
                                                     <label class="col-sm-1 col-1">&nbsp;</label>
                                                 </label>
                                             </div>
@@ -662,7 +701,10 @@
                                     <div class="row">
                                         <label class="col-form-label col-sm-9 col-9">TOTAL</label>
                                         <label class="col-form-label col-sm-1 col-1 text-right">IDR</label>
-                                        <input type="text" name="total" id="total" class="total form-control text-right col-sm-2 col-2" value="0" readonly />
+                                        <label class="row-flex col-form-label col-sm-2 col-2 no-padding">
+                                            <input type="number" name="total" id="total" class="total form-control text-right col-sm-10 col-10" value="0" readonly />
+                                            <label class="col-sm-2 col-2">&nbsp;</label>
+                                        </label>
                                     </div>
                                 </div>
                             </div>
@@ -790,12 +832,22 @@
 
                     if (response.hasOwnProperty('surgery')) {
                         $("#div_surgery").show();
-                        var htmlDocter = '<option value="">-- Pilih Dokter Anestesi --</option>';
+                        var htmlSurgery = '<option value="">-- Pilih Dokter Spesialis --</option>';
 
                         $.each(response.surgery, function(index, value) {
-                            htmlDocter += '<option value="' + value.id + '-' + value.fare + '">' + value.name + '</option>';
+                            htmlSurgery += '<option value="' + value.id + '-' + value.fare + '">' + value.name + '</option>';
                         })
-                        $(".surgery").html(htmlDocter)
+                        $(".surgery").html(htmlSurgery)
+                    }
+
+                    if (response.hasOwnProperty('anestesi')) {
+                        $("#div_anestesi").show();
+                        var htmlAnestesi = '<option value="">-- Pilih Dokter Anestesi --</option>';
+
+                        $.each(response.anestesi, function(index, value) {
+                            htmlAnestesi += '<option value="' + value.id + '-' + value.fare + '">' + value.name + '</option>';
+                        })
+                        $(".anestesi").html(htmlAnestesi)
                     }
 
                     if (response.hasOwnProperty('laboratory')) {
@@ -989,10 +1041,10 @@
                             '        <label class="col-sm-5 col-5 text-center no-padding">X</label>' +
                             '        <label class="col-sm-7 col-7 pl-0">IDR</label>' +
                             '    </div>' +
-                            '    <input type="text" name="room_rate[]" id="room_rate_' + nXElem + '" class="room_rate form-control text-right col-sm-2 col-2" value="0" data-id="' + nXElem + '" onblur="calculation_room(this, false, true);" />' +
+                            '    <input type="number" name="room_rate[]" id="room_rate_' + nXElem + '" class="room_rate form-control text-right col-sm-2 col-2" value="0" data-id="' + nXElem + '" onblur="calculation_room(this, false, true);" />' +
                             '    <label class="col-form-label col-sm-1 col-1 text-right">= IDR</label>' +
                             '    <div class="row-flex col-sm-2 col-2 no-padding">' +
-                            '        <input type="text" name="room_subtotal[]" id="room_subtotal_' + nXElem + '" class="room_subtotal form-control text-right col-sm-11 col-11" value="0" readonly />' +
+                            '        <input type="number" name="room_subtotal[]" id="room_subtotal_' + nXElem + '" class="room_subtotal form-control text-right col-sm-11 col-11" value="0" readonly />' +
                             '        <label class="col-form-label col-sm-1 col-1 add-pic text-right row-room-' + nXElem + '" data-id="' + nXElem + '" onclick="javascript:$(\'#row-room-' + nXElem + '\').remove(); calculation_room(this); calculation_total();"><i class="far fa-window-close"></i></label>' +
                             '    </div>' +
                             '</div>';
@@ -1018,7 +1070,7 @@
                 '   <input type="text" name="room_nurse[]" id="room_nurse_' + nXElem + '" placeholder="Contoh: Jasa Perawat kamar" class="form-control col-sm-9 col-9" />' +
                 '   <label class="col-form-label col-sm-1 col-1 text-right">IDR</label>' +
                 '   <label class="row-flex col-sm-2 col-2 no-padding">' +
-                '       <input type="text" name="room_nurse_subtotal[]" id="room_nurse_subtotal_' + nXElem +'" class="room_nurse_subtotal form-control text-right col-sm-11 col-11" value="0" onblur="calculation_room_nurse()" />' +
+                '       <input type="number" name="room_nurse_subtotal[]" id="room_nurse_subtotal_' + nXElem +'" class="room_nurse_subtotal form-control text-right col-sm-11 col-11" value="0" onblur="calculation_room_nurse()" />' +
                 '       <div class="col-form-label col-sm-1 col-1 add-pic text-right row-room-nurse-' + nXElem + '" onclick="javascript:$(\'#row-room-nurse-' + nXElem + '\').remove(); calculation_room_nurse(); calculation_total();"><i class="far fa-window-close"></i></div>' +
                 '   </label>' +
                 '</div>' +
@@ -1081,7 +1133,7 @@
                             '   </select>' +
                             '   <label class="col-form-label col-sm-1 col-1 text-right">IDR</label>' +
                             '   <label class="row-flex col-sm-2 col-2 no-padding">' +
-                            '       <input type="text" name="admin_subtotal[]" id="admin_subtotal_' + nXElem + '" class="admin_subtotal form-control text-right col-sm-11 col-11" value="0" onblur="calculation_admin(this);" />' +
+                            '       <input type="number" name="admin_subtotal[]" id="admin_subtotal_' + nXElem + '" class="admin_subtotal form-control text-right col-sm-11 col-11" value="0" onblur="calculation_admin(this);" />' +
                             '       <div class="col-form-label col-sm-1 col-1 add-pic text-right row-admin-' + nXElem + '" data-id="' + nXElem + '" onclick="javascript:$(\'#row-admin-' + nXElem + '\').remove(); calculation_admin(this); calculation_total();"><i class="far fa-window-close"></i></div>' +
                             '   </label>' +
                             '</div>';
@@ -1107,7 +1159,7 @@
                 '   <input type="text" name="medicine_value[]" id="medicine_value_' + nXElem + '" placeholder="Contoh: Paracetamol" class="form-control col-sm-9 col-9" />' +
                 '   <label class="col-form-label col-sm-1 col-1 text-right">IDR</label>' +
                 '   <label class="row-flex col-sm-2 col-2 no-padding">' +
-                '       <input type="text" name="medicine_subtotal[]" id="medicine_subtotal_' + nXElem + '" class="medicine_subtotal form-control text-right col-sm-11 col-11" value="0" onblur="calculation_medicine()" />' +
+                '       <input type="number" name="medicine_subtotal[]" id="medicine_subtotal_' + nXElem + '" class="medicine_subtotal form-control text-right col-sm-11 col-11" value="0" onblur="calculation_medicine()" />' +
                 '       <div class="col-form-label col-sm-1 col-1 add-pic text-right row-medicine-' + nXElem + '" onclick="javascript:$(\'#row-medicine-' + nXElem + '\').remove(); calculation_medicine(); calculation_total();"><i class="far fa-window-close"></i></div>' +
                 '   </label>' +
                 '</div>' +
@@ -1123,17 +1175,29 @@
             calculation_total();
         }
 
-        function calculation_docter(e) {
+        function calculation_docter(e, is_docters = false, is_rate = false) {
+            var docter_subtotal;
             var docter_id = $(e).attr("data-id");
+            var qty = $("#docter_qty_" + docter_id).val();
             
-            var docter_subtotal = $(e).val();
+            if (is_docters === true) {
+                docter_subtotal = $("#docter_rate_" + docter_id).val();
+            } else if (is_docters === false && is_rate === true) {
+                docter_subtotal = $(e).val();
+            } else {
+                docter_subtotal = $(e).val();
                 docter_subtotal = docter_subtotal.split("-");
                 docter_subtotal = docter_subtotal[1];
+            }
 
-            $("#docter_subtotal_" + docter_id).val(docter_subtotal);
+            $("#docter_rate_" + docter_id).val(docter_subtotal);
+            $("#docter_subtotal_" + docter_id).val(docter_subtotal * qty);
 
             var st_docter = 0;
             $.each($(".docter_subtotal"), function(index, value) {
+                st_docter = st_docter + parseInt($(value).val());
+            })
+            $.each($(".docter_do_subtotal"), function(index, value) {
                 st_docter = st_docter + parseInt($(value).val());
             })
             $(".subtotal-docter").val(st_docter);
@@ -1157,27 +1221,36 @@
                     $('.overlay-loading').hide();
                     if (response.hasOwnProperty('docter')) {
                         var htmlDocter = '' +
-                            '<div class="row row-docter col-sm-12 col-12" id="row-docter-' + nXElem + '">'+
-                            '   <select name="docter[]" id="docter_' + nXElem + '" class="docter form-control select2 col-sm-9 col-9" data-id="' + nXElem + '" onchange="calculation_docter(this);">' +
-                            '       <option value="">-- Pilih Dokter --</option>';
+                            '<div class="row row-docter col-sm-12 col-12" id="row-docter-' + nXElem + '">' +
+                            '    <select name="docter[]" id="docter_' + nXElem + '" class="docter form-control select2 col-sm-4 col-4" data-id="' + nXElem + '" onchange="calculation_docter(this);">' +
+                            '        <option value="">-- Pilih Dokter --</option>';
 
                         $.each(response.docter, function(index, value) {
                             htmlDocter += '<option value="' + value.id + '-' + value.fare + '">' + value.name + '</option>';
                         })
 
                         htmlDocter += '' +
-                            '   </select>' +
-                            '   <label class="col-form-label col-sm-1 col-1 text-right">IDR</label>' +
-                            '   <label class="row-flex col-sm-2 col-2 no-padding">' +
-                            '       <input type="text" name="docter_subtotal[]" id="docter_subtotal_' + nXElem + '" class="docter_subtotal form-control text-right col-sm-11 col-11" onblur="calculation_docter(this)" value="0" />' +
-                            '       <div class="col-form-label col-sm-1 col-1 add-pic text-right row-docter-' + nXElem + '" data-id="' + nXElem + '" onclick="javascript:$(\'#row-docter-' + nXElem + '\').remove(); calculation_docter(this); calculation_total();"><i class="far fa-window-close"></i></div>' +
-                            '   </label>' +
+                            '    </select>' +
+                            '    <div class="row-flex col-sm-2 col-2">' +
+                            '        <input type="number" name="docter_qty[]" id="docter_qty_' + nXElem + '" class="docter_qty form-control col-sm-8 col-8" min="1" value="1" data-id="' + nXElem + '" onchange="calculation_docter(this, true);" />' +
+                            '        <label class="col-form-label col-sm-4 col-4 text-center">Pcs</label>' +
+                            '    </div>' +
+                            '    <div class="row-flex col-form-label col-sm-1 col-1 text-right pl-0 pr-0">' +
+                            '        <label class="col-sm-5 col-5 text-center no-padding">X</label>' +
+                            '        <label class="col-sm-7 col-7 pl-0">IDR</label>' +
+                            '    </div>' +
+                            '    <input type="number" name="docter_rate[]" id="docter_rate_' + nXElem + '" class="docter_rate form-control text-right col-sm-2 col-2" value="0" data-id="' + nXElem + '" onblur="calculation_docter(this, false, true);" />' +
+                            '    <label class="col-form-label col-sm-1 col-1 text-right">= IDR</label>' +
+                            '    <div class="row-flex col-sm-2 col-2 no-padding">' +
+                            '        <input type="number" name="docter_subtotal[]" id="docter_subtotal_' + nXElem + '" class="docter_subtotal form-control text-right col-sm-11 col-11" value="0" readonly />' +
+                            '        <label class="col-form-label col-sm-1 col-1 add-pic text-right row-docter-' + nXElem + '" data-id="' + nXElem + '" onclick="javascript:$(\'#row-docter-' + nXElem + '\').remove(); calculation_docter(this); calculation_total();"><i class="far fa-window-close"></i></label>' +
+                            '    </div>' +
                             '</div>' +
                             '<div class="row-docter-do-div col-sm-12 col-12 pl-0" id="row-docter-do-div-' + nXElem + '" data-count="' + nXElem + '">' +
                             '</div>' +
                             '<label class="col-form-label add-pic ml-3" onclick="appendDocterDoElem(' + nXElem + ');">+ Tambahkan Tindakan Dokter</label>';
 
-                        $(".row-docter-div").append(htmlDocter);
+                        $(".row-docter-div").append(htmlDocter)
                         $("#docter_" + nXElem).select2({
                             theme: 'bootstrap4'
                         }).one('select2:open', function(e) {
@@ -1186,6 +1259,20 @@
                     }
                 }
             })
+        }
+
+        function calculation_docterdo() {
+            var st_docter_do = 0;
+            $.each($(".docter_subtotal"), function(index, value) {
+                st_docter_do = st_docter_do + parseInt($(value).val());
+            })
+
+            $.each($(".docter_do_subtotal"), function(index, value) {
+                st_docter_do = st_docter_do + parseInt($(value).val());
+            })
+
+            $(".subtotal-docter").val(st_docter_do);
+            calculation_total();
         }
 
         function appendDocterDoElem(id) {
@@ -1200,7 +1287,7 @@
                 '    </label>' +
                 '    <label class="col-form-label col-sm-1 col-1 text-right">IDR</label>' +
                 '    <label class="row-flex col-sm-2 col-2 no-padding">' +
-                '        <input type="text" name="docter_do_subtotal[' + id + '][]" id="docter_do_subtotal_' + nXElem + '" class="docter_do_subtotal form-control text-right col-sm-11 col-11" value="0" />' +
+                '        <input type="number" name="docter_do_subtotal[' + id + '][]" id="docter_do_subtotal_' + nXElem + '" class="docter_do_subtotal form-control text-right col-sm-11 col-11" value="0" onblur="calculation_docterdo()" />' +
                 '        <div class="col-form-label col-sm-1 col-1 add-pic text-right row-docter-' + nXElem + '" onclick="javascript:$(\'#row-docter-do-' + nXElem + '\').remove();"><i class="far fa-window-close"></i></div>' +
                 '    </label>' +
                 '</div>';
@@ -1244,7 +1331,7 @@
                         var htmlSurgery = '' +
                             '<div class="row row-surgery col-sm-12 col-12" id="row-surgery-' + nXElem + '">'+
                             '   <select name="surgery[]" id="surgery_' + nXElem + '" class="surgery form-control select2 col-sm-9 col-9" data-id="' + nXElem + '" onchange="calculation_surgery(this);">' +
-                            '       <option value="">-- Pilih Dokter Anestesi --</option>';
+                            '       <option value="">-- Pilih Dokter Spesialis --</option>';
 
                         $.each(response.surgery, function(index, value) {
                             htmlSurgery += '<option value="' + value.id + '-' + value.fare + '">' + value.name + '</option>';
@@ -1254,7 +1341,7 @@
                             '   </select>' +
                             '   <label class="col-form-label col-sm-1 col-1 text-right">IDR</label>' +
                             '   <label class="row-flex col-sm-2 col-2 no-padding">' +
-                            '       <input type="text" name="surgery_subtotal[]" id="surgery_subtotal_' + nXElem + '" class="surgery_subtotal form-control text-right col-sm-11 col-11" value="0" onblur="calculation_surgery(this);" />' +
+                            '       <input type="number" name="surgery_subtotal[]" id="surgery_subtotal_' + nXElem + '" class="surgery_subtotal form-control text-right col-sm-11 col-11" value="0" onblur="calculation_surgery(this);" />' +
                             '       <div class="col-form-label col-sm-1 col-1 add-pic text-right row-surgery-' + nXElem + '" data-id="' + nXElem + '" onclick="javascript:$(\'#row-surgery-' + nXElem + '\').remove(); calculation_surgery(this); calculation_total();"><i class="far fa-window-close"></i></div>' +
                             '   </label>' +
                             '</div>';
@@ -1270,6 +1357,16 @@
             })
         }
 
+        function calculation_surgery_nurse() {
+            var st_surgery_nurse = 0;
+            $.each($(".surgery_nurse_subtotal"), function(index, value) {
+                st_surgery_nurse = st_surgery_nurse + parseInt($(value).val());
+            })
+
+            $(".subtotal-surgery-nurse").val(st_surgery_nurse);
+            calculation_total();
+        }
+
         function appendSurgeryNurseElem() {
             var xElem = parseInt($(".row-surgery-nurse-div").attr("data-count"));
             var nXElem = xElem + 1;
@@ -1280,11 +1377,73 @@
                 '   <input type="text" name="surgery_nurse[]" id="surgery_nurse_' + nXElem + '" placeholder="Contoh: Jasa Perawat Anestesi" class="form-control col-sm-9 col-9" />' +
                 '   <label class="col-form-label col-sm-1 col-1 text-right">IDR</label>' +
                 '   <label class="row-flex col-sm-2 col-2 no-padding">' +
-                '       <input type="text" name="surgery_nurse_subtotal[]" id="surgery_nurse_subtotal_' + nXElem + '" class="surgery_nurse_subtotal form-control text-right col-sm-11 col-11" value="0" />' +
+                '       <input type="number" name="surgery_nurse_subtotal[]" id="surgery_nurse_subtotal_' + nXElem + '" class="surgery_nurse_subtotal form-control text-right col-sm-11 col-11" value="0" onblur="calculation_surgery_nurse();" />' +
                 '       <div class="col-form-label col-sm-1 col-1 add-pic text-right row-surgery-nurse-' + nXElem + '" onclick="javascript:$(\'#row-surgery-nurse-' + nXElem + '\').remove();"><i class="far fa-window-close"></i></div>' +
                 '   </label>' +
                 '</div>' +
             '');
+        }
+
+        function calculation_anestesi(e) {
+            var anestesi_id = $(e).attr("data-id");
+            
+            var anestesi_subtotal = $(e).val();
+                anestesi_subtotal = anestesi_subtotal.split("-");
+                anestesi_subtotal = anestesi_subtotal[1];
+
+            $("#anestesi_subtotal_" + anestesi_id).val(anestesi_subtotal);
+            
+            var st_anestesi = 0;
+            $.each($(".anestesi_subtotal"), function(index, value) {
+                st_anestesi = st_anestesi + parseInt($(value).val());
+            })
+            $(".subtotal-anestesi").val(st_anestesi);
+            calculation_total();
+        }
+
+        function appendAnestesiElem() {
+            var xElem = parseInt($(".row-anestesi-div").attr("data-count"));
+            var nXElem = xElem + 1;
+            $(".row-anestesi-div").attr("data-count", (xElem + 1));
+
+            var rs_id = ($("#rs_id").find(":selected").val());
+            $.ajax({
+                url: '<?php echo base_url("master/datas/layanan"); ?>',
+                type: "post",
+                dataType: "json",
+                data: {
+                    rs_id: rs_id
+                },
+                success: function(response) {
+                    $('.overlay-loading').hide();
+                    if (response.hasOwnProperty('anestesi')) {
+                        var htmlAnestesi = '' +
+                            '<div class="row row-anestesi col-sm-12 col-12" id="row-anestesi-' + nXElem + '">'+
+                            '   <select name="anestesi[]" id="anestesi_' + nXElem + '" class="anestesi form-control select2 col-sm-9 col-9" data-id="' + nXElem + '" onchange="calculation_anestesi(this);">' +
+                            '       <option value="">-- Pilih Dokter Anestesi --</option>';
+
+                        $.each(response.anestesi, function(index, value) {
+                            htmlAnestesi += '<option value="' + value.id + '-' + value.fare + '">' + value.name + '</option>';
+                        })
+
+                        htmlAnestesi += '' +
+                            '   </select>' +
+                            '   <label class="col-form-label col-sm-1 col-1 text-right">IDR</label>' +
+                            '   <label class="row-flex col-sm-2 col-2 no-padding">' +
+                            '       <input type="number" name="anestesi_subtotal[]" id="anestesi_subtotal_' + nXElem + '" class="anestesi_subtotal form-control text-right col-sm-11 col-11" value="0" onblur="calculation_anestesi(this);" />' +
+                            '       <div class="col-form-label col-sm-1 col-1 add-pic text-right row-anestesi-' + nXElem + '" data-id="' + nXElem + '" onclick="javascript:$(\'#row-anestesi-' + nXElem + '\').remove(); calculation_anestesi(this); calculation_total();"><i class="far fa-window-close"></i></div>' +
+                            '   </label>' +
+                            '</div>';
+
+                        $(".row-anestesi-div").append(htmlAnestesi);
+                        $("#anestesi_" + nXElem).select2({
+                            theme: 'bootstrap4'
+                        }).one('select2:open', function(e) {
+                            $('input.select2-search__field').prop('placeholder', 'Cari disini...');
+                        });
+                    }
+                }
+            })
         }
 
         function calculation_lab(e, is_lab = false, is_qty = false) {
@@ -1348,10 +1507,10 @@
                             '        <label class="col-sm-5 col-5 text-center no-padding">X</label>' +
                             '        <label class="col-sm-7 col-7 pl-0">IDR</label>' +
                             '    </div>' +
-                            '    <input type="text" name="lab_rate[]" id="lab_rate_' + nXElem + '" class="lab_rate form-control text-right col-sm-2 col-2" value="0" data-id="' + nXElem + '" onblur="calculation_lab(this, false, true);" />' +
+                            '    <input type="number" name="lab_rate[]" id="lab_rate_' + nXElem + '" class="lab_rate form-control text-right col-sm-2 col-2" value="0" data-id="' + nXElem + '" onblur="calculation_lab(this, false, true);" />' +
                             '    <label class="col-form-label col-sm-1 col-1 text-right">= IDR</label>' +
                             '    <div class="row-flex col-sm-2 col-2 no-padding">' +
-                            '        <input type="text" name="lab_subtotal[]" id="lab_subtotal_' + nXElem + '" class="lab_subtotal form-control text-right col-sm-11 col-11" value="0" readonly />' +
+                            '        <input type="number" name="lab_subtotal[]" id="lab_subtotal_' + nXElem + '" class="lab_subtotal form-control text-right col-sm-11 col-11" value="0" readonly />' +
                             '        <label class="col-form-label col-sm-1 col-1 add-pic text-right row-lab-' + nXElem + '" data-id="' + nXElem + '" onclick="javascript:$(\'#row-lab-' + nXElem + '\').remove(); calculation_lab(this); calculation_total();"><i class="far fa-window-close"></i></label>' +
                             '    </div>' +
                             '</div>';
@@ -1428,10 +1587,10 @@
                             '        <label class="col-sm-5 col-5 text-center no-padding">X</label>' +
                             '        <label class="col-sm-7 col-7 pl-0">IDR</label>' +
                             '    </div>' +
-                            '    <input type="text" name="radiology_rate[]" id="radiology_rate_' + nXElem + '" class="radiology_rate form-control text-right col-sm-2 col-2" value="0" data-id="' + nXElem + '" onblur="calculation_radiology(this, false, true);" />' +
+                            '    <input type="number" name="radiology_rate[]" id="radiology_rate_' + nXElem + '" class="radiology_rate form-control text-right col-sm-2 col-2" value="0" data-id="' + nXElem + '" onblur="calculation_radiology(this, false, true);" />' +
                             '    <label class="col-form-label col-sm-1 col-1 text-right">= IDR</label>' +
                             '    <div class="row-flex col-sm-2 col-2 no-padding">' +
-                            '        <input type="text" name="radiology_subtotal[]" id="radiology_subtotal_' + nXElem + '" class="radiology_subtotal form-control text-right col-sm-11 col-11" value="0" readonly />' +
+                            '        <input type="number" name="radiology_subtotal[]" id="radiology_subtotal_' + nXElem + '" class="radiology_subtotal form-control text-right col-sm-11 col-11" value="0" readonly />' +
                             '        <label class="col-form-label col-sm-1 col-1 add-pic text-right row-radiology-' + nXElem + '" data-id="' + nXElem + '" onclick="javascript:$(\'#row-radiology-' + nXElem + '\').remove(); calculation_radiology(this); calculation_total();"><i class="far fa-window-close"></i></label>' +
                             '    </div>' +
                             '</div>';
@@ -1508,10 +1667,10 @@
                             '        <label class="col-sm-5 col-5 text-center no-padding">X</label>' +
                             '        <label class="col-sm-7 col-7 pl-0">IDR</label>' +
                             '    </div>' +
-                            '    <input type="text" name="medic_rate[]" id="medic_rate_' + nXElem + '" class="medic_rate form-control text-right col-sm-2 col-2" value="0" data-id="' + nXElem + '" onblur="calculation_medic(this, false, true);" />' +
+                            '    <input type="number" name="medic_rate[]" id="medic_rate_' + nXElem + '" class="medic_rate form-control text-right col-sm-2 col-2" value="0" data-id="' + nXElem + '" onblur="calculation_medic(this, false, true);" />' +
                             '    <label class="col-form-label col-sm-1 col-1 text-right">= IDR</label>' +
                             '    <div class="row-flex col-sm-2 col-2 no-padding">' +
-                            '        <input type="text" name="medic_subtotal[]" id="medic_subtotal_' + nXElem + '" class="medic_subtotal form-control text-right col-sm-11 col-11" value="0" readonly />' +
+                            '        <input type="number" name="medic_subtotal[]" id="medic_subtotal_' + nXElem + '" class="medic_subtotal form-control text-right col-sm-11 col-11" value="0" readonly />' +
                             '        <label class="col-form-label col-sm-1 col-1 add-pic text-right row-medic-' + nXElem + '" data-id="' + nXElem + '" onclick="javascript:$(\'#row-medic-' + nXElem + '\').remove(); calculation_medic(this); calculation_total();"><i class="far fa-window-close"></i></label>' +
                             '    </div>' +
                             '</div>';
@@ -1588,10 +1747,10 @@
                             '        <label class="col-sm-5 col-5 text-center no-padding">X</label>' +
                             '        <label class="col-sm-7 col-7 pl-0">IDR</label>' +
                             '    </div>' +
-                            '    <input type="text" name="rehab_rate[]" id="rehab_rate_' + nXElem + '" class="rehab_rate form-control text-right col-sm-2 col-2" value="0" data-id="' + nXElem + '" onblur="calculation_rehab(this, false, true);" />' +
+                            '    <input type="number" name="rehab_rate[]" id="rehab_rate_' + nXElem + '" class="rehab_rate form-control text-right col-sm-2 col-2" value="0" data-id="' + nXElem + '" onblur="calculation_rehab(this, false, true);" />' +
                             '    <label class="col-form-label col-sm-1 col-1 text-right">= IDR</label>' +
                             '    <div class="row-flex col-sm-2 col-2 no-padding">' +
-                            '        <input type="text" name="rehab_subtotal[]" id="rehab_subtotal_' + nXElem + '" class="rehab_subtotal form-control text-right col-sm-11 col-11" value="0" readonly />' +
+                            '        <input type="number" name="rehab_subtotal[]" id="rehab_subtotal_' + nXElem + '" class="rehab_subtotal form-control text-right col-sm-11 col-11" value="0" readonly />' +
                             '        <label class="col-form-label col-sm-1 col-1 add-pic text-right row-rehab-' + nXElem + '" data-id="' + nXElem + '" onclick="javascript:$(\'#row-rehab-' + nXElem + '\').remove(); calculation_rehab(this); calculation_total();"><i class="far fa-window-close"></i></label>' +
                             '    </div>' +
                             '</div>';
@@ -1622,6 +1781,7 @@
             }).one('select2:open', function(e) {
                 $('input.select2-search__field').prop('placeholder', 'Cari disini...');
             });
+
             $.validator.setDefaults({
                 ignore: ":hidden, [contenteditable='true']:not([name])",
                 submitHandler: function(form) {
@@ -1679,6 +1839,11 @@
                     $(element).removeClass('is-invalid');
                 }
             });
+        });
+
+        $("#modal-bills").on("hidden.bs.modal", function(e) {
+            $('.overlay-loading').show();
+            location.reload();
         });
 
         function detail_bills(id) {

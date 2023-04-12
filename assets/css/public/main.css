@@ -29,6 +29,13 @@ body {
 .form-group .fa-eye {
     display: none;
 }
+.form-group [type="number"] {
+    padding-right: 2px;
+}
+.form-group [type="number"]::-webkit-inner-spin-button,
+.form-group [type="number"]::-webkit-outer-spin-button {
+    margin-left: 2px;
+}
 .row-flex {
     display: flex;
 }

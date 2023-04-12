@@ -66,6 +66,7 @@ class Detail
             case "medic":
             case "doctor":
             case "surgery":
+            case "anestesi":
             case "laboratory":
             case "fee":
                 $this->_service($responseObj, $responsecode, $responseMessage);

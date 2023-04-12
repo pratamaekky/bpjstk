@@ -4,6 +4,9 @@
 <head>
     <?php include(APPPATH . "views/layout/html_header_script.php"); ?>
     <link href="<?php echo base_url("assets/plugins/datatables/jquery.dataTables.min.css"); ?>" rel="stylesheet">
+    <!-- Select2 -->
+    <link href="<?php echo base_url("assets/plugins/select2/css/select2.min.css"); ?>" rel="stylesheet">
+    <link href="<?php echo base_url("assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css"); ?>" rel="stylesheet">
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -23,7 +26,7 @@
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0">Data Tindakan Rehab Medik Rumah Sakit</h1>
+                            <h1 class="m-0">Data Dokter Anestesi Rumah Sakit</h1>
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="#">Home</a></li>
                                 <li class="breadcrumb-item"><a href="<?php echo base_url("master/service"); ?>">Data Pelayanan</a></li>
@@ -31,7 +34,7 @@
                             </ol>
                         </div><!-- /.col -->
                         <div class="col-sm-6">
-                            <button type="button" class="btn btn-success float-sm-right ml-2" data-toggle="modal" data-target="#modal-rehabilitation"><i class="fas fa-plus"></i> Tambah</button>
+                            <button type="button" class="btn btn-success float-sm-right ml-2" data-toggle="modal" data-target="#modal-anestesi"><i class="fas fa-plus"></i> Tambah</button>
                         </div><!-- /.col -->
                     </div><!-- /.row -->
                 </div><!-- /.container-fluid -->
@@ -46,11 +49,11 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-body">
-                                    <table id="tableRehabilitationLists" class="table table-hover">
+                                    <table id="tableAnestesiLists" class="table table-hover">
                                         <thead>
                                             <tr>
                                                 <th class="dt-head-center" style="width: 20px;">No</th>
-                                                <th class="dt-head-center">Tindakan Rehab Medik</th>
+                                                <th class="dt-head-center">Nama Dokter Anestesi</th>
                                                 <th class="dt-head-center">Tarif</th>
                                                 <th class="dt-head-center" style="width: 60px;">Action</th>
                                             </tr>
@@ -69,14 +72,14 @@
         <?php include(APPPATH . "views/layout/html_footer.php"); ?>
     </div>
 
-    <div class="modal fade modal-overflow" id="modal-rehabilitation">
-        <form name="rehabilitationForm" id="rehabilitationForm" enctype="multipart/form-data" novalidate="novalidate">
+    <div class="modal fade modal-overflow" id="modal-anestesi">
+        <form name="anestesiForm" id="anestesiForm" enctype="multipart/form-data" novalidate="novalidate">
             <input type="hidden" name="id_rs" id="id_rs" value="<?php echo (!is_null($hospital) ? $hospital->id : 0) ?>" />
             <input type="hidden" name="id" id="id" value="0" />
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title" id="title-modal-form">Tambah Tindakan Rehab Medik Rumah Sakit</h4>
+                        <h4 class="modal-title" id="title-modal-form">Tambah Dokter Anestesi Rumah Sakit</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -85,13 +88,13 @@
                         <div class="col-12 col-sm-12">
                             <div class="row">
                                 <div class="form-group col-12">
-                                    <label for="value">Nama Tindakan Rehab Medik</label>
+                                    <label for="name">Nama Dokter Anestesi</label>
                                     <div class="input-group">
-                                        <input type="text" name="value" id="value" class="form-control" placeholder="Contoh: Kamar Inap Kelas II" autocomplete="off" required="required" />
+                                        <input type="text" name="name" id="name" class="form-control" placeholder="Contoh: dr. Abdulrachman Saleh" autocomplete="off" required="required" />
                                     </div>
                                 </div>
                                 <div class="form-group col-12">
-                                    <label for="fare">Tarif</label>
+                                    <label for="fare">Tarif Dokter Anestesi</label>
                                     <div class="input-group">
                                         <input type="number" name="fare" id="fare" class="form-control" placeholder="Contoh: 2000000" autocomplete="off" required="required" />
                                     </div>
@@ -116,11 +119,13 @@
     <?PHP include(APPPATH . "views/layout/html_footer_script.php"); ?>
     <script src="<?php echo base_url("assets/plugins/datatables/jquery.dataTables.min.js"); ?>"></script>
     <script src="<?php echo base_url("assets/plugins/jquery-validation/jquery.validate.min.js"); ?>"></script>
+    <!-- Select2 -->
+    <script src="<?php echo base_url("assets/plugins/select2/js/select2.full.min.js"); ?>"></script>
     <!-- BootBox -->
     <script src="<?php echo base_url("assets/js/bootstarp-bootbox.min.js"); ?>"></script>
     <script>
         $(document).ready(function(){
-            $('#tableRehabilitationLists').DataTable({
+            $('#tableAnestesiLists').DataTable({
                 'processing': true,
                 'serverSide': true,
                 'serverMethod': 'post',
@@ -138,15 +143,15 @@
                     infoFiltered: ""
                 },
                 'ajax': {
-                    'url':'<?php echo base_url("master/service/rehabilitation/data"); ?>',
+                    'url':'<?php echo base_url("master/service/anestesi/data"); ?>',
                     'type': 'POST',
-                    'data': {"rsid": <?php echo $rsId; ?>, 'action':'#tableRehabilitationLists'}
+                    'data': {"rsid": <?php echo $rsId; ?>, 'action':'#tableAnestesiLists'}
                 },
                 'columns': [
                     { data: 'no', className: 'dt-body-center' },
-                    { data: 'value' },
+                    { data: 'name' },
                     { data: 'fare' },
-                    { data: 'action' },
+                    { data: 'action' }
                 ],
                 "columnDefs":[
                     {
@@ -158,6 +163,12 @@
         });
 
         $(function() {
+            $('.select2').select2({
+                theme: 'bootstrap4'
+            }).one('select2:open', function(e) {
+                $('input.select2-search__field').prop('placeholder', 'Cari disini...');
+            });
+
             $.validator.setDefaults({
                 ignore: ":hidden, [contenteditable='true']:not([name])",
                 submitHandler: function(form) {
@@ -166,9 +177,9 @@
                     var todo = $("#todo").val();
                     var url;
                     if (todo == "update") {
-                        url = "<?php echo base_url('master/service/rehabilitation/update'); ?>";
+                        url = "<?php echo base_url('master/service/anestesi/update'); ?>";
                     } else {
-                        url = "<?php echo base_url('master/service/rehabilitation/save'); ?>";
+                        url = "<?php echo base_url('master/service/anestesi/save'); ?>";
                     }
 
                     $.ajax({
@@ -183,6 +194,7 @@
                         success: function(response) {
                             if (response.result == 200 || response.message == 'Success') {
                                 $(".overlay-loading").hide();
+                                show_notif('success', response.data.name);
                                 location.reload();
                             } else {
                                 $('.overlay-loading').hide();
@@ -196,7 +208,7 @@
                     });
                 }
             });
-            $('#rehabilitationForm').validate({
+            $('#anestesiForm').validate({
                 errorElement: 'span',
                 errorPlacement: function(error, element) {
                     error.addClass('invalid-feedback');
@@ -211,31 +223,32 @@
             });
         });
 
-        $("#modal-rehabilitation").on("hidden.bs.modal", function(e) {
-            $("#rehabilitationForm").trigger("reset");
+        $("#modal-anestesi").on("hidden.bs.modal", function(e) {
+            $("#anestesiForm").trigger("reset");
             $("#btnForm").html("Simpan");
             $("#todo").val("");
             $('.select2').val('').trigger('change');
         });
 
         function editService(id) {
+            var categoryHtml = "";
             $('.overlay-loading').show();
             $.ajax({
-                url: "<?php echo base_url('master/service/rehabilitation/detail/'); ?>",
+                url: "<?php echo base_url('master/service/anestesi/detail/'); ?>",
                 type: "POST",
                 data: {
                     id: id
                 },
                 dataType: "JSON",
                 success: function(response) {
+                    var category = response.category;
                     $('.overlay-loading').hide();
                     $("#id").val(response.id);
-                    $("#value").val(response.value);
+                    $("#name").val(response.name);
                     $("#fare").val(response.fare);
-
                     $("#btnForm").html("Update");
                     $("#todo").val("update");
-                    $("#modal-rehabilitation").modal("toggle");
+                    $("#modal-anestesi").modal("toggle");
                 },
                 error: function(error) {
                     $('.overlay-loading').hide();
@@ -246,8 +259,8 @@
 
         function deleteService(id) {
             bootbox.confirm({
-                title: "Hapus Rehab Medik",
-                message: "Apakah kamu yakin untuk menghapus Rehab Medik ini? Aksi ini tidak bisa di kembalikan",
+                title: "Hapus Dokter Anestesi",
+                message: "Apakah kamu yakin untuk menghapus dokter anestesi ini? Aksi ini tidak bisa di kembalikan",
                 buttons: {
                     cancel: {
                         label: '<i class="fa fa-times"></i> Batal'
@@ -260,7 +273,7 @@
                     if (result) {
                         $('.overlay-loading').show();
                         $.ajax({
-                            url: '<?php echo base_url("master/service/rehabilitation/delete"); ?>',
+                            url: '<?php echo base_url("master/service/anestesi/delete"); ?>',
                             type: "post",
                             dataType: "json",
                             data: {
@@ -269,17 +282,17 @@
                             success: function(response) {
                                 $('.overlay-loading').hide();
                                 if (response.result == 200) {
-                                    $('#tableRehabilitationLists').DataTable().ajax.reload()
+                                    $('#tableAnestesiLists').DataTable().ajax.reload()
                                     show_notif('success', response.data.name);
                                 }
                             }
                         });
                     } else {
-                        show_notif('info', 'Rehab Medik batal dihapus');
+                        show_notif('info', 'Dokter Anestesi batal dihapus');
                     }
                 }
             });
-        }        
+        }
 </script>
 </body>
 

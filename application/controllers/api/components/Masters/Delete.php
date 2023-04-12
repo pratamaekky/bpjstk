@@ -82,6 +82,7 @@ class Delete
             case "medic":
             case "doctor":
             case "surgery":
+            case "anestesi":
             case "laboratory":
             case "fee":
                 $this->_delete_service($responseObj, $responsecode, $responseMessage);

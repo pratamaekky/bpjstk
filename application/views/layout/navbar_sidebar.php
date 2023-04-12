@@ -69,13 +69,19 @@
                     <li class="nav-item">
                         <a href="<?php echo base_url("master/service/doctor/lists/" . $this->plkk_session->rs_id); ?>" class="nav-link <?php echo ($this->module == "service" && $this->command == "doctor") ? "active" : ""; ?>">
                             <i class="nav-icon fas fa-user-md"></i>
-                            <p>Dokter</i></p>
+                            <p>Dokter Umum / IGD</i></p>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="<?php echo base_url("master/service/surgery/lists/" . $this->plkk_session->rs_id); ?>" class="nav-link <?php echo ($this->module == "service" && $this->command == "surgery") ? "active" : ""; ?>">
                             <i class="nav-icon fas fa-stethoscope"></i>
                             <p>Dokter Specialis</i></p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="<?php echo base_url("master/service/anestesi/lists/" . $this->plkk_session->rs_id); ?>" class="nav-link <?php echo ($this->module == "service" && $this->command == "anestesi") ? "active" : ""; ?>">
+                            <i class="nav-icon fas fa-syringe"></i>
+                            <p>Dokter Anestesi</i></p>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -87,7 +93,7 @@
                     <li class="nav-item">
                         <a href="<?php echo base_url("master/service/fee/lists/" . $this->plkk_session->rs_id); ?>" class="nav-link <?php echo ($this->module == "service" && $this->command == "fee") ? "active" : ""; ?>">
                             <i class="nav-icon fas fa-file-invoice-dollar"></i>
-                            <p>Biaya Lainnya</i></p>
+                            <p>Biaya Lainnya / Administrasi</i></p>
                         </a>
                     </li>
                 <?php } ?>
@@ -114,7 +120,7 @@
                                     <p>Pemilik RS</p>
                                 </a>
                             </li>
-                            <li class="nav-item">
+                            <!-- <li class="nav-item">
                                 <a href="<?php echo base_url("master/generals/lists/ot_category"); ?>" class="nav-link <?php echo ($this->module == "generals" && $this->last_segment == "ot_category") ? "active" : ""; ?>">
                                     <i class="fas fa-database nav-icon"></i>
                                     <p>Kategori Operasi</p>
@@ -125,11 +131,11 @@
                                     <i class="fas fa-user-tag nav-icon"></i>
                                     <p>Dokter Umum/IGD</p>
                                 </a>
-                            </li>
+                            </li> -->
                             <li class="nav-item">
                                 <a href="<?php echo base_url("master/generals/lists/doctor_specialist"); ?>" class="nav-link <?php echo ($this->module == "generals" && $this->last_segment == "doctor_specialist") ? "active" : ""; ?>">
                                     <i class="fas fa-user-md nav-icon"></i>
-                                    <p>Dokter Spesialisasi</p>
+                                    <p>Spesialisasi Dokter</p>
                                 </a>
                             </li>
                             <li class="nav-item">

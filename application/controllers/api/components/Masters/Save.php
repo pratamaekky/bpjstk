@@ -121,6 +121,21 @@ class Save
         ];
     }
 
+    private function _save_anestesi(&$responseObj, &$responsecode, &$responseMessage)
+    {
+        $saveAnestesi = $this->CI->general->saveAnestesi($this->_params);
+
+        if ($saveAnestesi > 0) {
+            $responsecode = 200;
+        }
+
+        $responseObj = [
+            "name" => "Save New Docter Anestesi",
+            "item" => []
+        ];
+    }
+
+
     private function _save_laboratory(&$responseObj, &$responsecode, &$responseMessage)
     {
         $saveLaboratory = $this->CI->general->saveLaboratory($this->_params);
@@ -247,6 +262,9 @@ class Save
                 break;
             case "surgery":
                 $this->_save_surgery($responseObj, $responsecode, $responseMessage);
+                break;
+            case "anestesi":
+                $this->_save_anestesi($responseObj, $responsecode, $responseMessage);
                 break;
             case "laboratory":
                 $this->_save_laboratory($responseObj, $responsecode, $responseMessage);

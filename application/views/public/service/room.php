@@ -93,7 +93,7 @@
                                 <div class="form-group col-12">
                                     <label for="fare">Tarif Kamar</label>
                                     <div class="input-group">
-                                        <input type="text" name="fare" id="fare" class="form-control" placeholder="Contoh: 2000000" autocomplete="off" required="required" />
+                                        <input type="number" name="fare" id="fare" class="form-control" placeholder="Contoh: 2000000" autocomplete="off" required="required" />
                                     </div>
                                 </div>
                             </div>
@@ -147,6 +147,12 @@
                     { data: 'value' },
                     { data: 'fare' },
                     { data: 'action' }
+                ],
+                "columnDefs":[
+                    {
+                        "targets":[0, 2, 3],
+                        "orderable":false,
+                    }
                 ]
             });
         });

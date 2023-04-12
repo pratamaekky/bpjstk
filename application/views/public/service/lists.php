@@ -51,8 +51,9 @@
                                                 <th class="dt-head-center">Radiologi</th>
                                                 <th class="dt-head-center">Medikal</th>
                                                 <th class="dt-head-center">Laboratorium</th>
-                                                <th class="dt-head-center">Dokter</th>
-                                                <th class="dt-head-center">Dokter OP</th>
+                                                <th class="dt-head-center">Dokter Umum/IGD</th>
+                                                <th class="dt-head-center">Dokter Specialis</th>
+                                                <th class="dt-head-center">Dokter Anestesi</th>
                                                 <th class="dt-head-center">Rehab Medik</th>
                                                 <th class="dt-head-center">Biaya</th>
                                                 <th class="dt-head-center">Users</th>
@@ -109,6 +110,7 @@
                     { data: 'laboratory', className: 'dt-body-center' },
                     { data: 'doctor', className: 'dt-body-center' },
                     { data: 'surgery', className: 'dt-body-center' },
+                    { data: 'anestesi', className: 'dt-body-center' },
                     { data: 'rehabilitation', className: 'dt-body-center' },
                     { data: 'fee', className: 'dt-body-center' },
                     { data: 'users', className: 'dt-body-center' },

@@ -435,6 +435,37 @@ class Data
         ];
     }
 
+    private function _data_anestesi(&$responseObj, &$responsecode, &$responseMessage)
+    {
+        $totalPage = 1;
+        $result = [];
+        $idRs = isset($this->_params["rsid"]) ? $this->_params["rsid"] : 0;
+        $draw = isset($this->_params["draw"]) ? intval($this->_params["draw"]) : 1;
+        $start = isset($this->_params["start"]) ? intval($this->_params["start"]) : 0;
+        $limit = isset($this->_params["length"]) ? intval($this->_params["length"]) : 10;
+        $query = (isset($this->_params["search"]["value"]) && !empty($this->_params["search"]["value"])) ? $this->_params["search"]["value"] : null;
+        $column = isset($this->_params["order"][0]["column"]) ? $this->_params["order"][0]["column"] : null;
+        $order = isset($this->_params["order"][0]["dir"]) ? $this->_params["order"][0]["dir"] : "asc";
+        $sortColumn = "name";
+
+        $totalAnestesi = $this->CI->general->totalAnestesi($idRs);
+
+        if ($totalAnestesi > 0) {
+            $result = $this->CI->general->getAnestesi($idRs, $query, $start, $limit, $sortColumn, $order);
+            $responsecode = 200;
+        }
+
+        $responseObj = [
+            "name" => "Data Docter Anestesi",
+            "item" => [
+                "draw" => $draw,
+                "iTotalRecords" => intval($limit),
+                "iTotalDisplayRecords" => intval($totalAnestesi),
+                "aaData" => $result
+            ]
+        ];
+    }
+
     private function _data_laboratory(&$responseObj, &$responsecode, &$responseMessage)
     {
         $totalPage = 1;
@@ -610,6 +641,9 @@ class Data
                 break;
             case "surgery":
                 $this->_data_surgery($responseObj, $responsecode, $responseMessage);
+                break;
+            case "anestesi":
+                $this->_data_anestesi($responseObj, $responsecode, $responseMessage);
                 break;
             case "laboratory":
                 $this->_data_laboratory($responseObj, $responsecode, $responseMessage);
