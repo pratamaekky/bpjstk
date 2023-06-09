@@ -91,6 +91,12 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a href="<?php echo base_url("master/service/ambulance/lists/" . $this->plkk_session->rs_id); ?>" class="nav-link <?php echo ($this->module == "service" && $this->command == "ambulance") ? "active" : ""; ?>">
+                            <i class="nav-icon fas fa-ambulance"></i>
+                            <p>Ambulance</i></p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a href="<?php echo base_url("master/service/fee/lists/" . $this->plkk_session->rs_id); ?>" class="nav-link <?php echo ($this->module == "service" && $this->command == "fee") ? "active" : ""; ?>">
                             <i class="nav-icon fas fa-file-invoice-dollar"></i>
                             <p>Biaya Lainnya / Administrasi</i></p>

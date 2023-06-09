@@ -469,6 +469,9 @@
                                                             <label class="col-sm-1 col-1">&nbsp;</label>
                                                         </label>
                                                     </div>
+                                                    <div class="row-surgery-do-div col-sm-12 col-12 pl-0" id="row-surgery-do-div-1" data-count="0">
+                                                    </div>
+                                                    <label class="col-form-label add-pic ml-3" onclick="appendSurgeryDoElem(1);">+ Tambahkan Tindakan Dokter Spesialis</label>
                                                 </div>
                                             </div>
                                             <label class="col-form-label add-pic" onclick="appendSurgeryElem();">+ Tambahkan Dokter Spesialis</label>
@@ -527,6 +530,9 @@
                                                             <label class="col-sm-1 col-1">&nbsp;</label>
                                                         </label>
                                                     </div>
+                                                    <div class="row-anestesi-do-div col-sm-12 col-12 pl-0" id="row-anestesi-do-div-1" data-count="0">
+                                                    </div>
+                                                    <label class="col-form-label add-pic ml-3" onclick="appendAnestesiDoElem(1);">+ Tambahkan Tindakan Dokter Anestesi</label>
                                                 </div>
                                             </div>
                                             <label class="col-form-label add-pic" onclick="appendAnestesiElem();">+ Tambahkan Dokter Anestesi</label>
@@ -691,6 +697,36 @@
                                                 <label class="col-form-label col-sm-1 col-1 text-right">IDR</label>
                                                 <label class="row-flex col-sm-2 col-2 no-padding">
                                                     <input type="number" name="subtotal" id="subtotal_rehab" class="subtotal subtotal-rehab form-control text-right col-sm-11 col-11" value="0" readonly />
+                                                    <label class="col-sm-1 col-1">&nbsp;</label>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-12 separate-div-bottom" id="div_ambulance" style="display: none;">
+                                    <div class="row">
+                                        <label for="ambulance" class="col-form-label col-sm-3 col-3">Ambulance</label>
+                                        <div class="input-group col-sm-9 col-9">
+                                            <div class="col-sm-12 col-12">
+                                                <div class="row row-ambulance-div" id="row-ambulance-div" data-count="1">
+                                                    <div class="row row-ambulance col-sm-12 col-12" id="row-ambulance-1">
+                                                        <select name="ambulance[]" id="ambulance_1" class="ambulance form-control select2 col-sm-9 col-9" data-id="1" onchange="calculation_ambulance(this);">
+                                                            <option value="">-- Pilih Ambulance --</option>
+                                                        </select>
+                                                        <label class="col-form-label col-sm-1 col-1 text-right">IDR</label>
+                                                        <label class="row-flex col-sm-2 col-2 no-padding">
+                                                            <input type="number" name="ambulance_subtotal[]" id="ambulance_subtotal_1" class="ambulance_subtotal form-control text-right col-sm-11 col-11" value="0" onblur="calculation_ambulance(this)" />
+                                                            <label class="col-sm-1 col-1">&nbsp;</label>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <label class="col-form-label add-pic" onclick="appendAmbulanceElem();">+ Tambahkan Ambulance</label>
+                                            <div class="sbtotal row col-sm-12 col-12">
+                                                <label class="col-form-label col-sm-9 col-9 pl-0">Sub Total</label>
+                                                <label class="col-form-label col-sm-1 col-1 text-right">IDR</label>
+                                                <label class="row-flex col-sm-2 col-2 no-padding">
+                                                    <input type="number" name="subtotal" id="subtotal_ambulance" class="subtotal subtotal-ambulance form-control text-right col-sm-11 col-11" value="0" readonly />
                                                     <label class="col-sm-1 col-1">&nbsp;</label>
                                                 </label>
                                             </div>
@@ -889,6 +925,17 @@
                         })
                         $(".rehab").html(htmlRehab)
                     }
+
+                    if (response.hasOwnProperty('ambulance')) {
+                        $("#div_ambulance").show();
+                        var htmlFee = '<option value="">-- Pilih Ambulance --</option>';
+
+                        $.each(response.ambulance, function(index, value) {
+                            htmlFee += '<option value="' + value.id + '-' + value.fare + '">' + value.value + '</option>';
+                        })
+                        $(".ambulance").html(htmlFee)
+                    }
+
 
                     $("#div_room_nurse").show();
                     $("#div_medicine").show();
@@ -1288,7 +1335,7 @@
                 '    <label class="col-form-label col-sm-1 col-1 text-right">IDR</label>' +
                 '    <label class="row-flex col-sm-2 col-2 no-padding">' +
                 '        <input type="number" name="docter_do_subtotal[' + id + '][]" id="docter_do_subtotal_' + nXElem + '" class="docter_do_subtotal form-control text-right col-sm-11 col-11" value="0" onblur="calculation_docterdo()" />' +
-                '        <div class="col-form-label col-sm-1 col-1 add-pic text-right row-docter-' + nXElem + '" onclick="javascript:$(\'#row-docter-do-' + nXElem + '\').remove();"><i class="far fa-window-close"></i></div>' +
+                '        <div class="col-form-label col-sm-1 col-1 add-pic text-right row-docter-' + nXElem + '" onclick="javascript:$(\'#row-docter-do-' + nXElem + '\').remove(); calculation_docterdo(this); calculation_total();"><i class="far fa-window-close"></i></div>' +
                 '    </label>' +
                 '</div>';
 
@@ -1344,7 +1391,10 @@
                             '       <input type="number" name="surgery_subtotal[]" id="surgery_subtotal_' + nXElem + '" class="surgery_subtotal form-control text-right col-sm-11 col-11" value="0" onblur="calculation_surgery(this);" />' +
                             '       <div class="col-form-label col-sm-1 col-1 add-pic text-right row-surgery-' + nXElem + '" data-id="' + nXElem + '" onclick="javascript:$(\'#row-surgery-' + nXElem + '\').remove(); calculation_surgery(this); calculation_total();"><i class="far fa-window-close"></i></div>' +
                             '   </label>' +
-                            '</div>';
+                            '</div>' +
+                            '<div class="row-surgery-do-div col-sm-12 col-12 pl-0" id="row-surgery-do-div-' + nXElem + '" data-count="' + nXElem + '">' +
+                            '</div>' +
+                            '<label class="col-form-label add-pic ml-3" onclick="appendSurgeryDoElem(' + nXElem + ');">+ Tambahkan Tindakan Dokter Spesialis</label>';
 
                         $(".row-surgery-div").append(htmlSurgery);
                         $("#surgery_" + nXElem).select2({
@@ -1355,6 +1405,40 @@
                     }
                 }
             })
+        }
+
+        function appendSurgeryDoElem(id) {
+            var xElem = parseInt($(".row-surgery-do-div").attr("data-count"));
+            var nXElem = xElem + 1;
+            $(".row-surgery-do-div").attr("data-count", (xElem + 1));
+
+            htmlSurgeryDo = ''+
+                '<div class="row-flex row-surgery-do col-sm-12 col-12 pl-0" id="row-surgery-do-' + nXElem + '">' +
+                '    <label class="row-flex col-sm-9 col-9 pr-3">' +
+                '       <input type="text" name="surgery_do_value[' + id + '][]" id="surgery_do_value_' + nXElem + '" placeholder="Contoh: Kunjungan" class="form-control col-sm-12 col-12 ml-3" />' +
+                '    </label>' +
+                '    <label class="col-form-label col-sm-1 col-1 text-right">IDR</label>' +
+                '    <label class="row-flex col-sm-2 col-2 no-padding">' +
+                '        <input type="number" name="surgery_do_subtotal[' + id + '][]" id="surgery_do_subtotal_' + nXElem + '" class="surgery_do_subtotal form-control text-right col-sm-11 col-11" value="0" onblur="calculation_surgerydo()" />' +
+                '        <div class="col-form-label col-sm-1 col-1 add-pic text-right row-surgery-' + nXElem + '" onclick="javascript:$(\'#row-surgery-do-' + nXElem + '\').remove(); calculation_surgerydo(this); calculation_total();"><i class="far fa-window-close"></i></div>' +
+                '    </label>' +
+                '</div>';
+
+            $("#row-surgery-do-div-" + id).append(htmlSurgeryDo)
+        }
+
+        function calculation_surgerydo() {
+            var st_docter_do = 0;
+            $.each($(".surgery_subtotal"), function(index, value) {
+                st_docter_do = st_docter_do + parseInt($(value).val());
+            })
+
+            $.each($(".surgery_do_subtotal"), function(index, value) {
+                st_docter_do = st_docter_do + parseInt($(value).val());
+            })
+
+            $(".subtotal-surgery").val(st_docter_do);
+            calculation_total();
         }
 
         function calculation_surgery_nurse() {
@@ -1378,7 +1462,7 @@
                 '   <label class="col-form-label col-sm-1 col-1 text-right">IDR</label>' +
                 '   <label class="row-flex col-sm-2 col-2 no-padding">' +
                 '       <input type="number" name="surgery_nurse_subtotal[]" id="surgery_nurse_subtotal_' + nXElem + '" class="surgery_nurse_subtotal form-control text-right col-sm-11 col-11" value="0" onblur="calculation_surgery_nurse();" />' +
-                '       <div class="col-form-label col-sm-1 col-1 add-pic text-right row-surgery-nurse-' + nXElem + '" onclick="javascript:$(\'#row-surgery-nurse-' + nXElem + '\').remove();"><i class="far fa-window-close"></i></div>' +
+                '       <div class="col-form-label col-sm-1 col-1 add-pic text-right row-surgery-nurse-' + nXElem + '" onclick="javascript:$(\'#row-surgery-nurse-' + nXElem + '\').remove(); calculation_surgery_nurse(); calculation_total();"><i class="far fa-window-close"></i></div>' +
                 '   </label>' +
                 '</div>' +
             '');
@@ -1430,10 +1514,13 @@
                             '   </select>' +
                             '   <label class="col-form-label col-sm-1 col-1 text-right">IDR</label>' +
                             '   <label class="row-flex col-sm-2 col-2 no-padding">' +
-                            '       <input type="number" name="anestesi_subtotal[]" id="anestesi_subtotal_' + nXElem + '" class="anestesi_subtotal form-control text-right col-sm-11 col-11" value="0" onblur="calculation_anestesi(this);" />' +
-                            '       <div class="col-form-label col-sm-1 col-1 add-pic text-right row-anestesi-' + nXElem + '" data-id="' + nXElem + '" onclick="javascript:$(\'#row-anestesi-' + nXElem + '\').remove(); calculation_anestesi(this); calculation_total();"><i class="far fa-window-close"></i></div>' +
+                            '       <input type="number" name="anestesi_subtotal[]" id="anestesi_subtotal_' + nXElem + '" class="anestesi_subtotal form-control text-right col-sm-11 col-11" value="0" onblur="calculation_anestesi_do(this);" />' +
+                            '       <div class="col-form-label col-sm-1 col-1 add-pic text-right row-anestesi-' + nXElem + '" data-id="' + nXElem + '" onclick="javascript:$(\'#row-anestesi-' + nXElem + '\').remove(); calculation_anestesi_do(this); calculation_total();"><i class="far fa-window-close"></i></div>' +
                             '   </label>' +
-                            '</div>';
+                            '</div>' +
+                            '<div class="row-anestesi-do-div col-sm-12 col-12 pl-0" id="row-anestesi-do-div-' + nXElem + '" data-count="' + nXElem + '">' +
+                            '</div>' +
+                            '<label class="col-form-label add-pic ml-3" onclick="appendAnestesiDoElem(' + nXElem + ');">+ Tambahkan Tindakan Dokter Anestesi</label>';
 
                         $(".row-anestesi-div").append(htmlAnestesi);
                         $("#anestesi_" + nXElem).select2({
@@ -1444,6 +1531,20 @@
                     }
                 }
             })
+        }
+
+        function calculation_anestesi_do() {
+            var st_anestesi_do = 0;
+            $.each($(".anestesi_subtotal"), function(index, value) {
+                st_anestesi_do = st_anestesi_do + parseInt($(value).val());
+            })
+
+            $.each($(".anestesi_do_subtotal"), function(index, value) {
+                st_anestesi_do = st_anestesi_do + parseInt($(value).val());
+            })
+
+            $(".subtotal-anestesi").val(st_anestesi_do);
+            calculation_total();
         }
 
         function calculation_lab(e, is_lab = false, is_qty = false) {
@@ -1471,6 +1572,27 @@
             $(".subtotal-lab").val(st_lab);
             calculation_total();
         }
+
+        function appendAnestesiDoElem(id) {
+            var xElem = parseInt($(".row-anestesi-do-div").attr("data-count"));
+            var nXElem = xElem + 1;
+            $(".row-anestesi-do-div").attr("data-count", (xElem + 1));
+
+            htmlAnestesiDo = ''+
+                '<div class="row-flex row-anestesi-do col-sm-12 col-12 pl-0" id="row-anestesi-do-' + nXElem + '">' +
+                '    <label class="row-flex col-sm-9 col-9 pr-3">' +
+                '       <input type="text" name="anestesi_do_value[' + id + '][]" id="anestesi_do_value_' + nXElem + '" placeholder="Contoh: Kunjungan" class="form-control col-sm-12 col-12 ml-3" />' +
+                '    </label>' +
+                '    <label class="col-form-label col-sm-1 col-1 text-right">IDR</label>' +
+                '    <label class="row-flex col-sm-2 col-2 no-padding">' +
+                '        <input type="number" name="anestesi_do_subtotal[' + id + '][]" id="anestesi_do_subtotal_' + nXElem + '" class="anestesi_do_subtotal form-control text-right col-sm-11 col-11" value="0" onblur="calculation_anestesi_do(this)" />' +
+                '        <div class="col-form-label col-sm-1 col-1 add-pic text-right row-anestesi-' + nXElem + '" onclick="javascript:$(\'#row-anestesi-do-' + nXElem + '\').remove(); calculation_anestesi_do(this); calculation_total();"><i class="far fa-window-close"></i></div>' +
+                '    </label>' +
+                '</div>';
+
+            $("#row-anestesi-do-div-" + id).append(htmlAnestesiDo)
+        }
+
 
         function appendLabElem() {
             var xElem = parseInt($(".row-lab-div").attr("data-count"));
@@ -1757,6 +1879,68 @@
 
                         $(".row-rehab-div").append(htmlRehab)
                         $("#rehab_" + nXElem).select2({
+                            theme: 'bootstrap4'
+                        }).one('select2:open', function(e) {
+                            $('input.select2-search__field').prop('placeholder', 'Cari disini...');
+                        });
+                    }
+                }
+            })
+        }
+
+        function calculation_ambulance(e) {
+            var ambulance_id = $(e).attr("data-id");
+            
+            var fare = $(e).val();
+                fare = fare.split("-");
+                fare = fare[1];
+
+            $("#ambulance_subtotal_" + ambulance_id).val(fare);
+
+            var st_ambulance = 0;
+            $.each($(".ambulance_subtotal"), function(index, value) {
+                st_ambulance = st_ambulance + parseInt($(value).val());
+            })
+            $(".subtotal-ambulance").val(st_ambulance);
+            calculation_total();
+        }
+
+        function appendAmbulanceElem() {
+            var xElem = parseInt($(".row-ambulance-div").attr("data-count"));
+            var nXElem = xElem + 1;
+            $(".row-ambulance-div").attr("data-count", (xElem + 1));
+
+            var rs_id = ($("#rs_id").find(":selected").val());
+            $.ajax({
+                url: '<?php echo base_url("master/datas/layanan"); ?>',
+                type: "post",
+                dataType: "json",
+                data: {
+                    rs_id: rs_id
+                },
+                success: function(response) {
+                    $('.overlay-loading').hide();
+                    if (response.hasOwnProperty('ambulance')) {
+                        var htmlAmbulance = '' +
+                            '<div class="row row-ambulance col-sm-12 col-12" id="row-ambulance-' + nXElem + '">'+
+                            '   <select name="ambulance[]" id="ambulance_' + nXElem + '" class="ambulance form-control select2 col-sm-9 col-9" data-id="' + nXElem + '" onchange="calculation_ambulance(this);">' +
+                            '       <option value="">-- Pilih Ambulance --</option>';
+
+                        $.each(response.ambulance, function(index, value) {
+                            htmlAmbulance += '<option value="' + value.id + '-' + value.fare + '">' + value.value + '</option>';
+                        })
+
+                        htmlAmbulance += '' +
+                            '   </select>' +
+                            '   <label class="col-form-label col-sm-1 col-1 text-right">IDR</label>' +
+                            '   <label class="row-flex col-sm-2 col-2 no-padding">' +
+                            '       <input type="number" name="ambulance_subtotal[]" id="ambulance_subtotal_' + nXElem + '" class="ambulance_subtotal form-control text-right col-sm-11 col-11" value="0" onblur="calculation_ambulance(this);" />' +
+                            '       <div class="col-form-label col-sm-1 col-1 add-pic text-right row-ambulance-' + nXElem + '" data-id="' + nXElem + '" onclick="javascript:$(\'#row-ambulance-' + nXElem + '\').remove(); calculation_ambulance(this); calculation_total();"><i class="far fa-window-close"></i></div>' +
+                            '   </label>' +
+                            '</div>';
+
+                        $(".row-ambulance-div").append(htmlAmbulance);
+                        $("#ambulance_" + nXElem).select2({
                             theme: 'bootstrap4'
                         }).one('select2:open', function(e) {
                             $('input.select2-search__field').prop('placeholder', 'Cari disini...');

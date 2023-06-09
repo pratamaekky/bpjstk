@@ -222,7 +222,7 @@
                     </div>
                     <div class="form-group col-12 separate-div-bottom" id="div_docter">
                         <div class="row">
-                            <label for="docter" class="col-form-label col-sm-3 col-3">Dokter</label>
+                            <label for="docter" class="col-form-label col-sm-3 col-3">Dokter Umum / IGD</label>
                             <div class="input-group col-sm-9 col-9">
                                 [INFO_YANKES_DOCTER]
                             </div>
@@ -230,7 +230,7 @@
                     </div>
                     <div class="form-group col-12 separate-div-bottom" id="div_surgery">
                         <div class="row">
-                            <label for="surgery" class="col-form-label col-sm-3 col-3">Dokter Anestesi</label>
+                            <label for="surgery" class="col-form-label col-sm-3 col-3">Dokter Spesialis</label>
                             <div class="input-group col-sm-9 col-9">
                                 [INFO_YANKES_SURGERY]
                             </div>
@@ -241,6 +241,14 @@
                             <label for="surgery-nurse" class="col-form-label col-sm-3 col-3">Jasa Perawat Operasi</label>
                             <div class="input-group col-sm-9 col-9">
                                 [INFO_YANKES_SURGERY_NURSE]
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-12 separate-div-bottom" id="div_anestessi">
+                        <div class="row">
+                            <label for="anestessi" class="col-form-label col-sm-3 col-3">Dokter Anestesi</label>
+                            <div class="input-group col-sm-9 col-9">
+                                [INFO_YANKES_ANESTESI]
                             </div>
                         </div>
                     </div>
@@ -273,6 +281,14 @@
                             <label for="rehab" class="col-form-label col-sm-3 col-3">Rehabilitasi</label>
                             <div class="input-group col-sm-9 col-9">
                                 [INFO_YANKES_REHAB]
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-12 separate-div-bottom" id="div_ambulance">
+                        <div class="row">
+                            <label for="ambulance" class="col-form-label col-sm-3 col-3">Ambulance</label>
+                            <div class="input-group col-sm-9 col-9">
+                                [INFO_YANKES_AMBULANCE]
                             </div>
                         </div>
                     </div>

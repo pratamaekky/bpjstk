@@ -85,6 +85,7 @@ class Delete
             case "anestesi":
             case "laboratory":
             case "fee":
+            case "ambulance":
                 $this->_delete_service($responseObj, $responsecode, $responseMessage);
                 break;
         }

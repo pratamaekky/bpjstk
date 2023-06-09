@@ -56,6 +56,7 @@
                                                 <th class="dt-head-center">Dokter Anestesi</th>
                                                 <th class="dt-head-center">Rehab Medik</th>
                                                 <th class="dt-head-center">Biaya</th>
+                                                <th class="dt-head-center">Ambulance</th>
                                                 <th class="dt-head-center">Users</th>
                                             </tr>
                                         </thead>
@@ -113,6 +114,7 @@
                     { data: 'anestesi', className: 'dt-body-center' },
                     { data: 'rehabilitation', className: 'dt-body-center' },
                     { data: 'fee', className: 'dt-body-center' },
+                    { data: 'ambulance', className: 'dt-body-center' },
                     { data: 'users', className: 'dt-body-center' },
                 ],
                 "columnDefs":[

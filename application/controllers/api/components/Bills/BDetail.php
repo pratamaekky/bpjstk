@@ -60,6 +60,9 @@ class BDetail
                         case 'surgery':
                             $detail["value"] = $this->CI->general->getSurgeryNameById($detail["value_id"]);
                             break;
+                        case 'anestesi':
+                            $detail["value"] = $this->CI->general->getAnestesiNameById($detail["value_id"]);
+                            break;
                         case 'lab':
                             $detail["value"] = $this->CI->general->getLaboratoryNameById($detail["value_id"]);
                             break;
@@ -72,11 +75,20 @@ class BDetail
                         case 'rehab':
                             $detail["value"] = $this->CI->general->getRehabilitationNameById($detail["value_id"]);
                             break;
+                        case 'ambulance':
+                            $detail["value"] = $this->CI->general->getAmbulanceNameById($detail["value_id"]);
+                            break;
                     }
                 }
 
                 if ($detail["type"] == "docter")
                     $detail["children"] = $this->CI->mbills->detailDocter($id, $detail["id"]);
+
+                if ($detail["type"] == "surgery")
+                    $detail["children"] = $this->CI->mbills->detailSurgery($id, $detail["id"]);
+
+                if ($detail["type"] == "anestesi")
+                    $detail["children"] = $this->CI->mbills->detailAnestesi($id, $detail["id"]);
 
                 $detail["qty"] = intval($detail["qty"]);
 

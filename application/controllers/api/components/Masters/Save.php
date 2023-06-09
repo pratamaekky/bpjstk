@@ -239,6 +239,20 @@ class Save
 
     }
 
+    private function _save_ambulance(&$responseObj, &$responsecode, &$responseMessage)
+    {
+        $saveAmbulance = $this->CI->general->saveAmbulance($this->_params);
+
+        if ($saveAmbulance > 0) {
+            $responsecode = 200;
+        }
+
+        $responseObj = [
+            "name" => "Save New Ambulance",
+            "item" => []
+        ];
+    }
+
     public function action(&$responseObj, &$responsecode, &$responseMessage)
     {
         switch ($this->_command) {
@@ -277,6 +291,9 @@ class Save
                 break;
             case "users":
                 $this->_save_users($responseObj, $responsecode, $responseMessage);
+                break;
+            case "ambulance":
+                $this->_save_ambulance($responseObj, $responsecode, $responseMessage);
                 break;
             case "patient":
                 $this->_save_patient($responseObj, $responsecode, $responseMessage);

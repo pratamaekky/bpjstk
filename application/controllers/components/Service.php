@@ -72,6 +72,7 @@ class Service extends web_base
                         "anestesi" => "<a class='btn btn-sm btn-success' href='" . base_url("master/service/anestesi/lists/$hospital->id") . "' aria-expanded='true' style='background-color: #6c757d;'><i class='fas fa-syringe mr-2 ml-2'></i></a>",
                         "rehabilitation" => "<a class='btn btn-sm btn-success' href='" . base_url("master/service/rehabilitation/lists/$hospital->id") . "' aria-expanded='true' style='background-color: #a52a2a;'><i class='fas fa-hand-holding-medical mr-2 ml-2'></i></a>",
                         "fee" => "<a class='btn btn-sm btn-warning' href='" . base_url("master/service/fee/lists/$hospital->id") . "' aria-expanded='true'><i class='fas fa-file-invoice-dollar mr-2 ml-2'></i></a>",
+                        "ambulance" => "<a class='btn btn-sm btn-success' href='" . base_url("master/service/ambulance/lists/$hospital->id") . "' aria-expanded='true' style='background-color: #1e3050;'><i class='fas fa-ambulance mr-2 ml-2'></i></a>",
                         "users" => "<a class='btn btn-sm btn-success' href='" . base_url("master/service/users/lists/$hospital->id") . "' aria-expanded='true' style='background-color: #6610f2;'><i class='fas fa-user-shield mr-2 ml-2'></i></a>"
                     ];
 
@@ -912,6 +913,87 @@ class Service extends web_base
         }
     }
 
+    private function _ambulance()
+    {
+        if (!is_null($this->_flag) && $this->_flag == "lists") {
+            if (!is_null($this->rsId)) {
+                $data["rsId"] = $this->rsId;
+                $hospital = $this->Masters->data("hospital", "detail", ["rsId" => $this->rsId]);
+                $hospital = json_decode($hospital);
+                $data["hospital"] = ($hospital->result == 200) ? $hospital->data->item : null;
+                $this->CI->load->view("public/service/ambulance.php", $data);
+            } else {
+                $this->CI->load->view("public/service/lists.php", []);
+            }
+        } else if (!is_null($this->_flag) && $this->_flag == "data") {
+            $items = [];
+            $draw = 1;
+            $totalRecods = 0;
+            $totalDisplays = 0;
+            $responseAmbulance = $this->Masters->data("ambulance", null, $this->_params);
+            $responseAmbulance = json_decode($responseAmbulance);
+
+            if ($responseAmbulance->result == 200) {
+                $resAmbulance = $responseAmbulance->data->item->aaData;
+
+                if (!empty($resAmbulance)) {
+                    foreach ($resAmbulance as $key => $ambulance) {
+                        $row = [
+                            "no" => ($key  + 1),
+                            "value" => $ambulance->value,
+                            "fare" => "Rp " . number_format($ambulance->fare, 0, ",","."),
+                            "action" => "<a class='btn btn-sm btn-primary mr-2' href='javascript:void(0);' onclick='editAmbulance($ambulance->id);' aria-expanded='true'><i class='fas fa-pencil-alt'></i></a>
+                                        <a class='btn btn-sm btn-danger' href='javascript:void(0)' onclick='deleteAmbulance(" . $ambulance->id . ")' aria-expanded='true'><i class='fas fa-trash'></i></a>"
+                        ];
+
+                        $items[] = $row;
+                    }
+                }
+
+                $draw = $responseAmbulance->data->item->draw;
+                $totalRecods = $responseAmbulance->data->item->iTotalRecords;
+                $totalDisplays = $responseAmbulance->data->item->iTotalDisplayRecords;
+            }
+
+            $result = [
+                "draw" => $draw,
+                "recordsTotal" => $totalRecods,
+                "recordsFiltered" => $totalDisplays,
+                "data" => $items
+            ];
+
+            echo json_encode($result);
+        } else if (!is_null($this->_flag) && $this->_flag == "detail") {
+            $responseAmbulance = $this->Masters->detail("ambulance", $this->_params);
+            $responseAmbulance = json_decode($responseAmbulance);
+
+            $result = ($responseAmbulance->result == 200) ? $responseAmbulance->data->item : $responseAmbulance->data;
+            
+            echo json_encode($result);
+        } else if (!is_null($this->_flag) && $this->_flag == "update") {
+            unset($this->_params["id_rs"]);
+            unset($this->_params["todo"]);
+            unset($this->_params["btnTodo"]);
+            $update = $this->Masters->update("ambulance", $this->_params);
+
+            echo $update;
+        } else if (!is_null($this->_flag) && $this->_flag == "delete") {
+            unset($this->_params["id_rs"]);
+            unset($this->_params["todo"]);
+            unset($this->_params["btnTodo"]);
+            $delete = $this->Masters->delete("ambulance", $this->_params);
+
+            echo $delete;
+        } else if (!is_null($this->_flag) && $this->_flag == "save") {
+            unset($this->_params["id"]);
+            unset($this->_params["todo"]);
+            unset($this->_params["btnTodo"]);
+            $saveHospital = $this->Masters->save("ambulance", $this->_params);
+
+            echo $saveHospital;
+        }
+    }
+
     public function action()
     {
         if ($this->plkk_session->user_role == 1 && $this->plkk_session->rs_id != $this->rsId)
@@ -953,6 +1035,9 @@ class Service extends web_base
                 break;
             case 'users':
                 $this->_users();
+                break;
+            case 'ambulance':
+                $this->_ambulance();
                 break;
         }
     }

@@ -246,7 +246,7 @@ class Data
             }
         }
 
-        $totalRoom = $this->CI->general->totalRoom();
+        $totalRoom = $this->CI->general->totalRoom($idRs);
 
         if ($totalRoom > 0) {
             $result = $this->CI->general->getRoom($idRs, $query, $start, $limit, $sortColumn, $order);
@@ -276,7 +276,7 @@ class Data
         $order = isset($this->_params["order"][0]["dir"]) ? $this->_params["order"][0]["dir"] : "asc";
         $sortColumn = "value";
 
-        $totalRadiology = $this->CI->general->totalRadiology();
+        $totalRadiology = $this->CI->general->totalRadiology($idRs);
 
         if ($totalRadiology > 0) {
             $result = $this->CI->general->getRadiology($idRs, $query, $start, $limit, $sortColumn, $order);
@@ -306,7 +306,7 @@ class Data
         $order = isset($this->_params["order"][0]["dir"]) ? $this->_params["order"][0]["dir"] : "asc";
         $sortColumn = "id";
 
-        $totalRehabilitation = $this->CI->general->totalRehabilitation();
+        $totalRehabilitation = $this->CI->general->totalRehabilitation($idRs);
 
         if ($totalRehabilitation > 0) {
             $result = $this->CI->general->getRehabilitation($idRs, $query, $start, $limit, $sortColumn, $order);
@@ -337,7 +337,7 @@ class Data
         $order = isset($this->_params["order"][0]["dir"]) ? $this->_params["order"][0]["dir"] : "asc";
         $sortColumn = "id";
 
-        $totalMedic = $this->CI->general->totalMedic();
+        $totalMedic = $this->CI->general->totalMedic($idRs);
 
         if ($totalMedic > 0) {
             $result = $this->CI->general->getMedic($idRs, $query, $start, $limit, $sortColumn, $order);
@@ -498,7 +498,7 @@ class Data
             }
         }
 
-        $totalLaboratory = $this->CI->general->totalLaboratory();
+        $totalLaboratory = $this->CI->general->totalLaboratory($idRs);
 
         if ($totalLaboratory > 0) {
             $result = $this->CI->general->getLaboratory($idRs, $query, $start, $limit, $sortColumn, $order);
@@ -548,7 +548,7 @@ class Data
             }
         }
 
-        $totalFee = $this->CI->general->totalFee();
+        $totalFee = $this->CI->general->totalFee($idRs);
 
         if ($totalFee > 0) {
             $result = $this->CI->general->getFee($idRs, $query, $start, $limit, $sortColumn, $order);
@@ -592,6 +592,49 @@ class Data
                 "draw" => $draw,
                 "iTotalRecords" => intval($limit),
                 "iTotalDisplayRecords" => intval($totalUsers),
+                "aaData" => $result
+            ]
+        ];
+    }
+
+    private function _data_ambulance(&$responseObj, &$responsecode, &$responseMessage)
+    {
+        $result = [];
+        $idRs = isset($this->_params["rsid"]) ? $this->_params["rsid"] : 0;
+        $draw = isset($this->_params["draw"]) ? intval($this->_params["draw"]) : 1;
+        $start = isset($this->_params["start"]) ? intval($this->_params["start"]) : 0;
+        $limit = isset($this->_params["length"]) ? intval($this->_params["length"]) : 10;
+        $query = (isset($this->_params["search"]["value"]) && !empty($this->_params["search"]["value"])) ? $this->_params["search"]["value"] : null;
+        $column = isset($this->_params["order"][0]["column"]) ? $this->_params["order"][0]["column"] : null;
+        $order = isset($this->_params["order"][0]["dir"]) ? $this->_params["order"][0]["dir"] : "asc";
+        $sortColumn = "value";
+        if (!is_null($column)) {
+            switch ($column) {
+                case 1:
+                    $sortColumn = "value";
+                    break;
+                case 2:
+                    $sortColumn = "fare";
+                    break;
+                default:
+                    $sortColumn = "value";
+                    break;
+            }
+        }
+
+        $totalAmbulance = $this->CI->general->totalAmbulance($idRs);
+
+        if ($totalAmbulance > 0) {
+            $result = $this->CI->general->getAmbulance($idRs, $query, $start, $limit, $sortColumn, $order);
+            $responsecode = 200;
+        }
+
+        $responseObj = [
+            "name" => "Data Ambulance",
+            "item" => [
+                "draw" => $draw,
+                "iTotalRecords" => intval($limit),
+                "iTotalDisplayRecords" => intval($totalAmbulance),
                 "aaData" => $result
             ]
         ];
@@ -653,6 +696,9 @@ class Data
                 break;
             case "users":
                 $this->_data_users($responseObj, $responsecode, $responseMessage);
+                break;
+            case "ambulance":
+                $this->_data_ambulance($responseObj, $responsecode, $responseMessage);
                 break;
         }
     }

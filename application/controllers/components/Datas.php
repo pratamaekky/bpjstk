@@ -114,6 +114,12 @@ class Datas
             $result["rehab"] = $responseRehab->data->item->aaData;
         }
 
+        $responseAmbulance = $this->Masters->data("ambulance", null, ["rsid" => $rs_id, "length" => 1000]);
+        $responseAmbulance = json_decode($responseAmbulance);
+        if ($responseAmbulance->result == 200) {
+            $result["ambulance"] = $responseAmbulance->data->item->aaData;
+        }
+
         echo json_encode($result);
     }
 

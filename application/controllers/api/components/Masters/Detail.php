@@ -69,6 +69,7 @@ class Detail
             case "anestesi":
             case "laboratory":
             case "fee":
+            case "ambulance":
                 $this->_service($responseObj, $responsecode, $responseMessage);
                 break;
         }

@@ -161,10 +161,11 @@ class General extends CI_Model
         return $this->db->affected_rows();
     }
 
-    public function totalRoom()
+    public function totalRoom($rsId)
     {
         $this->db->select("count(id) as total");
         $this->db->from("tbl_room");
+        $this->db->where("id_rs", $rsId);
 
         $query = $this->db->get();
         if (!is_null($query) && $query->num_rows() > 0) {
@@ -220,10 +221,11 @@ class General extends CI_Model
         }
     }
 
-    public function totalRadiology()
+    public function totalRadiology($rsId)
     {
         $this->db->select("count(id) as total");
         $this->db->from("tbl_radiology");
+        $this->db->where("id_rs", $rsId);
 
         $query = $this->db->get();
         if (!is_null($query) && $query->num_rows() > 0) {
@@ -279,10 +281,11 @@ class General extends CI_Model
         }
     }
 
-    public function totalRehabilitation()
+    public function totalRehabilitation($rsId)
     {
         $this->db->select("count(id) as total");
         $this->db->from("tbl_rehabilitation");
+        $this->db->where("id_rs", $rsId);
 
         $query = $this->db->get();
         if (!is_null($query) && $query->num_rows() > 0) {
@@ -338,10 +341,11 @@ class General extends CI_Model
         }
     }
 
-    public function totalMedic()
+    public function totalMedic($rsId)
     {
         $this->db->select("count(id) as total");
         $this->db->from("tbl_medic");
+        $this->db->where("id_rs", $rsId);
 
         $query = $this->db->get();
         if (!is_null($query) && $query->num_rows() > 0) {
@@ -583,10 +587,11 @@ class General extends CI_Model
         }
     }
 
-    public function totalLaboratory()
+    public function totalLaboratory($rsId)
     {
         $this->db->select("count(id) as total");
         $this->db->from("tbl_laboratory");
+        $this->db->where("id_rs", $rsId);
 
         $query = $this->db->get();
         if (!is_null($query) && $query->num_rows() > 0) {
@@ -644,10 +649,11 @@ class General extends CI_Model
         }
     }
 
-    public function totalFee()
+    public function totalFee($rsId)
     {
         $this->db->select("count(id) as total");
         $this->db->from("tbl_fee");
+        $this->db->where("id_rs", $rsId);
 
         $query = $this->db->get();
         if (!is_null($query) && $query->num_rows() > 0) {
@@ -705,6 +711,67 @@ class General extends CI_Model
         }
     }
 
+    public function totalAmbulance($rsId)
+    {
+        $this->db->select("count(id) as total");
+        $this->db->from("tbl_ambulance");
+        $this->db->where("id_rs", $rsId);
+
+        $query = $this->db->get();
+        if (!is_null($query) && $query->num_rows() > 0) {
+            $row = $query->row();
+            return $row->total;
+        }
+
+        return 0;
+    }
+
+    public function getAmbulance($rsId, $query, $offset, $limit, $order, $sort)
+    {
+        $this->db->select("*");
+        $this->db->from("tbl_ambulance");
+        $this->db->where("id_rs", $rsId);
+
+        if (!is_null($query))
+            $this->db->like("name", $query);
+
+        $this->db->order_by($order, $sort);
+
+        if ($limit > 0)
+            $this->db->limit($limit, $offset);
+        
+        $query = $this->db->get();
+        if (!is_null($query) && $query->num_rows() > 0) {
+            return $query->result();
+        }
+
+        return null;
+    }
+
+    public function getAmbulanceNameById($id)
+    {
+        $this->db->select("value");
+        $this->db->from("tbl_ambulance");
+        $this->db->where("id", $id);
+
+        $query = $this->db->get();
+
+        if (!is_null($query) && $query->num_rows() > 0)
+            return $query->row()->value;
+
+        return "";
+    }
+
+    public function saveAmbulance($data)
+    {
+        $this->db->insert("tbl_ambulance", $data);
+        if ($this->db->affected_rows() > 0) {
+            return $this->db->insert_id();
+        } else {
+            return false;
+        }
+    }
+
     public function getServiceById($id, $command)
     {
         $this->db->select("*");
@@ -735,6 +802,9 @@ class General extends CI_Model
                 break;
             case 'fee':
                 $this->db->from("tbl_fee");
+                break;
+            case 'ambulance':
+                $this->db->from("tbl_ambulance");
                 break;
         }
         $this->db->where("id", $id);
@@ -780,6 +850,9 @@ class General extends CI_Model
             case 'fee':
                 $this->db->update("tbl_fee", $data);
                 break;
+            case 'ambulance':
+                $this->db->update("tbl_ambulance", $data);
+                break;
         }
 
         return $this->db->affected_rows();
@@ -814,6 +887,9 @@ class General extends CI_Model
                 break;
             case 'fee':
                 $this->db->delete('tbl_fee', ['id' => $data["id"]]);
+                break;
+            case 'ambulance':
+                $this->db->delete('tbl_ambulance', ['id' => $data["id"]]);
                 break;
         }
 

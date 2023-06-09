@@ -86,6 +86,7 @@ class Update
             case "anestesi":
             case "laboratory":
             case "fee":
+            case "ambulance":
                 $this->_update_service($responseObj, $responsecode, $responseMessage);
                 break;
         }
