@@ -39,18 +39,21 @@ class Save_bills
         $dataBills = [
             "rs_id" => $this->_params["rs_id"],
             "id_patient" => $idPatient,
+            "jenis_kelamin" => $this->_params["jenis_kelamin"],
+            "lokasi" => $this->_params["lokasi"],
             "jkk_date" => date("Y-m-d H:i:00", strtotime($this->_params["jkk_date"])),
             "treatment_date" => date("Y-m-d", strtotime($this->_params["treatment_date"])),
             "last_condition" => $this->_params["last_condition"],
             "ranap_date_start" => !empty($this->_params["ranap_date"]) ? date("Y-m-d", strtotime(explode(" - ", $this->_params["ranap_date"])[0])) : "",
             "ranap_date_last" => !empty($this->_params["ranap_date"]) ? date("Y-m-d", strtotime(explode(" - ", $this->_params["ranap_date"])[1])) : "",
-            "last_rajal" => $this->_params["last_rajal"],
+            "last_rajal" => date("Y-m-d", strtotime($this->_params["last_rajal"])),
             "diagnose" => $this->_params["diagnose"],
             "dx_sekunder" => $this->_params["dx_sekunder"],
             "action" => $this->_params["action"],
             "verification" => $this->_params["verification"],
             "cob" => $this->_params["cob_subtotal"][0],
             "stmb" => json_encode($this->_params["stmb"]),
+            "total_bayar" => $this->_params["total_bayar"],
             "total" => 0
         ];
 
@@ -404,6 +407,7 @@ class Save_bills
                 $subTotalBills += intval($detail["total"]);
             }
         }
+
         $cob = intval($this->_params["cob_subtotal"][0]);
         $totalBills = $subTotalBills - $cob;
 

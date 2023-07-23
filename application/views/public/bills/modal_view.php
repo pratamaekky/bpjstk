@@ -35,9 +35,9 @@
                     </div>
                     <div class="form-group col-6">
                         <div class="row">
-                            <label for="company" class="col-form-label col-sm-3 col-3">Perusahaan</label>
+                            <label for="npp" class="col-form-label col-sm-3 col-3">NPP</label>
                             <div class="input-group col-sm-9 col-9">
-                                <label class="form-control">[INFO_PATIENT_COMPANY]</label>
+                                <label class="form-control">[INFO_PATIENT_NPP]</label>
                             </div>
                         </div>
                     </div>
@@ -51,9 +51,25 @@
                     </div>
                     <div class="form-group col-6">
                         <div class="row">
-                            <label for="npp" class="col-form-label col-sm-3 col-3">NPP</label>
+                            <label for="name" class="col-form-label col-sm-3 col-3">Jenis Kelamin</label>
                             <div class="input-group col-sm-9 col-9">
-                                <label class="form-control">[INFO_PATIENT_NPP]</label>
+                                <label class="form-control">[INFO_PATIENT_JENIS_KELAMIN]</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-6">
+                        <div class="row">
+                            <label for="company" class="col-form-label col-sm-3 col-3">Perusahaan</label>
+                            <div class="input-group col-sm-9 col-9">
+                                <label class="form-control">[INFO_PATIENT_COMPANY]</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-6">
+                        <div class="row">
+                            <label for="npp" class="col-form-label col-sm-3 col-3">Lokasi</label>
+                            <div class="input-group col-sm-9 col-9">
+                                <label class="form-control">[INFO_PATIENT_LOKASI]</label>
                             </div>
                         </div>
                     </div>
@@ -292,7 +308,14 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group col-12 separate-div-bottom" id="div_rehab">
+                    <div class="form-group col-12 separate-div-bottom" id="div_total_bayar">
+                        <div class="row">
+                            <label class="col-form-label col-sm-9 col-9">Total Pembayaran Tagihan</label>
+                            <label class="col-form-label col-sm-1 col-1 text-right"> IDR </label>
+                            <label class="form-control col-sm-2 col-2 text-right">[INFO_TOTAL_BAYAR]</label>
+                        </div>
+                    </div>
+                    <div class="form-group col-12 separate-div-bottom" id="div_total">
                         <div class="row">
                             <label class="col-form-label col-sm-9 col-9">TOTAL</label>
                             <label class="col-form-label col-sm-1 col-1 text-right"> IDR </label>

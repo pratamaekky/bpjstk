@@ -127,9 +127,9 @@
                                 </div>
                                 <div class="form-group col-6">
                                     <div class="row">
-                                        <label for="company" class="col-form-label col-sm-3 col-3">Perusahaan</label>
+                                        <label for="npp" class="col-form-label col-sm-3 col-3">NPP</label>
                                         <div class="input-group col-sm-9 col-9">
-                                            <input type="text" name="company" id="company" class="form-control" placeholder="Contoh: PT ANGIN RIBUT" autocomplete="off" required="required" />
+                                            <input type="text" name="npp" id="npp" class="form-control" placeholder="Contoh: BB9999999" autocomplete="off" required="required" />
                                         </div>
                                     </div>
                                 </div>
@@ -143,9 +143,29 @@
                                 </div>
                                 <div class="form-group col-6">
                                     <div class="row">
-                                        <label for="npp" class="col-form-label col-sm-3 col-3">NPP</label>
+                                        <label for="jenis_kelamin" class="col-form-label col-sm-3 col-3">Jenis Kelamin</label>
                                         <div class="input-group col-sm-9 col-9">
-                                            <input type="text" name="npp" id="npp" class="form-control" placeholder="Contoh: BB9999999" autocomplete="off" required="required" />
+                                            <select name="jenis_kelamin" id="jenis_kelamin" class="form-control" required="required">
+                                                <option value="">-- Pilih Jenis Kelamin --</option>
+                                                <option value="Laki-Laki">Laki-Laki</option>
+                                                <option value="Perempuan">Perempuan</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-6">
+                                    <div class="row">
+                                        <label for="company" class="col-form-label col-sm-3 col-3">Perusahaan</label>
+                                        <div class="input-group col-sm-9 col-9">
+                                            <input type="text" name="company" id="company" class="form-control" placeholder="Contoh: PT ANGIN RIBUT" autocomplete="off" required="required" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-6">
+                                    <div class="row">
+                                        <label for="lokasi" class="col-form-label col-sm-3 col-3">Lokasi</label>
+                                        <div class="input-group col-sm-9 col-9">
+                                            <input type="text" name="lokasi" id="lokasi" class="form-control" placeholder="Contoh: Lobi Kantor" autocomplete="off" required="required" />
                                         </div>
                                     </div>
                                 </div>
@@ -733,7 +753,17 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group col-12 separate-div-bottom" id="div_rehab">
+                                <div class="form-group col-12 separate-div-bottom" id="div_total_bayar">
+                                    <div class="row">
+                                        <label class="col-form-label col-sm-9 col-9">Total Pembayaran Tagihan</label>
+                                        <label class="col-form-label col-sm-1 col-1 text-right">IDR</label>
+                                        <label class="row-flex col-form-label col-sm-2 col-2 no-padding">
+                                            <input type="number" name="total_bayar" id="total_bayar" class="total_bayar form-control text-right col-sm-10 col-10" value="0" />
+                                            <label class="col-sm-2 col-2">&nbsp;</label>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group col-12 separate-div-bottom" id="div_total">
                                     <div class="row">
                                         <label class="col-form-label col-sm-9 col-9">TOTAL</label>
                                         <label class="col-form-label col-sm-1 col-1 text-right">IDR</label>
@@ -2081,6 +2111,17 @@
                     } else {
                         show_notif('info', 'Tagihan batal dihapus');
                     }
+                }
+            });
+        }
+
+        function export_bills($id) {
+            $.ajax({
+                url: '<?php echo base_url("bills/export"); ?>/' + $id,
+                type: "post",
+                dataType: "json",
+                success: function(response) {
+                    $('.overlay-loading').hide();
                 }
             });
         }

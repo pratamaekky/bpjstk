@@ -39,9 +39,11 @@ class Detail_bills
             $modal_detail = str_replace("[INFO_HOSPITAL_NAME]", $bill["hospital"]["name"], $modal_detail);
 
             $modal_detail = str_replace("[INFO_PATIENT_KPJ]", $bill["patient"]["kpj"], $modal_detail);
-            $modal_detail = str_replace("[INFO_PATIENT_COMPANY]", $bill["patient"]["company"], $modal_detail);
-            $modal_detail = str_replace("[INFO_PATIENT_NAME]", $bill["patient"]["name"], $modal_detail);
             $modal_detail = str_replace("[INFO_PATIENT_NPP]", $bill["patient"]["npp"], $modal_detail);
+            $modal_detail = str_replace("[INFO_PATIENT_NAME]", $bill["patient"]["name"], $modal_detail);
+            $modal_detail = str_replace("[INFO_PATIENT_JENIS_KELAMIN]", $bill["jenis_kelamin"], $modal_detail);
+            $modal_detail = str_replace("[INFO_PATIENT_COMPANY]", $bill["patient"]["company"], $modal_detail);
+            $modal_detail = str_replace("[INFO_PATIENT_LOKASI]", $bill["lokasi"], $modal_detail);
             
             $modal_detail = str_replace("[INFO_JKK]", $bill["jkk_date"], $modal_detail);
             $modal_detail = str_replace("[INFO_LAST_CONDITION]", $bill["last_condition"], $modal_detail);
@@ -532,6 +534,7 @@ class Detail_bills
             $modal_detail = str_replace("[INFO_YANKES_AMBULANCE]", $yankesAmbulance, $modal_detail);
 
             // $total = $total - $cob;
+            $modal_detail = str_replace("[INFO_TOTAL_BAYAR]", number_format($bill["total_bayar"], 0, ",", "."), $modal_detail);
             $modal_detail = str_replace("[INFO_TOTAL]", number_format($total, 0, ",", "."), $modal_detail);
         }
         

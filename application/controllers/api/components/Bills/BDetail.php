@@ -92,7 +92,7 @@ class BDetail
 
                 $detail["qty"] = intval($detail["qty"]);
 
-                if ($detail["type"] != 'docter_do') 
+                if ($detail["type"] != 'docter_do' && $detail["type"] != 'surgery_do' && $detail["type"] != 'anestesi_do')
                     $dataDetail[] = $detail;
             }
 
