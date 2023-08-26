@@ -516,7 +516,7 @@ class Data
         ];
     }
 
-    private function _data_fee(&$responseObj, &$responsecode, &$responseMessage)
+    private function _data_admin(&$responseObj, &$responsecode, &$responseMessage)
     {
         $totalPage = 1;
         $result = [];
@@ -691,8 +691,8 @@ class Data
             case "laboratory":
                 $this->_data_laboratory($responseObj, $responsecode, $responseMessage);
                 break;
-            case "fee":
-                $this->_data_fee($responseObj, $responsecode, $responseMessage);
+            case "admin":
+                $this->_data_admin($responseObj, $responsecode, $responseMessage);
                 break;
             case "users":
                 $this->_data_users($responseObj, $responsecode, $responseMessage);

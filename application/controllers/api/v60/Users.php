@@ -29,21 +29,6 @@ class Users extends API_Controller
         ));
     }
 
-    // public function create()
-    // {
-    //     $this->writeLogInput();
-
-    //     try {
-    //         $create = new Create();
-    //         $create->action($this->responseObj, $this->jsonInputObj, $this->res_code, $this->res_message);
-
-    //         $this->sendResponse($this->res_code, $this->res_message);
-    //     } catch (Exception $e) {
-    //         $this->sendResponseError($e);
-    //     }
-    //     $this->writeLogOutput();
-    // }
-
     public function login($data)
     {
         try {
@@ -54,21 +39,5 @@ class Users extends API_Controller
         } catch (Exception $e) {
             return $this->sendResponseError($e);
         }
-        // $this->writeLogOutput();
     }
-
-    // public function update()
-    // {
-    //     $this->writeLogInput();
-
-    //     try {
-    //         $create = new Create();
-    //         $create->action($this->responseObj, $this->jsonInputObj, $this->res_code, $this->res_message);
-
-    //         $this->sendResponse($this->res_code, $this->res_message);
-    //     } catch (Exception $e) {
-    //         $this->sendResponseError($e);
-    //     }
-    //     $this->writeLogOutput();
-    // }
 }

@@ -58,49 +58,4 @@ class API_Controller extends CI_Controller
         ];
         return $this->sendResponse($responsMessage->getCode() == 0 ? $responseCode : $responsMessage->getCode(), $responsMessage->getMessage());
     }
-
-    protected function checkValidation()
-    {
-        $words = array(
-            "<?php",
-            "<script",
-            "<noscript"
-        );
-        $found = false;
-        foreach ($words as $word) {
-            $offset = strpos($this->jsonInputStr, $word);
-            if ($offset !== false) {
-                $this->sendResponse(422, "Unprocessable Entity!");
-                die;
-            }
-        }
-    }
-
-    protected function writeLogInput($folderName = null, $logFileName = NULL, $ip = null, $singleFile = false)
-    {
-        if (!$folderName) {
-            $folderName = $this->router->fetch_class();
-        }
-        if (!$logFileName) {
-            $logFileName = $this->router->fetch_method();
-        }
-
-        $this->apiIO = "========= INPUT JSON =========\r\n";
-        $this->apiIO .= $this->jsonInputStr . "\r\n";
-        $this->myutils->writeApiLogs($folderName, $logFileName, $this->apiIO, $ip, $singleFile);
-    }
-
-    protected function writeLogOutput($folderName = null, $logFileName = NULL, $response = null, $ip = null, $singleFile = false)
-    {
-        if (!$folderName) {
-            $folderName = $this->router->fetch_class();
-        }
-        if (!$logFileName) {
-            $logFileName = $this->router->fetch_method();
-        }
-
-        $this->apiIO = "========= OUTPUT =========\r\n";
-        $this->apiIO .= $response . "\r\n";
-        $this->myutils->writeApiLogs($folderName, $logFileName, $this->apiIO, $ip, $singleFile);
-    }
 }

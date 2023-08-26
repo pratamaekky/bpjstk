@@ -97,6 +97,7 @@ body {
         }    	
         #modal-bills .form-group {
             margin-bottom: 0.5rem;
+            padding-right: 15px;;
         }
     	.modal-overflow .modal-body .add-pic {
     	    cursor: pointer;

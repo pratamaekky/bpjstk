@@ -66,10 +66,10 @@ class Datas
             $result["room"] = $responseRoom->data->item->aaData;
         }
 
-        $responseFee = $this->Masters->data("fee", null, ["rsid" => $rs_id, "length" => 1000]);
-        $responseFee = json_decode($responseFee);
-        if ($responseFee->result == 200) {
-            $result["fee"] = $responseFee->data->item->aaData;
+        $responseAdmin = $this->Masters->data("admin", null, ["rsid" => $rs_id, "length" => 1000]);
+        $responseAdmin = json_decode($responseAdmin);
+        if ($responseAdmin->result == 200) {
+            $result["admin"] = $responseAdmin->data->item->aaData;
         }
 
         $responseDocter = $this->Masters->data("doctor", null, ["rsid" => $rs_id, "length" => 1000]);
