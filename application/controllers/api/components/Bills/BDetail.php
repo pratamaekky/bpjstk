@@ -17,7 +17,8 @@ class BDetail
             'muser'
         ]);
         $this->CI->load->library(array(
-            'form_validation'
+            'form_validation',
+            'myutils'
         ));
 
         $this->_params = $params;
@@ -37,74 +38,75 @@ class BDetail
         $hospital = null;
         $yankes = "";
         $details = $this->CI->mbills->detail($id);
+        $details = $this->CI->myutils->group_by('yankes', $details);
+
         if (!is_null($details)) {
             $patient = $this->CI->muser->getPatientById($bill["id_patient"]);
             $hospital = $this->CI->mhospital->detail($bill["rs_id"]);
 
-            foreach ($details as $detail) {
-                $yankes = ($detail["yankes"] == "ranap") ? "Rawat Inap" : "Rawat Jalan";
-                if (intval($detail["value_id"]) != 0) {
-                    switch ($detail["type"]) {
-                        case 'room':
-                            $detail["value"] = $this->CI->general->getRoomNameById($detail["value_id"]);
-                            break;
-                        case 'room_nurse':
-                            $detail["value"] = $this->CI->general->getDoctorNameById($detail["value_id"]);
-                            break;
-                        case 'admin':
-                            $detail["value"] = $this->CI->general->getFeeNameById($detail["value_id"]);
-                            break;
-                        case 'docter':
-                            $detail["value"] = $this->CI->general->getDoctorNameById($detail["value_id"]);
-                            break;
-                        case 'surgery':
-                            $detail["value"] = $this->CI->general->getSurgeryNameById($detail["value_id"]);
-                            break;
-                        case 'anestesi':
-                            $detail["value"] = $this->CI->general->getAnestesiNameById($detail["value_id"]);
-                            break;
-                        case 'lab':
-                            $detail["value"] = $this->CI->general->getLaboratoryNameById($detail["value_id"]);
-                            break;
-                        case 'radiology':
-                            $detail["value"] = $this->CI->general->getRadiologyNameById($detail["value_id"]);
-                            break;
-                        case 'medic':
-                            $detail["value"] = $this->CI->general->getMedicNameById($detail["value_id"]);
-                            break;
-                        case 'rehab':
-                            $detail["value"] = $this->CI->general->getRehabilitationNameById($detail["value_id"]);
-                            break;
-                        case 'ambulance':
-                            $detail["value"] = $this->CI->general->getAmbulanceNameById($detail["value_id"]);
+            foreach ($details as $yankes => $yankesData) {
+                $yankesData = $this->CI->myutils->group_by('type', $yankesData);
+                $dataByType = [];
+
+                foreach ($yankesData as $type => $data) {
+                    switch ($type) {
+                        case "docter":
+                        case "surgery":
+                        case "anestesi":
+                            if (isset($yankesData[$type . "_do"])) {
+                                $typeDo = $this->CI->myutils->group_by('value_id', $yankesData[$type . "_do"]);
+                                foreach ($data as $key => $da) {
+                                    if (isset($typeDo[$da["id"]]))
+                                        $data[$key]["do"] = $typeDo[$da["id"]];
+                                }
+                            }
                             break;
                     }
+
+                    foreach ($data as $key => $da) {
+                        switch ($type) {
+                            case 'room':
+                                $data[$key]["value"] = $this->CI->general->getRoomNameById($data[$key]["value_id"]);
+                                break;
+                            case 'admin':
+                                $data[$key]["value"] = $this->CI->general->getFeeNameById($data[$key]["value_id"]);
+                                break;
+                            case 'docter':
+                                $data[$key]["value"] = $this->CI->general->getDoctorNameById($data[$key]["value_id"]);
+                                break;
+                            case 'surgery':
+                                $data[$key]["value"] = $this->CI->general->getSurgeryNameById($data[$key]["value_id"]);
+                                break;
+                            case 'anestesi':
+                                $data[$key]["value"] = $this->CI->general->getAnestesiNameById($data[$key]["value_id"]);
+                                break;
+                            case 'laboratory':
+                                $data[$key]["value"] = $this->CI->general->getLaboratoryNameById($data[$key]["value_id"]);
+                                break;
+                            case 'radiology':
+                                $data[$key]["value"] = $this->CI->general->getRadiologyNameById($data[$key]["value_id"]);
+                                break;
+                            case 'medic':
+                                $data[$key]["value"] = $this->CI->general->getMedicNameById($data[$key]["value_id"]);
+                                break;
+                            case 'rehab':
+                                $data[$key]["value"] = $this->CI->general->getRehabilitationNameById($data[$key]["value_id"]);
+                                break;
+                            case 'ambulance':
+                                $data[$key]["value"] = $this->CI->general->getAmbulanceNameById($data[$key]["value_id"]);
+                                break;
+                        }
+                    }
+                    if ($type != "docter_do" && $type != "surgery_do" && $type != "anestesi_do")
+                        $dataByType[$type] = $data;
                 }
 
-                if ($detail["type"] == "docter")
-                    $detail["children"] = $this->CI->mbills->detailDocter($id, $detail["id"]);
-
-                if ($detail["type"] == "surgery")
-                    $detail["children"] = $this->CI->mbills->detailSurgery($id, $detail["id"]);
-
-                if ($detail["type"] == "anestesi")
-                    $detail["children"] = $this->CI->mbills->detailAnestesi($id, $detail["id"]);
-
-                $detail["qty"] = intval($detail["qty"]);
-
-                if ($detail["type"] != 'docter_do' && $detail["type"] != 'surgery_do' && $detail["type"] != 'anestesi_do')
-                    $dataDetail[] = $detail;
+                $detailGroup[$yankes] = $dataByType;
             }
-
-            $detailGroup = array_reduce($dataDetail, function ($result, $item) {
-                $result[$item['type']][] = $item;
-                return $result;
-            }, array());
 
             $responsecode = 200;
         }
 
-        $bill["yankes"] = $yankes;
         $bill["hospital"] = $hospital;
         $bill["patient"] = $patient;
         $bill["detail"] = $detailGroup;

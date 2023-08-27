@@ -322,9 +322,8 @@
                                     <div class="row">
                                         <label class="col-form-label col-sm-9 col-9">Total Pembayaran Tagihan</label>
                                         <label class="col-form-label col-sm-1 col-1 text-right">IDR</label>
-                                        <label class="row-flex col-form-label col-sm-2 col-2 no-padding">
-                                            <input type="number" name="total_bayar" id="total_bayar" class="total_bayar form-control text-right col-sm-10 col-10" value="0" />
-                                            <label class="col-sm-2 col-2">&nbsp;</label>
+                                        <label class="row-flex col-form-label col-sm-2 col-2 no-padding pr-1">
+                                            <input type="number" name="total_bayar" id="total_bayar" class="total_bayar form-control text-right col-sm-11 col-11" value="0" />
                                         </label>
                                     </div>
                                 </div>
@@ -332,9 +331,8 @@
                                     <div class="row">
                                         <label class="col-form-label col-sm-9 col-9">TOTAL</label>
                                         <label class="col-form-label col-sm-1 col-1 text-right">IDR</label>
-                                        <label class="row-flex col-form-label col-sm-2 col-2 no-padding">
-                                            <input type="number" name="total" id="total" class="total form-control text-right col-sm-10 col-10" value="0" readonly />
-                                            <label class="col-sm-2 col-2">&nbsp;</label>
+                                        <label class="row-flex col-form-label col-sm-2 col-2 no-padding pr-1">
+                                            <input type="number" name="total" id="total" class="total form-control text-right col-sm-11 col-11" value="0" readonly />
                                         </label>
                                     </div>
                                 </div>

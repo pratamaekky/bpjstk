@@ -151,7 +151,7 @@
                         <div class="row">
                             <label for="diagnose" class="col-form-label col-sm-3 col-3">Diagnosa</label>
                             <div class="input-group col-sm-9 col-9">
-                                <p class="form-control" style="height: 62px;">[INFO_DIAGNOSE]</p>
+                                <p class="form-control text-bold" style="height: 62px;">[INFO_DIAGNOSE]</p>
                             </div>
                         </div>
                     </div>
@@ -159,7 +159,7 @@
                         <div class="row">
                             <label for="action" class="col-form-label col-sm-3 col-3">Tindakan</label>
                             <div class="input-group col-sm-9 col-9">
-                                <p class="form-control" style="height: 62px;">[INFO_ACTION]</p>
+                                <p class="form-control text-bold" style="height: 62px;">[INFO_ACTION]</p>
                             </div>
                         </div>
                     </div>
@@ -167,7 +167,7 @@
                         <div class="row">
                             <label for="action" class="col-form-label col-sm-3 col-3">Keterangan</label>
                             <div class="input-group col-sm-9 col-9">
-                                <p class="form-control" style="height: 62px;">[INFO_VERIFICATION]</p>
+                                <p class="form-control text-bold" style="height: 62px;">[INFO_VERIFICATION]</p>
                             </div>
                         </div>
                     </div>
@@ -196,130 +196,48 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group col-12 separate-div-bottom">
-                        <div class="row">
-                            <label for="yankes" class="col-form-label col-sm-3 col-3">Jenis Pelayanan</label>
-                            <div class="input-group col-sm-9 col-9">
-                                <label class="form-control">[INFO_YANKES]</label>
-                            </div>
+                    <div class="card-outline card-outline-tabs col-12" id="bills-form">
+                        <div class="card-header p-0 border-bottom-0">
+                            <ul class="nav nav-tabs" id="custom-tabs-four-tab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="yankes-ranap-tab" data-toggle="pill" href="#yankes-ranap-view" role="tab" aria-controls="yankes-ranap" aria-selected="true">RANAP</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="yankes-rajal-tab" data-toggle="pill" href="#yankes-rajal-view" role="tab" aria-controls="yankes-rajal" aria-selected="false">RAJAL</a>
+                                </li>
+                            </ul>
                         </div>
-                    </div>
-                    <div class="form-group col-12 separate-div-bottom" id="div_room">
-                        <div class="row">
-                            <label for="room" class="col-form-label col-sm-3 col-3">Kamar</label>
-                            <div class="input-group col-sm-9 col-9">
-                                [INFO_YANKES_ROOM]
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group col-12 separate-div-bottom" id="div_room_nurse">
-                        <div class="row">
-                            <label for="room-nurse" class="col-form-label col-sm-3 col-3">Jasa Perawat Kamar</label>
-                            <div class="input-group col-sm-9 col-9">
-                                [INFO_YANKES_ROOM_NURSE]
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group col-12 separate-div-bottom" id="div_admin">
-                        <div class="row">
-                            <label for="admin" class="col-form-label col-sm-3 col-3">Administrasi</label>
-                            <div class="input-group col-sm-9 col-9">
-                                [INFO_YANKES_ADMIN]
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group col-12 separate-div-bottom" id="div_medicine">
-                        <div class="row">
-                            <label for="medicine" class="col-form-label col-sm-3 col-3">Obat-Obatan</label>
-                            <div class="input-group col-sm-9 col-9">
-                                [INFO_YANKES_MEDICINE]
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group col-12 separate-div-bottom" id="div_docter">
-                        <div class="row">
-                            <label for="docter" class="col-form-label col-sm-3 col-3">Dokter Umum / IGD</label>
-                            <div class="input-group col-sm-9 col-9">
-                                [INFO_YANKES_DOCTER]
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group col-12 separate-div-bottom" id="div_surgery">
-                        <div class="row">
-                            <label for="surgery" class="col-form-label col-sm-3 col-3">Dokter Spesialis</label>
-                            <div class="input-group col-sm-9 col-9">
-                                [INFO_YANKES_SURGERY]
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group col-12 separate-div-bottom" id="div_surgery_nurse">
-                        <div class="row">
-                            <label for="surgery-nurse" class="col-form-label col-sm-3 col-3">Jasa Perawat Operasi</label>
-                            <div class="input-group col-sm-9 col-9">
-                                [INFO_YANKES_SURGERY_NURSE]
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group col-12 separate-div-bottom" id="div_anestessi">
-                        <div class="row">
-                            <label for="anestessi" class="col-form-label col-sm-3 col-3">Dokter Anestesi</label>
-                            <div class="input-group col-sm-9 col-9">
-                                [INFO_YANKES_ANESTESI]
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group col-12 separate-div-bottom" id="div_lab">
-                        <div class="row">
-                            <label for="lab" class="col-form-label col-sm-3 col-3">Laboratorium</label>
-                            <div class="input-group col-sm-9 col-9">
-                                [INFO_YANKES_LAB]
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group col-12 separate-div-bottom" id="div_radiology">
-                        <div class="row">
-                            <label for="radiology" class="col-form-label col-sm-3 col-3">Radiologi</label>
-                            <div class="input-group col-sm-9 col-9">
-                                [INFO_YANKES_RADIOLOGY]
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group col-12 separate-div-bottom" id="div_medic">
-                        <div class="row">
-                            <label for="medic" class="col-form-label col-sm-3 col-3">Medikal</label>
-                            <div class="input-group col-sm-9 col-9">
-                                [INFO_YANKES_MEDIC]
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group col-12 separate-div-bottom" id="div_rehab">
-                        <div class="row">
-                            <label for="rehab" class="col-form-label col-sm-3 col-3">Rehabilitasi</label>
-                            <div class="input-group col-sm-9 col-9">
-                                [INFO_YANKES_REHAB]
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group col-12 separate-div-bottom" id="div_ambulance">
-                        <div class="row">
-                            <label for="ambulance" class="col-form-label col-sm-3 col-3">Ambulance</label>
-                            <div class="input-group col-sm-9 col-9">
-                                [INFO_YANKES_AMBULANCE]
+                        <div class="card-body" style="padding-left: 0; padding-right: 0;">
+                            <div class="tab-content" id="custom-tabs-four-tabContent">
+                                <div class="tab-pane fade show active" id="yankes-ranap-view" role="tabpanel" aria-labelledby="yankes-ranap-tab">
+                                    <div class="yankes-div" id="ctc-yankes-ranap" data-elem="true">
+                                        [DETAIL_BILLS_RANAP]
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="yankes-rajal-view" role="tabpanel" aria-labelledby="yankes-rajal-tab">
+                                    <div class="yankes-div" id="ctc-yankes-rajal" data-elem="true">
+                                        [DETAIL_BILLS_RAJAL]
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="form-group col-12 separate-div-bottom" id="div_total_bayar">
                         <div class="row">
                             <label class="col-form-label col-sm-9 col-9">Total Pembayaran Tagihan</label>
-                            <label class="col-form-label col-sm-1 col-1 text-right"> IDR </label>
-                            <label class="form-control col-sm-2 col-2 text-right">[INFO_TOTAL_BAYAR]</label>
+                            <label class="col-form-label col-sm-1 col-1 text-right">IDR</label>
+                            <label class="row-flex col-form-label col-sm-2 col-2 no-padding pr-1">
+                                <label class="form-control col-sm-11 col-11 text-right">[INFO_TOTAL_BAYAR]</label>
+                            </label>
                         </div>
                     </div>
                     <div class="form-group col-12 separate-div-bottom" id="div_total">
                         <div class="row">
                             <label class="col-form-label col-sm-9 col-9">TOTAL</label>
-                            <label class="col-form-label col-sm-1 col-1 text-right"> IDR </label>
-                            <label class="form-control col-sm-2 col-2 text-right">[INFO_TOTAL]</label>
+                            <label class="col-form-label col-sm-1 col-1 text-right">IDR</label>
+                            <label class="row-flex col-form-label col-sm-2 col-2 no-padding pr-1">
+                                <label class="form-control col-sm-11 col-11 text-right">[INFO_TOTAL]</label>
+                            </label>
                         </div>
                     </div>
                 </div>
