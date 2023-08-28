@@ -73,8 +73,8 @@ class Detail_bills
             $elementsBillDetail = "-";
             $yankesAdmin = "-";
             $yankesMedicine = "-";
-            $yankesDocter = "-";
-            $yankesDocterDo = "-";
+            $elementsBillDetail = "-";
+            $elementsBillDetailDo = "-";
             $yankesSurgery = "-";
             $yankesSurgeryNurse = "-";
             $yankesAnestesi = "-";
@@ -122,13 +122,30 @@ class Detail_bills
                         case "ambulance":
                             foreach ($datas as $data) {
                                 $elementsBillDetail .= '<div class="row-flex col-sm-12 col-12 pl-0">';
-                                $elementsBillDetail .= '    <p class="form-control col-sm-9 col-9 mr-2 text-bold" style="height: auto;">' . $data["value"] . '</p>';
+                                $elementsBillDetail .= '    <p class="form-control col-sm-9 col-9 mr-2 text-bold" style="height: auto; font-size: 14px;">' . $data["value"] . '</p>';
                                 $elementsBillDetail .= '    <label class="col-form-label col-sm-1 col-1 text-right">= IDR</label>';
                                 $elementsBillDetail .= '    <label class="row-flex col-sm-2 col-2 no-padding">';
                                 $elementsBillDetail .= '        <label class="form-control col-sm-11 col-11 text-right">' . number_format($data["total"], 0, ",", ".") . '</label>';
                                 $elementsBillDetail .= '        <label class="col-sm-1 col-1">&nbsp;</label>';
                                 $elementsBillDetail .= '    </label>';
                                 $elementsBillDetail .= '</div>';
+
+                                if (isset($data["do"])) {
+                                    foreach ($data["do"] as $do) {
+                                        $elementsBillDetail .= '<div class="row-flex col-sm-12 col-12 pl-0">';
+                                        $elementsBillDetail .= '    <label class="row-flex col-sm-9 col-9 mr-2 pr-3">';
+                                        $elementsBillDetail .= '        <label class="form-control col-sm-12 col-12 ml-3">' . $do["value"] . '</label>';
+                                        $elementsBillDetail .= '    </label>';
+                                        $elementsBillDetail .= '    <label class="col-form-label col-sm-1 col-1 text-right">= IDR</label>';
+                                        $elementsBillDetail .= '    <label class="row-flex col-sm-2 col-2 no-padding">';
+                                        $elementsBillDetail .= '        <label class="form-control col-sm-11 col-11 text-right">' . number_format($do["total"], 0, ",", ".") . '</label>';
+                                        $elementsBillDetail .= '        <label class="col-sm-1 col-1">&nbsp;</label>';
+                                        $elementsBillDetail .= '    </label>';
+                                        $elementsBillDetail .= '</div>';
+
+                                        $subTotalByType += intval($do["total"]);
+                                    }
+                                }
 
                                 $subTotalByType += intval($data["total"]);
                             }
@@ -143,7 +160,7 @@ class Detail_bills
                         case "rehab":
                             foreach ($datas as $data) {
                                 $elementsBillDetail .= '<div class="row-flex col-sm-12 col-12 pl-0">';
-                                $elementsBillDetail .= '    <p class="form-control col-sm-4 col-4 mr-2 text-bold" style="height: auto;">' . $data["value"] . '</p>';
+                                $elementsBillDetail .= '    <p class="form-control col-sm-4 col-4 mr-2 text-bold" style="height: auto; font-size: 14px;">' . $data["value"] . '</p>';
                                 $elementsBillDetail .= '    <label class="form-control col-sm-1 col-1">' . $data["qty"] . '</label>';
                                 $elementsBillDetail .= '    <label class="col-form-label col-sm-1 col-1 text-center">Hari</label>';
                                 $elementsBillDetail .= '    <label class="row-flex col-form-label col-sm-1 col-1 text-right pl-0 pr-0">';
@@ -157,7 +174,24 @@ class Detail_bills
                                 $elementsBillDetail .= '        <label class="col-sm-1 col-1">&nbsp;</label>';
                                 $elementsBillDetail .= '    </label>';
                                 $elementsBillDetail .= '</div>';
-                                
+
+                                if (isset($data["do"])) {
+                                    foreach ($data["do"] as $do) {
+                                        $elementsBillDetail .= '<div class="row-flex col-sm-12 col-12 pl-0">';
+                                        $elementsBillDetail .= '    <label class="row-flex col-sm-9 col-9 mr-2 pr-3">';
+                                        $elementsBillDetail .= '        <label class="form-control col-sm-12 col-12 ml-3">' . $do["value"] . '</label>';
+                                        $elementsBillDetail .= '    </label>';
+                                        $elementsBillDetail .= '    <label class="col-form-label col-sm-1 col-1 text-right">= IDR</label>';
+                                        $elementsBillDetail .= '    <label class="row-flex col-sm-2 col-2 no-padding">';
+                                        $elementsBillDetail .= '        <label class="form-control col-sm-11 col-11 text-right">' . number_format($do["total"], 0, ",", ".") . '</label>';
+                                        $elementsBillDetail .= '        <label class="col-sm-1 col-1">&nbsp;</label>';
+                                        $elementsBillDetail .= '    </label>';
+                                        $elementsBillDetail .= '</div>';
+
+                                        $subTotalByType += intval($do["total"]);
+                                    }
+                                }
+
                                 $subTotalByType += intval($data["total"]);
                             }
                             break;
@@ -178,12 +212,11 @@ class Detail_bills
 
                 $modal_detail = str_replace("[DETAIL_BILLS_" . strtoupper($yankes) . "]", $elementsBillDetail, $modal_detail);
             }
-             
+
             $modal_detail = str_replace("[DETAIL_BILLS_RANAP]", "-", $modal_detail);
             $modal_detail = str_replace("[DETAIL_BILLS_RAJAL]", "-", $modal_detail);
-            // $total = $total - $cob;
             $modal_detail = str_replace("[INFO_TOTAL_BAYAR]", number_format($bill["total_bayar"], 0, ",", "."), $modal_detail);
-            $modal_detail = str_replace("[INFO_TOTAL]", number_format($bill["total"], 0, ",", "."), $modal_detail);
+            $modal_detail = str_replace("[INFO_TOTAL]", number_format($bill["subtotal"], 0, ",", "."), $modal_detail);
         }
         
         echo json_encode($modal_detail);

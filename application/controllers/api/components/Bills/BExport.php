@@ -122,6 +122,22 @@ class BExport
                 'vertical' => 'center'
             ]
         ];
+        $styleAlign = [
+            'horizontal' => [
+                'right' => [
+                    'alignment' => [
+                        'horizontal' => 'right'
+                    ]
+                ]
+                ],
+            'vertical' => [
+                'middle' => [
+                    'alignment' => [
+                        'vertical' => 'center'
+                    ]
+                ]
+            ]
+        ];
         $styleBorders = [
             'borders' => [
                 'allborders' => [
@@ -130,8 +146,19 @@ class BExport
             ]
         ];
         $styleFill = [
-            'fill' => [
-                'fillType' => PHPExcel_Style_Fill::FILL_SOLID
+            'background' => [
+                'grey' => [
+                    'fill' => [
+                        'type' => PHPExcel_Style_Fill::FILL_SOLID,
+                        'color' => array('rgb' => 'D9D9D9')
+                    ]
+                ],
+                'darkgrey' => [
+                    'fill' => [
+                        'type' => PHPExcel_Style_Fill::FILL_SOLID,
+                        'color' => array('rgb' => 'BFBFBF')
+                    ]
+                ]
             ]
         ];
         $styleFontBold = [
@@ -171,61 +198,87 @@ class BExport
         $detail = [];
         $kamar = [];
         $icu = [];
+
+        $detailBills = [];
         if (isset($bills["detail"])) {
-            if (isset($bills["detail"]["room"]) && !is_null($bills["detail"]["room"])) {
-                foreach ($bills["detail"]["room"] as $room) {
-                    if (strtoupper($room['value']) == "ICU" || strtoupper($room['value']) == "HDU") {
-                        $icu[strtoupper($room['value'])] = [
-                            "qty" => $room["qty"],
-                            "total" => $room["total"]
-                        ];
-                    } else {
-                        $kamar[] = [
-                            "qty" => $room["qty"],
-                            "total" => $room["total"]
-                        ];
+            foreach ($bills["detail"] as $yankes => $yankesData) {
+                $detailBills[$yankes]["room"][] = (isset($yankesData["room"]) && !is_null($yankesData["room"])) ? array_sum(array_column($yankesData["room"], "total")) : 0;
+                $detailBills[$yankes]["admin"][] = (isset($yankesData["admin"]) && !is_null($yankesData["admin"])) ? array_sum(array_column($yankesData["admin"], "total")) : 0;
+                $detailBills[$yankes]["medicine"][] = (isset($yankesData["medicine"]) && !is_null($yankesData["medicine"])) ? array_sum(array_column($yankesData["medicine"], "total")) : 0;
+
+                if (isset($yankesData["docter"]) && !is_null($yankesData["docter"])) {
+                    $subTotalDocter = 0;
+                    $subTotalDocter += array_sum(array_column($yankesData["docter"], "total"));
+                    if (isset($yankesData["docter"])) {
+                        foreach ($yankesData["docter"] as $docter) {
+                            if (isset($docter["do"]) && !is_null($docter["do"]))
+                                $subTotalDocter += (isset($docter["do"]) && !is_null($docter["do"])) ? array_sum(array_column($docter["do"], "total")) : 0;
+                        }
+                    }
+                    $detailBills[$yankes]["docter"][] = $subTotalDocter;
+                }
+    
+                if (isset($yankesData["surgery"]) && !is_null($yankesData["surgery"])) {
+                    $subTotalSurgery = 0;
+                    $subTotalSurgery += array_sum(array_column($yankesData["surgery"], "total"));
+                    if (isset($yankesData["surgery"])) {
+                        foreach ($yankesData["surgery"] as $surgery) {
+                            if (isset($surgery["do"]) && !is_null($surgery["do"]))
+                                $subTotalSurgery += (isset($surgery["do"]) && !is_null($surgery["do"])) ? array_sum(array_column($surgery["do"], "total")) : 0;
+                        }
+                    }
+                    $detailBills[$yankes]["docter"][] = $subTotalSurgery;
+                }
+
+                if (isset($yankesData["surgery_nurse"]) && !is_null($yankesData["surgery_nurse"]))
+                    $detailBills[$yankes]["docter"][] = array_sum(array_column($yankesData["surgery_nurse"], "total"));
+
+                if (isset($yankesData["room_nurse"]) && !is_null($yankesData["room_nurse"]))
+                    $detailBills[$yankes]["docter"][] = array_sum(array_column($yankesData["room_nurse"], "total"));
+
+                if (isset($yankesData["anestesi"]) && !is_null($yankesData["anestesi"])) {
+                    $subTotalAnestesi = 0;
+                    $subTotalAnestesi += array_sum(array_column($yankesData["anestesi"], "total"));
+                    if (isset($yankesData["anestesi"])) {
+                        foreach ($yankesData["anestesi"] as $anestesi) {
+                            if (isset($anestesi["do"]) && !is_null($anestesi["do"]))
+                                $subTotalAnestesi += (isset($anestesi["do"]) && !is_null($anestesi["do"])) ? array_sum(array_column($anestesi["do"], "total")) : 0;
+                        }
+                    }
+                    $detailBills[$yankes]["docter"][] = $subTotalAnestesi;
+                }
+
+                if (isset($yankesData["medic"]) && !is_null($yankesData["medic"]))
+                    $detailBills[$yankes]["docter"][] = array_sum(array_column($yankesData["medic"], "total"));
+
+                $detailBills[$yankes]["laboratory"][] = (isset($yankesData["laboratory"]) && !is_null($yankesData["laboratory"])) ? array_sum(array_column($yankesData["laboratory"], "total")) : 0;
+                $detailBills[$yankes]["radiology"][] = (isset($yankesData["radiology"]) && !is_null($yankesData["radiology"])) ? array_sum(array_column($yankesData["radiology"], "total")) : 0;
+                $detailBills[$yankes]["ambulance"][] = (isset($yankesData["ambulance"]) && !is_null($yankesData["ambulance"])) ? array_sum(array_column($yankesData["ambulance"], "total")) : 0;
+                $detailBills[$yankes]["rehab"][] = (isset($yankesData["rehab"]) && !is_null($yankesData["rehab"])) ? array_sum(array_column($yankesData["rehab"], "total")) : 0;
+            }
+        }
+
+        if (!empty($bills["detail"])) {
+            foreach ($bills["detail"] as $yankes => $detailBill) {
+                foreach ($detailBill as $kBill => $dBill) {
+                    if ($kBill == "room") {
+                        foreach ($dBill as $db) {
+                            var_dump($db);
+                            if (strtoupper($db['value']) == "ICU" || strtoupper($db['value']) == "HDU") {
+                                $icu[strtoupper($db['value'])] = [
+                                    "qty" => $db["qty"],
+                                    "total" => $db["fare"]
+                                ];
+                            } else {
+                                $kamar[] = [
+                                    "qty" => $db["qty"],
+                                    "total" => $db["fare"]
+                                ];
+                            }
+                        }
                     }
                 }
             }
-
-            $detail["room"][] = (isset($bills["detail"]["room"]) && !is_null($bills["detail"]["room"])) ? array_sum(array_column($bills["detail"]["room"], "total")) : 0;
-            $detail["admin"][] = (isset($bills["detail"]["admin"]) && !is_null($bills["detail"]["admin"])) ? array_sum(array_column($bills["detail"]["admin"], "total")) : 0;
-            $detail["medicine"][] = (isset($bills["detail"]["medicine"]) && !is_null($bills["detail"]["medicine"])) ? array_sum(array_column($bills["detail"]["medicine"], "total")) : 0;
-
-            $subTotalDocter = (isset($bills["detail"]["docter"]) && !is_null($bills["detail"]["docter"])) ? array_sum(array_column($bills["detail"]["docter"], "total")) : 0;
-            if (isset($bills["detail"]["docter"]) && !is_null($bills["detail"]["docter"])) {
-                foreach ($bills["detail"]["docter"] as $docter) {
-                    if (isset($docter["children"]) && !is_null($docter["children"]))
-                        $subTotalDocter += (isset($docter["children"]) && !is_null($docter["children"])) ? array_sum(array_column($docter["children"], "total")) : 0;
-                }
-            }
-            $detail["docter"][] = $subTotalDocter;
-
-            $subTotalSurgery = (isset($bills["detail"]["surgery"]) && !is_null($bills["detail"]["surgery"])) ? array_sum(array_column($bills["detail"]["surgery"], "total")) : 0;
-            if (isset($bills["detail"]["surgery"]) && !is_null($bills["detail"]["surgery"])) {
-                foreach ($bills["detail"]["surgery"] as $surgery) {
-                    if (isset($surgery["children"]) && !is_null($surgery["children"]))
-                        $subTotalSurgery += (isset($surgery["children"]) && !is_null($surgery["children"])) ? array_sum(array_column($surgery["children"], "total")) : 0;
-                }
-            }
-            $detail["docter"][] = $subTotalSurgery;
-
-            $detail["docter"][] = (isset($bills["detail"]["surgery_nurse"]) && !is_null($bills["detail"]["surgery_nurse"])) ? array_sum(array_column($bills["detail"]["surgery_nurse"], "total")) : 0;
-            $detail["docter"][] = (isset($bills["detail"]["room_nurse"]) && !is_null($bills["detail"]["room_nurse"])) ? array_sum(array_column($bills["detail"]["room_nurse"], "total")) : 0;
-            $subTotalAnestesi = (isset($bills["detail"]["anestesi"]) && !is_null($bills["detail"]["anestesi"])) ? array_sum(array_column($bills["detail"]["anestesi"], "total")) : 0;
-            if (isset($bills["detail"]["anestesi"]) && !is_null($bills["detail"]["anestesi"])) {
-                foreach ($bills["detail"]["anestesi"] as $anestesi) {
-                    if (isset($anestesi["children"]) && !is_null($anestesi["children"]))
-                        $subTotalAnestesi += (isset($anestesi["children"]) && !is_null($anestesi["children"])) ? array_sum(array_column($anestesi["children"], "total")) : 0;
-                }
-            }
-            $detail["docter"][] = $subTotalAnestesi;
-            $detail["docter"][] = (isset($bills["detail"]["medic"]) && !is_null($bills["detail"]["medic"])) ? array_sum(array_column($bills["detail"]["medic"], "total")) : 0;
-
-            $detail["lab"][] = (isset($bills["detail"]["lab"]) && !is_null($bills["detail"]["lab"])) ? array_sum(array_column($bills["detail"]["lab"], "total")) : 0;
-            $detail["radiology"][] = (isset($bills["detail"]["radiology"]) && !is_null($bills["detail"]["radiology"])) ? array_sum(array_column($bills["detail"]["radiology"], "total")) : 0;
-            $detail["rehab"][] = (isset($bills["detail"]["rehab"]) && !is_null($bills["detail"]["rehab"])) ? array_sum(array_column($bills["detail"]["rehab"], "total")) : 0;
-            $detail["ambulance"][] = (isset($bills["detail"]["ambulance"]) && !is_null($bills["detail"]["ambulance"])) ? array_sum(array_column($bills["detail"]["ambulance"], "total")) : 0;
         }
 
         $kamarLetter = "A";
@@ -234,7 +287,9 @@ class BExport
 
         foreach ($kamar as $kam) {
             $sheet->setCellValue($kamarLetter . '15', $kam["qty"]."x".number_format($kam["total"], 0, ",", "."));
+            $kamarLetter++;
         }
+
         $sheet->setCellValue('C14', 'ICU / HDU');
         foreach ($icu as $ic) {
             $sheet->setCellValue($icuLetter . '15', $ic["qty"]."x".number_format($ic["total"], 0, ",", "."));
@@ -249,201 +304,172 @@ class BExport
             ]
         ]));
 
-        $sheet->getRowDimension('17')->setRowHeight(22);
-        $jenisYankes = (($bills['yankes'] == "Rawat Inap") ? "RANAP" : "RAJAL");
-        $sheet->setCellValue('A17', $jenisYankes);
-
-        $xDocter = count($detail["docter"]);
-        $lastRowDetail = 17;
         $firstRowDetail = 17;
-        $subTotalDetailDocter = 0;
+        $nextRowDetail = 17;
+        $lastRowDetail = 17;
+        $firstSheetRow = 0;
 
-        $detailRoom = $detail["room"];
-        $detailAdmin = $detail["admin"];
-        $detailMedicine = $detail["medicine"];
-        $detailLab = $detail["lab"];
-        $detailRadiology = $detail["radiology"];
-        $detailAmbulance = $detail["ambulance"];
-        $detailRehab = $detail["rehab"];
-        $subTotalDetail = [];
-        $subRowTotalDetail = [];
+        $columnDetail = [
+            "room" => "B",
+            "admin" => "C",
+            "medicine" => "D",
+            "docter" => "E",
+            "laboratory" => "F",
+            "radiology" => "G",
+            "ambulance" => "H",
+            "rehab" => "I",
+            "total" => "J"
+        ];
 
-        foreach ($detail["docter"] as $key => $detailDocter) {
-            $sheet->getRowDimension($lastRowDetail)->setRowHeight(22);
-            $sheet->setCellValue('E'.$lastRowDetail, $detailDocter);
-            $subTotalDetailDocter += $detailDocter;
-            $subTotalDetail[] = $detailDocter;
-            $subRowTotalDetail[$key][] = $detailDocter;
-
-            $lastRowDetail++;
-        }
-
-        for ($xRoom = 0 ; $xRoom < $xDocter ; $xRoom++) {
-            if (isset($detailRoom[$xRoom])) {
-                $sheet->setCellValue('B' . $firstRowDetail, $detailRoom[$xRoom]);
-                $subTotalDetail[] = $detailRoom[$xRoom];
-                $subRowTotalDetail[$xRoom][] = $detailRoom[$xRoom];
-            } else {
-                $sheet->setCellValue('B' . ($firstRowDetail + $xRoom), "-");
-            }
-        }
-
-        for ($xAdmin = 0 ; $xAdmin < $xDocter ; $xAdmin++) {
-            if (isset($detailAdmin[$xAdmin])) {
-                $sheet->setCellValue('C' . $firstRowDetail, $detailAdmin[$xAdmin]);
-                $subTotalDetail[] = $detailAdmin[$xAdmin];
-                $subRowTotalDetail[$xAdmin][] = $detailAdmin[$xAdmin];
-            } else {
-                $sheet->setCellValue('C' . ($firstRowDetail + $xAdmin), "-");
-            }
-        }
-
-        for ($xMedicine = 0 ; $xMedicine < $xDocter ; $xMedicine++) {
-            if (isset($detailMedicine[$xMedicine])) {
-                $sheet->setCellValue('D' . $firstRowDetail, $detailMedicine[$xMedicine]);
-                $subTotalDetail[] = $detailMedicine[$xMedicine];
-                $subRowTotalDetail[$xMedicine][] = $detailMedicine[$xMedicine];
-            } else {
-                $sheet->setCellValue('D' . ($firstRowDetail + $xMedicine), "-");
-            }
-        }
-
-        for ($xLab = 0 ; $xLab < $xDocter ; $xLab++) {
-            if (isset($detailLab[$xLab])) {
-                $sheet->setCellValue('F' . $firstRowDetail, $detailLab[$xLab]);
-                $subTotalDetail[] = $detailLab[$xLab];
-                $subRowTotalDetail[$xLab][] = $detailLab[$xLab];
-            } else {
-                $sheet->setCellValue('F' . ($firstRowDetail + $xLab), "-");
-            }
-        }
-
-        for ($xRadiology = 0 ; $xRadiology < $xDocter ; $xRadiology++) {
-            if (isset($detailRadiology[$xRadiology])) {
-                $sheet->setCellValue('G' . $firstRowDetail, $detailRadiology[$xRadiology]);
-                $subTotalDetail[] = $detailRadiology[$xRadiology];
-                $subRowTotalDetail[$xRadiology][] = $detailRadiology[$xRadiology];
-            } else {
-                $sheet->setCellValue('G' . ($firstRowDetail + $xRadiology), "-");
-            }
-        }
-
-        for ($xAmbulance = 0 ; $xAmbulance < $xDocter ; $xAmbulance++) {
-            if (isset($detailAmbulance[$xAmbulance])) {
-                $sheet->setCellValue('H' . $firstRowDetail, $detailAmbulance[$xAmbulance]);
-                $subTotalDetail[] = $detailAmbulance[$xAmbulance];
-                $subRowTotalDetail[$xAmbulance][] = $detailAmbulance[$xAmbulance];
-            } else {
-                $sheet->setCellValue('H' . ($firstRowDetail + $xAmbulance), "-");
-            }
-        }
-
-        for ($xRehab = 0 ; $xRehab < $xDocter ; $xRehab++) {
-            if (isset($detailRehab[$xRehab])) {
-                $sheet->setCellValue('I' . $firstRowDetail, $detailRehab[$xRehab]);
-                $subTotalDetail[] = $detailRehab[$xRehab];
-                $subRowTotalDetail[$xRehab][] = $detailRehab[$xRehab];
-            } else {
-                $sheet->setCellValue('I' . ($firstRowDetail + $xRehab), "-");
-            }
-        }
-
-        for ($xSubTotal = 0 ; $xSubTotal < $xDocter ; $xSubTotal++) {
-            $sheet->setCellValue('J' . ($firstRowDetail + $xSubTotal), array_sum($subRowTotalDetail[$xSubTotal]));
-        }
-
-        // $sheet->setCellValue('B17', $detail['room']);
-        // $sheet->setCellValue('C17', $detail['admin']);
-        // $sheet->setCellValue('D17', $detail['medicine']);
-    
-        // $sheet->setCellValue('F17', $detail['lab']);
-        // $sheet->setCellValue('G17', $detail['radiology']);
-        // $sheet->setCellValue('H17', $detail['ambulance']);
-        // $sheet->setCellValue('I17', $detail['rehab']);
-        // $sheet->setCellValue('J17', array_sum($detail));
-
-        $sheet->getStyle('A'.$lastRowDetail.':J'.$lastRowDetail)->applyFromArray(array_merge($style, $styleAlignCenter, $styleBorders, $styleFontBold, $styleFill));
-        $sheet->setCellValue('A'.$lastRowDetail, 'TOTAL ' . $jenisYankes);
-        $sheet->setCellValue('B'.$lastRowDetail, array_sum($detail['room']));
-        $sheet->setCellValue('C'.$lastRowDetail, array_sum($detail['admin']));
-        $sheet->setCellValue('D'.$lastRowDetail, array_sum($detail['medicine']));
-        $sheet->setCellValue('E'.$lastRowDetail, $subTotalDetailDocter);
-        $sheet->setCellValue('F'.$lastRowDetail, array_sum($detail['lab']));
-        $sheet->setCellValue('G'.$lastRowDetail, array_sum($detail['radiology']));
-        $sheet->setCellValue('H'.$lastRowDetail, array_sum($detail['ambulance']));
-        $sheet->setCellValue('I'.$lastRowDetail, array_sum($detail['rehab']));
-        $sheet->setCellValue('J'.$lastRowDetail, array_sum($subTotalDetail));
-        $sheet->getRowDimension($lastRowDetail)->setRowHeight(22);
-        $sheet->mergeCells('A17:A'.($lastRowDetail-1));
-
-        $sheet->getStyle('A17:J'.$lastRowDetail)->applyFromArray(array_merge($style, $styleAlignCenter, $styleBorders, $styleFill));
-
-        $cob = intval($bills["cob"]);
-        $acc = intval($bills["subtotal"]);
-        $bayar = intval($bills["total_bayar"]);
-        $selisih = $acc - $bayar - $cob;
-
-        $sheet->setCellValue('A' . ($lastRowDetail+3), "TOTAL PENGAJUAN");
-        $sheet->mergeCells('A'. ($lastRowDetail+3) . ':B'. ($lastRowDetail+3));
-
-        $sheet->setCellValue('A' . ($lastRowDetail+4), "TOTAL ACC");
-        $sheet->mergeCells('A'. ($lastRowDetail+4) . ':B'. ($lastRowDetail+4));
-
-        $sheet->setCellValue('F' . ($lastRowDetail+3), "TOTAL SELISIH");
-        $sheet->mergeCells('F'. ($lastRowDetail+3) . ':G'. ($lastRowDetail+3));
-
-        $sheet->setCellValue('C' . ($lastRowDetail+3), $jenisYankes . ' TOTAL');
-        $sheet->mergeCells('C'. ($lastRowDetail+3) . ':D'. ($lastRowDetail+3));
-
-        $sheet->setCellValue('C' . ($lastRowDetail+4), $jenisYankes . ' TOTAL');
-        $sheet->mergeCells('C'. ($lastRowDetail+4) . ':D'. ($lastRowDetail+4));
-
-        $sheet->setCellValue('H' . ($lastRowDetail+3), $jenisYankes . ' TOTAL');
-        $sheet->mergeCells('H'. ($lastRowDetail+3) . ':I'. ($lastRowDetail+3));
-
-        $sheet->setCellValue('E' . ($lastRowDetail+3), $bayar);
-        $sheet->setCellValue('E' . ($lastRowDetail+4), $acc);
-        $sheet->setCellValue('J' . ($lastRowDetail+3), $selisih);
-
-        $sheet->getStyle('A' . ($lastRowDetail+3) . ':E' . ($lastRowDetail+4))->applyFromArray(array_merge($style, $styleAlignCenter, $styleBorders, $styleFill));
-        $sheet->getStyle('F' . ($lastRowDetail+3) . ':J' . ($lastRowDetail+3))->applyFromArray(array_merge($style, $styleAlignCenter, $styleBorders, $styleFill));
-        $sheet->getStyle('A' . ($lastRowDetail+4))->applyFromArray(array_merge($style, $styleFontBold));
-        $sheet->getStyle('E' . ($lastRowDetail+4))->applyFromArray(array_merge($style, $styleFontBold));
-        $sheet->getStyle('F' . ($lastRowDetail+3))->applyFromArray(array_merge($style, $styleFontBold));
-        $sheet->getStyle('J' . ($lastRowDetail+3))->applyFromArray(array_merge($style, $styleFontBold));
         
-        $sheet->getRowDimension(($lastRowDetail+3))->setRowHeight(22);
-        $sheet->getRowDimension(($lastRowDetail+4))->setRowHeight(22);
+        $totalYankes = [];
+        if (!empty($detailBills)) {
+            $yankesRow = 17;
+            $subTotal = [];
+            foreach ($detailBills as $yankes => $dataBills) {
+                $yankesData = [];
+                $yankesSubtotal = 0;
+                $countRow = [];
+                foreach ($dataBills as $bill) {
+                    $countRow[] = count($bill);
+                }
 
-        $sheet->setCellValue('G' . ($lastRowDetail+5), 'KETERANGAN / HASIL VERIFIKASI:');
-        $sheet->setCellValue('G' . ($lastRowDetail+6), $bills["verification"]);
-        $sheet->mergeCells('G'. ($lastRowDetail+5) . ':J'. ($lastRowDetail+5));
-        $sheet->mergeCells('G'. ($lastRowDetail+6) . ':J'. ($lastRowDetail+6));
-        $sheet->mergeCells('G'. ($lastRowDetail+7) . ':J'. ($lastRowDetail+7));
-        $sheet->mergeCells('G'. ($lastRowDetail+8) . ':J'. ($lastRowDetail+8));
+                $sheet->setCellValue("A" . $yankesRow, strtoupper($yankes));
+                $sheet->getStyle("A" . $yankesRow)->applyFromArray(array_merge($style, $styleAlignCenter, $styleFontBold));
 
-        $sheet->getStyle('G' . ($lastRowDetail+5) . ':J' . ($lastRowDetail+5))->applyFromArray([
+                $maxCount = max($countRow);
+                foreach ($dataBills as $type => $bill) {
+                    $billRow = $yankesRow;
+                    $billTotalRow = $yankesRow;
+                    for ($i = 0 ; $i < $maxCount ; $i++) {
+                        // var_dump($i);
+                        $yankesData[$i][] = isset($bill[$i]) ? $bill[$i] : 0;
+                        $sheet->setCellValue($columnDetail[$type].$billRow, (isset($bill[$i]) ? $bill[$i] : "-"));
+                        $sheet->getStyle($columnDetail[$type].$billRow)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED0);
+                        $sheet->getRowDimension($billRow)->setRowHeight(20);
+                        // var_dump(isset($bill[$i]) ? $bill[$i] : "-");
+
+                        $billRow++;
+                    }
+
+                    for ($i = 0 ; $i < $maxCount ; $i++) {
+                        $sheet->setCellValue($columnDetail["total"].$billTotalRow, array_sum($yankesData[$i]));
+                        $sheet->getStyle($columnDetail["total"].$billTotalRow)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED0);
+                        $sheet->getStyle($columnDetail["total"].$billTotalRow)->applyFromArray(array_merge($style, $styleFill["background"]["darkgrey"]));
+                        $sheet->getStyle($columnDetail["total"].$billTotalRow)->getFont()->setSize(11);
+                        $billTotalRow++;
+                    }
+
+                    $sheet->setCellValue($columnDetail[$type].$billRow, array_sum($bill));
+                    $sheet->getStyle($columnDetail[$type].$billRow)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED0);
+                    $sheet->getStyle($columnDetail[$type].$billRow)->applyFromArray($styleFill["background"]["grey"]);
+                    $yankesSubtotal += array_sum($bill);
+                    $subTotal[$type][] = array_sum($bill);
+                }
+                
+                $subTotal["total"][] = $yankesSubtotal;
+                $sheet->setCellValue($columnDetail["total"].$billRow, $yankesSubtotal);
+                $sheet->getStyle($columnDetail["total"].$billRow)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED0);
+                $sheet->getStyle($columnDetail["total"].$billRow)->applyFromArray(array_merge($style, $styleFill["background"]["darkgrey"]));
+                $sheet->getStyle($columnDetail["total"].$billRow)->getFont()->setSize(11);
+                $sheet->setCellValue("A".$billRow, "TOTAL " . strtoupper($yankes));
+                $sheet->getStyle("A".$billRow)->applyFromArray($styleFill["background"]["grey"]);
+                $sheet->getRowDimension($billRow)->setRowHeight(20);
+                $sheet->mergeCells("A".$yankesRow.':A'.($billTotalRow-1));
+                $yankesRow += $maxCount + 1;
+
+                $totalYankes[$yankes] = $yankesSubtotal;
+            }
+
+            foreach ($columnDetail as $key => $column) {
+                $sheet->setCellValue($column.$yankesRow, array_sum($subTotal[$key]));
+                $sheet->getStyle($column.$yankesRow)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED0);
+                $sheet->getStyle($column.$yankesRow)->applyFromArray(array_merge($style, $styleFontBold, $styleFill["background"]["darkgrey"]));
+                $sheet->getStyle($column.$yankesRow)->getFont()->setSize(11);
+            }
+
+            $sheet->setCellValue("A".$yankesRow, "TOTAL");
+            $sheet->getStyle("A".$yankesRow)->applyFromArray(array_merge($style, $styleFontBold, $styleFill["background"]["darkgrey"]));
+            $sheet->getStyle("A".$yankesRow)->getFont()->setSize(11);
+            $sheet->getStyle('A17:J'.$yankesRow)->applyFromArray(array_merge($style, $styleBorders));
+            $sheet->getStyle('B17:J'.$yankesRow)->applyFromArray(array_merge($style, $styleAlign["horizontal"]["right"]));
+            $sheet->getRowDimension($yankesRow)->setRowHeight(20);
+        }
+
+        $sheet->getStyle('A17:J'.$yankesRow)->applyFromArray(array_merge($style, $styleAlign["vertical"]["middle"]));
+        
+        $newRow = $yankesRow + 3;
+
+        $sheet->setCellValue('A' . $newRow, "TOTAL PENGAJUAN");
+        $sheet->mergeCells('A'. $newRow . ':B'. ($newRow + 1));
+        $sheet->setCellValue('A' . ($newRow + 2), "TOTAL ACC");
+        $sheet->mergeCells('A'. ($newRow + 2) . ':B'. ($newRow + 3));
+        $sheet->setCellValue('F' . $newRow, "TOTAL SELISIH");
+        $sheet->mergeCells('F'. $newRow . ':G'. ($newRow + 1));
+        $sheet->getStyle("A".$newRow.":B".($newRow+3))->applyFromArray($styleAlignCenter);
+        $sheet->getStyle("A".($newRow+2).":B".($newRow+3))->applyFromArray($styleFontBold);
+        $sheet->getStyle("F".$newRow.":G".($newRow+1))->applyFromArray(array_merge($style, $styleAlignCenter, $styleFontBold));
+
+        $sheet->setCellValue('C' . $newRow, "RANAP TOTAL");
+        $sheet->mergeCells('C'. $newRow . ':D'. $newRow);
+        $sheet->setCellValue('C' . ($newRow + 1), "RAJAL TOTAL");
+        $sheet->mergeCells('C'. ($newRow + 1) . ':D'. ($newRow + 1));
+        $sheet->setCellValue('C' . ($newRow + 2), "RANAP TOTAL");
+        $sheet->mergeCells('C'. ($newRow + 2) . ':D'. ($newRow + 2));
+        $sheet->setCellValue('C' . ($newRow + 3), "RAJAL TOTAL");
+        $sheet->mergeCells('C'. ($newRow + 3) . ':D'. ($newRow + 3));
+        $sheet->setCellValue('H' . $newRow, "RANAP TOTAL");
+        $sheet->mergeCells('H'. $newRow . ':I'. $newRow);
+        $sheet->setCellValue('H' . ($newRow + 1), "RAJAL TOTAL");
+        $sheet->mergeCells('H'. ($newRow + 1) . ':I'. ($newRow + 1));
+
+        $sheet->setCellValue('E' . $newRow, $bills["total_bayar"]);
+        $sheet->mergeCells('E'. $newRow . ':E'. ($newRow + 1));
+        $sheet->setCellValue('E' . ($newRow + 2), array_sum($totalYankes));
+        $sheet->mergeCells('E'. ($newRow + 2) . ':E'. ($newRow + 3));
+        $sheet->setCellValue('J' . $newRow, (array_sum($totalYankes) - intval($bills["total_bayar"])));
+        $sheet->mergeCells('J'. $newRow . ':J'. ($newRow + 1));
+        $sheet->getStyle("E".$newRow.":E".($newRow+3))->applyFromArray($styleAlign["vertical"]["middle"]);
+        $sheet->getStyle("E".($newRow+2).":E".($newRow+3))->applyFromArray($styleFontBold);
+        $sheet->getStyle("J".$newRow.":J".($newRow+1))->applyFromArray(array_merge($style, $styleFontBold, $styleAlign["vertical"]["middle"]));
+        $sheet->getStyle("E".$newRow.":E".($newRow+3))->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED0);
+        $sheet->getStyle("F".$newRow.":F".($newRow+1))->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED0);
+        $sheet->getStyle("J".$newRow.":J".($newRow+1))->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED0);
+
+        $sheet->getStyle("A".$newRow.":E".($newRow+3))->applyFromArray($styleBorders);
+        $sheet->getStyle("F".$newRow.":J".($newRow+1))->applyFromArray($styleBorders);
+        $sheet->getStyle("A".$newRow.":J".($newRow+3))->getFont()->setSize(11);
+
+        $sheet->setCellValue('G' . ($newRow+2), 'KETERANGAN / HASIL VERIFIKASI:');
+        $sheet->setCellValue('G' . ($newRow+3), $bills["verification"]);
+        $sheet->mergeCells('G'. ($newRow+2) . ':L'. ($newRow+2));
+        $sheet->mergeCells('G'. ($newRow+3) . ':L'. ($newRow+3));
+        $sheet->mergeCells('G'. ($newRow+4) . ':L'. ($newRow+4));
+        $sheet->mergeCells('G'. ($newRow+5) . ':L'. ($newRow+5));
+        $sheet->getStyle("G".($newRow+3).":L".($newRow+5))->getFont()->setSize(8);
+
+        $sheet->getStyle('G' . ($newRow+2) . ':L' . ($newRow+2))->applyFromArray([
             'borders' => [
                 'top' => [
                     'style' => PHPExcel_Style_Border::BORDER_THIN,
                 ],
             ]
         ]);
-        $sheet->getStyle('G' . ($lastRowDetail+5) . ':G' . ($lastRowDetail+8))->applyFromArray([
+        $sheet->getStyle('G' . ($newRow+2) . ':L' . ($newRow+5))->applyFromArray([
             'borders' => [
                 'left' => [
                     'style' => PHPExcel_Style_Border::BORDER_THIN,
                 ],
             ]
         ]);
-        $sheet->getStyle('J' . ($lastRowDetail+5) . ':J' . ($lastRowDetail+8))->applyFromArray([
+        $sheet->getStyle('J' . ($newRow+2) . ':L' . ($newRow+5))->applyFromArray([
             'borders' => [
                 'right' => [
                     'style' => PHPExcel_Style_Border::BORDER_THIN,
                 ],
             ]
         ]);
-        $sheet->getStyle('G' . ($lastRowDetail+8) . ':J' . ($lastRowDetail+8))->applyFromArray([
+        $sheet->getStyle('G' . ($newRow+5) . ':L' . ($newRow+5))->applyFromArray([
             'borders' => [
                 'bottom' => [
                     'style' => PHPExcel_Style_Border::BORDER_THIN,
